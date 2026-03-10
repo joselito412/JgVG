@@ -1,26 +1,287 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Win95 Color Palette */
+  --win95-desktop: #008080;
+  --win95-window: #c0c0c0;
+  --win95-titlebar: #000080;
+  --win95-titlebar-inactive: #808080;
+  --win95-text: #000000;
+  --win95-text-light: #ffffff;
+  --win95-border-light: #ffffff;
+  --win95-border-dark: #404040;
+  --win95-border-darker: #808080;
+  --win95-input-bg: #ffffff;
+  --win95-rpg-bg: #0a0a14;
+  --win95-rpg-border: #f0f0f0;
+  --win95-rpg-text: #f5a623;
+  
+  --background: #008080;
+  --foreground: #000000;
+  --card: #c0c0c0;
+  --card-foreground: #000000;
+  --popover: #c0c0c0;
+  --popover-foreground: #000000;
+  --primary: #000080;
+  --primary-foreground: #ffffff;
+  --secondary: #c0c0c0;
+  --secondary-foreground: #000000;
+  --muted: #808080;
+  --muted-foreground: #404040;
+  --accent: #000080;
+  --accent-foreground: #ffffff;
+  --destructive: #ff0000;
+  --destructive-foreground: #ffffff;
+  --border: #808080;
+  --input: #ffffff;
+  --ring: #000080;
+  --radius: 0;
 }
 
 @theme inline {
+  --font-sans: var(--font-mono), 'Space Mono', 'Courier New', monospace;
+  --font-mono: var(--font-mono), 'Space Mono', 'Courier New', monospace;
+  --font-pixel: var(--font-pixel), 'VT323', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-[#008080] text-black;
+    image-rendering: pixelated;
+    -webkit-font-smoothing: none;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Pixelated image rendering */
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Scanlines overlay */
+.scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.03),
+    rgba(0, 0, 0, 0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+/* Win95 Bevel Effects */
+.win95-raised {
+  border: 2px solid;
+  border-color: #ffffff #404040 #404040 #ffffff;
+}
+
+.win95-sunken {
+  border: 2px solid;
+  border-color: #404040 #ffffff #ffffff #404040;
+}
+
+.win95-btn {
+  border: 2px solid;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  background-color: #c0c0c0;
+  cursor: pointer;
+}
+
+.win95-btn:active {
+  border-color: #404040 #ffffff #ffffff #404040;
+}
+
+/* RPG Dialog Box */
+.rpg-dialog {
+  background: linear-gradient(180deg, #0a0a14 0%, #0f0f1f 100%);
+  border: 4px double #f0f0f0;
+  box-shadow: inset 0 0 20px rgba(245, 166, 35, 0.1);
+}
+
+/* RPG Menu Panel - Classic JRPG style */
+.rpg-panel {
+  background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1f 100%);
+  border: 3px solid #4a4a6a;
+  box-shadow: 
+    inset 2px 2px 0 #2a2a4a,
+    inset -2px -2px 0 #0a0a14,
+    0 0 0 2px #0a0a14,
+    4px 4px 0 rgba(0,0,0,0.5);
+  position: relative;
+}
+
+.rpg-panel::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border: 1px solid rgba(255,255,255,0.1);
+  pointer-events: none;
+}
+
+/* RPG Stat Bar */
+.rpg-stat-bar {
+  height: 12px;
+  background: #1a1a2e;
+  border: 2px solid #4a4a6a;
+  box-shadow: inset 1px 1px 0 #0a0a14;
+  position: relative;
+  overflow: hidden;
+}
+
+.rpg-stat-bar-fill {
+  height: 100%;
+  position: relative;
+  transition: width 0.5s ease-out;
+}
+
+.rpg-stat-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 100%);
+}
+
+/* Skill Colors */
+.skill-legal { background: linear-gradient(90deg, #f5a623 0%, #d4830a 100%); }
+.skill-tech { background: linear-gradient(90deg, #00d9ff 0%, #0099cc 100%); }
+.skill-wisdom { background: linear-gradient(90deg, #a855f7 0%, #7c3aed 100%); }
+.skill-charisma { background: linear-gradient(90deg, #ec4899 0%, #be185d 100%); }
+.skill-strength { background: linear-gradient(90deg, #ef4444 0%, #b91c1c 100%); }
+.skill-dexterity { background: linear-gradient(90deg, #22c55e 0%, #15803d 100%); }
+
+/* RPG Selection Arrow Animation */
+.rpg-arrow {
+  animation: arrow-bounce 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes arrow-bounce {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(4px); }
+}
+
+/* RPG Menu Item Hover */
+.rpg-menu-item {
+  transition: all 0.1s ease;
+  cursor: pointer;
+}
+
+.rpg-menu-item:hover {
+  background: rgba(245, 166, 35, 0.15);
+}
+
+.rpg-menu-item.selected {
+  background: rgba(245, 166, 35, 0.25);
+}
+
+/* Pixel Art Border */
+.pixel-border {
+  box-shadow:
+    0 -4px 0 0 #f0f0f0,
+    0 4px 0 0 #f0f0f0,
+    -4px 0 0 0 #f0f0f0,
+    4px 0 0 0 #f0f0f0,
+    -4px -4px 0 0 #f0f0f0,
+    4px -4px 0 0 #f0f0f0,
+    -4px 4px 0 0 #f0f0f0,
+    4px 4px 0 0 #f0f0f0;
+}
+
+/* Glowing text effect for RPG */
+.rpg-glow {
+  text-shadow: 
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    0 0 20px currentColor;
+}
+
+/* Battle scene grid pattern */
+.battle-grid {
+  background-image: 
+    linear-gradient(rgba(0, 128, 128, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 128, 128, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Typewriter cursor */
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background-color: #f5a623;
+  margin-left: 2px;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Level badge */
+.level-badge {
+  background: linear-gradient(180deg, #f5a623 0%, #d4830a 100%);
+  border: 2px solid #fff;
+  box-shadow: 2px 2px 0 #000;
+}
+
+/* Custom scrollbar Win95 style */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #c0c0c0;
+  border: 1px solid #808080;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #404040 #404040 #ffffff;
+}
+
+::-webkit-scrollbar-thumb:active {
+  border-color: #404040 #ffffff #ffffff #404040;
+}
+
+::-webkit-scrollbar-button {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #404040 #404040 #ffffff;
+  width: 16px;
+  height: 16px;
 }
