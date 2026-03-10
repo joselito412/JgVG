@@ -1,76 +1,44 @@
-﻿# ðŸ•¹ï¸ Ficha TÃ©cnica del Proyecto: Portafolio Web Retro + AI Chatbot
+# 🕹️ Ficha Técnica del Proyecto: Portafolio Web Retro + AI Chatbot
 
-Este documento describe la arquitectura, el stack tecnolÃ³gico y las dependencias necesarias para inicializar y desplegar el portafolio web con estÃ©tica retro (8-bit/GUI 90s). El proyecto opera bajo una topologÃ­a full-stack serverless en **Vercel**, persistencia de datos en **Cloudflare D1** y un chatbot impulsado por **Vercel AI SDK**.
+Este documento describe la arquitectura, el stack tecnológico y las dependencias necesarias para inicializar y desplegar el portafolio web con estética retro (8-bit/GUI 90s). El proyecto opera bajo una topología full-stack serverless en **Vercel**, persistencia de datos en **Supabase** y un chatbot impulsado por **Vercel AI SDK**.
 
-## ðŸ—ï¸ Arquitectura del Framework (Full-Stack)
+## 🏗️ Arquitectura del Framework (Full-Stack)
 
-El proyecto utiliza **Next.js (App Router)** como meta-framework full-stack, desplegado nativamente en Vercel. Esta decisiÃ³n permite manejar tanto el frontend reactivo como las funciones de backend (Route Handlers) en un solo repositorio.
+El proyecto utiliza **Next.js (App Router)** como meta-framework full-stack, desplegado nativamente en Vercel. 
 
-* **Frontend (Cliente):** Componentes de React estilizados con Tailwind CSS y frameworks retro (`NES.css` o `98.css`). Maneja el renderizado de la UI de 8-bits y el estado local del chatbot interactivo.
-* **Backend (Servidor/Vercel Functions):** Rutas de API en Next.js (`/api/*`) que actÃºan de puente seguro para procesar las peticiones del chatbot hacia proveedores de LLM (como OpenAI) y para enviar consultas proxy hacia la base de datos Cloudflare D1.
-* **Base de Datos (Edge):** Cloudflare D1 (SQLite serverless) estructurado y consultado preferiblemente mediante **Drizzle ORM** para garantizar seguridad de tipos (Type-safety).
+* **Frontend (Cliente):** Componentes de React estilizados con Tailwind CSS y frameworks retro (`NES.css`).
+* **Backend (Servidor/Vercel Functions):** Rutas de API en Next.js (`/api/*`) que actúan de puente seguro para procesar las peticiones del chatbot hacia proveedores de LLM.
+* **Base de Datos:** Inicializado con **Supabase** (PostgreSQL + Auth) como Backend-as-a-Service.
 
-## ðŸ“¦ Dependencias NPM (InstalaciÃ³n Inicial)
+## 📦 Instalación y Desarrollo Local (Frontend)
 
-Para configurar el entorno de trabajo exacto, ejecuta los siguientes comandos en la raÃ­z del proyecto inicializado con Next.js:
-
-### 1. NÃºcleo y Meta-Frameworkbash
-
-npx create-next-app@latest mi-portafolio-retro
-
-# (Seleccionar: TypeScript, Tailwind CSS, App Router)
-
-```
-
-### 2. Motor de Estilos Retro (Frontend)
-InstalaciÃ³n de las dependencias estÃ©ticas base y tipografÃ­as autoalojadas para evitar parpadeos de carga y mantener la ilusiÃ³n de 8-bits:
-```bash
-npm install nes.css @fontsource/press-start-2p
-
-```
-
-*(Nota: Tailwind CSS ya viene incluido con el comando de Next.js. El archivo `tailwind.config.ts` deberÃ¡ configurarse para inyectar los bordes de `box-shadow` duro y utilidades como `image-rendering: pixelated`).*
-
-### 3. Vercel AI SDK (Chatbot)
-
-Paquetes oficiales de Vercel para integrar flujos de texto en tiempo real (streaming) desde el LLM hacia la interfaz del portafolio:
+Para configurar el entorno de trabajo exacto, ejecuta los siguientes comandos en la raíz del proyecto:
 
 ```bash
-npm install ai @ai-sdk/react @ai-sdk/openai
-
+npm install
+npm run dev
 ```
 
-### 4. Capa de Base de Datos (ConexiÃ³n a Cloudflare D1)
+Abre [http://localhost:3000](http://localhost:3000) con tu navegador para ver el resultado.
 
-Herramientas para modelar la base de datos de manera declarativa y abstraer las consultas SQL:
+## 🐳 Desarrollo del Backend (Docker + Supabase Local)
 
-```bash
-npm install drizzle-orm
-npm install -D drizzle-kit
+Para garantizar un entorno de pruebas destructivo sin afectar los datos de producción, este proyecto utiliza el **Supabase CLI** junto con **Docker Desktop** para emular la base de datos (PostgreSQL), la autenticación y el almacenamiento de forma local:
 
-```
+### Prerrequisitos
+1. Tener [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado y ejecutándose en tu PC en Windows.
 
-## ðŸ¤– IntegraciÃ³n del Chatbot (Vercel AI SDK)
+### Arrancar la Base de Datos Local
+1. Inicia el servidor local de Supabase (una vez tengas Docker abierto):
+   ```bash
+   npx supabase start
+   ```
+2. Las credenciales generadas localmente ya están referenciadas en tu `.env.local` y servirán para conectar el frontend al backend local:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbG...
+   ```
+3. Accede a **Supabase Studio** localmente en [http://127.0.0.1:54323](http://127.0.0.1:54323) para gestionar tablas y datos visualmente sin tocar la nube central.
 
-El SDK de Vercel simplifica la creaciÃ³n de experiencias conversacionales sin tener que gestionar websockets o estados complejos manualmente. El flujo del chatbot se divide en dos archivos clave dentro de Next.js:
-
-**1. El Backend (Ruta de API - `app/api/chat/route.ts`):**
-Utiliza la funciÃ³n `streamText` del SDK para conectar con el modelo (ej. OpenAI `gpt-4o-mini`) y devolver una respuesta en flujo de datos continua al cliente.
-
-**2. El Frontend (Componente React - `app/components/RetroChatbot.tsx`):**
-Utiliza el hook de React `useChat` proporcionado por `@ai-sdk/react`. Este hook maneja automÃ¡ticamente el array de mensajes, el estado de carga y el envÃ­o del formulario.
-
-*Tip de DiseÃ±o Retro:* Puedes envolver la salida de los mensajes del hook `useChat` dentro de componentes contenedores de `NES.css` (como `<div className="nes-container with-title">`) para que el bot parezca un NPC de un clÃ¡sico juego de rol RPG.
-
-## ðŸš€ Variables de Entorno Requeridas (`.env.local`)
-
-Para que la arquitectura inter-nube y el chatbot funcionen de forma segura tras el despliegue en Vercel, se deben configurar los siguientes secretos en el panel de Vercel:
-
-* `OPENAI_API_KEY`: Llave para el proveedor del LLM del chatbot.
-* `CLOUDFLARE_ACCOUNT_ID`: ID de tu cuenta de Cloudflare.
-* `CLOUDFLARE_DATABASE_ID`: Identificador Ãºnico de tu volumen D1.
-* `CLOUDFLARE_API_TOKEN`: Token con permisos restringidos de lectura/escritura exclusiva para D1.
-
-```
-
-```
+## 🤖 Integración del Chatbot (Vercel AI SDK)
+El SDK de Vercel simplifica la creación de experiencias conversacionales sin tener que gestionar websockets o estados complejos manualmente. El flujo utilizará `streamText` desde el servidor en `app/api/chat/route.ts` hacia el hook `useChat` reactivo en el frontend.
