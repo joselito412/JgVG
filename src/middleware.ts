@@ -15,7 +15,7 @@ export async function middleware(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({
@@ -32,7 +32,7 @@ export async function middleware(request: NextRequest) {
   // IMPORTANTE: NO eliminar. refresh() evalúa el token JWT guardado.
   // Sin esto, una sesión falsificada podría mantenerse.
   const {
-    data: { user },
+    data: { user: _user },
   } = await supabase.auth.getUser();
 
   // Ejemplo de protección de rutas:
