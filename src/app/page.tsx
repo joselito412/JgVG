@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { Phone, Linkedin, Mail, Github, X, Minus, Square, ChevronRight, Sword, Shield, Zap, BookOpen, Heart, Star, Instagram, BookMarked, ExternalLink } from "lucide-react"
+import { Linkedin, Mail, Github, X, Minus, Square, ChevronRight, Sword, Shield, Zap, BookOpen, Heart, Star, Instagram, BookMarked, ExternalLink, MessageCircle, FileCode } from "lucide-react"
 import Scene3D from "@/components/three/Scene3D"
 
 // ===========================================
@@ -263,11 +263,12 @@ function CharacterStatsPanel() {
   return (
     <div className="rpg-panel p-6 md:p-8 flex flex-col items-center text-center">
       {/* Avatar Central */}
-      <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#60b080] mb-4 shadow-[0_0_15px_rgba(96,176,128,0.5)]">
-        {/* Usamos un color solido/gradiente mientras tanto como placeholder del rostro */}
-        <div className="w-full h-full bg-gradient-to-br from-[#2a4a3a] to-[#1a2a2a] flex items-center justify-center">
-          <span className="font-[family-name:var(--font-pixel)] text-3xl md:text-5xl text-[#60b080]">JV</span>
-        </div>
+      <div className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-4 md:border-[6px] border-[#60b080] mb-6 shadow-[0_0_25px_rgba(96,176,128,0.6)] bg-[#6CBA89] relative transition-transform hover:scale-105 duration-300">
+        <img 
+          src="/profile.png" 
+          alt="Jose Guillermo Vasquez" 
+          className="w-full h-full object-cover object-center"
+        />
       </div>
       
       {/* Nombres y Titulos */}
@@ -291,10 +292,11 @@ function CharacterStatsPanel() {
           <span className="font-[family-name:var(--font-pixel)] text-sm md:text-base font-semibold opacity-90 text-center">Explora el catálogo de soluciones legales y tecnológicas</span>
         </a>
         
-        <a href="https://api.whatsapp.com/message/F5WCMM3W67FLH1?autoload=1&app_absent=0" target="_blank" rel="noopener noreferrer" className="group win95-btn bg-[#25D366] hover:bg-[#1DA851] text-white p-4 flex flex-col items-center justify-center gap-3 rounded-xl border-b-4 border-r-4 border-[#128C7E] transition-transform hover:-translate-y-1">
-          <span className="text-4xl md:text-5xl group-hover:scale-110 transition-transform">💬</span>
-          <span className="font-[family-name:var(--font-pixel)] text-xl md:text-2xl font-bold shadow-black drop-shadow-sm">Hablemos por WhatsApp</span>
-          <span className="font-[family-name:var(--font-pixel)] text-sm md:text-base font-semibold text-green-100 text-center">Respuesta rápida garantizada</span>
+        <a href="https://api.whatsapp.com/message/F5WCMM3W67FLH1?autoload=1&app_absent=0" target="_blank" rel="noopener noreferrer" className="group win95-btn bg-white hover:bg-[#f0f0f0] p-4 flex flex-col items-center justify-center gap-3 rounded-xl border-b-4 border-r-4 border-gray-400 transition-transform hover:-translate-y-1 text-black">
+          <svg className="w-12 h-12 md:w-16 md:h-16 group-hover:scale-110 transition-transform drop-shadow-sm" viewBox="0 0 24 24" fill="#25D366">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+          </svg>
+          <span className="font-[family-name:var(--font-pixel)] text-xl md:text-2xl font-bold group-hover:text-[#25D366] transition-colors">Hablemos por WhatsApp</span>
         </a>
       </div>
       
@@ -405,14 +407,14 @@ function FloatingChatBubble({ onSendMessage }: { onSendMessage: (message: string
   }
 
   return (
-    <div className="fixed bottom-20 right-4 z-50 flex flex-col items-end">
+    <div className="fixed bottom-16 md:bottom-[4.5rem] lg:bottom-20 right-4 md:right-6 z-[60] flex flex-col items-end">
       {/* Botón flotante (Avatar Icono) */}
       {!isOpen && (
         <button 
           onClick={() => setIsOpen(true)}
-          className="group relative bg-[#1a1a2e] border-2 border-[#f5a623] w-14 h-14 md:w-16 md:h-16 rounded-full flex flex-col items-center justify-center shadow-[0_0_15px_rgba(245,166,35,0.4)] hover:scale-110 transition-transform cursor-pointer animate-in zoom-in"
+          className="group relative bg-[#1a1a2e] border-2 border-[#f5a623] w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full flex flex-col items-center justify-center shadow-[0_0_15px_rgba(245,166,35,0.4)] hover:scale-110 transition-transform cursor-pointer animate-in zoom-in"
         >
-          <span className="text-2xl md:text-3xl drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">🤖</span>
+          <span className="text-xl md:text-2xl lg:text-3xl drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">🤖</span>
           <span className="w-3 h-3 bg-[#88ff88] rounded-full absolute bottom-0 right-0 border-2 border-[#1a1a2e] animate-pulse"></span>
           
           {/* Tooltip pequeño para invitar al click */}
@@ -527,7 +529,7 @@ const SOCIAL_LINKS = [
   { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/in/joseguillermovasquez", color: "#0077b5" },
   { name: "GitHub", icon: Github, href: "https://github.com/joselito412", color: "#ffffff" },
   { name: "Instagram", icon: Instagram, href: "https://instagram.com/avocado.center", color: "#e4405f" },
-  { name: "Blog", icon: BookMarked, href: "https://avocado.center/", color: "#f5a623" }
+  { name: "WhatsApp", icon: MessageCircle, href: "https://wa.me/message/M72SDBBNYNDDJ1", color: "#25D366" }
 ]
 
 // Removed old RPGFooter
@@ -789,8 +791,18 @@ function SpecialAbilitiesPanel({ type }: { type: 'legal' | 'tech' }) {
 }
 
 // Taskbar (Win95 Footer Modificado)
-function Taskbar() {
+function Taskbar({ onMenuClick }: { onMenuClick?: (section: string) => void }) {
   const [time, setTime] = useState("")
+  const [isStartOpen, setIsStartOpen] = useState(false)
+
+  // Cerrar menú con ESC
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsStartOpen(false)
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   useEffect(() => {
     const updateTime = () => {
@@ -804,19 +816,105 @@ function Taskbar() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 h-auto bg-[#c0c0c0] border-t-2 border-[#dfdfdf] flex flex-col z-[50] win95-raised p-1">
-      
-      {/* Renglón Principal (Start Button e Info Central) */}
-      <div className="flex items-center justify-between px-1 md:px-2 py-1 h-10 w-full mb-1">
-        <button className="win95-btn flex items-center gap-2 px-2 md:px-4 py-1 font-bold text-sm h-full group">
-          <span className="text-xl group-active:scale-95">🥑</span>
-          <span className="font-[family-name:var(--font-pixel)] hidden sm:inline text-black">Start</span>
-        </button>
-        
-        {/* Separator */}
-        <div className="h-8 w-0.5 bg-gray-400 border-r border-white mx-1"></div>
+      {/* === MENÚ DE INICIO WIN95 === */}
+      {isStartOpen && (
+        <div className="absolute bottom-full left-0 mb-1 w-64 bg-[#c0c0c0] win95-raised flex flex-row z-[100] animate-in slide-in-from-bottom-2 shadow-2xl">
+          {/* Banda lateral azul */}
+          <div className="w-8 bg-gradient-to-b from-[#000080] to-[#1084d0] flex flex-col justify-end pb-2 overflow-hidden">
+            <span className="text-[#c0c0c0] font-bold text-xl -rotate-90 transform origin-bottom-left whitespace-nowrap mb-2 ml-1 tracking-widest font-sans">
+              Proyectos <span className="text-white">95</span>
+            </span>
+          </div>
+          
+          {/* Opciones del menú (Estructura de Índice Win95) */}
+          <div className="flex-1 p-1 flex flex-col pt-2 text-black">
+            
+            {/* Categoría: Programas */}
+            <div className="group relative">
+              <button className="flex items-center justify-between w-full px-2 py-2 hover:bg-[#000080] hover:text-white transition-colors cursor-default">
+                <div className="flex items-center gap-3">
+                  <span className="text-xl -mt-1">📁</span>
+                  <span className="font-[family-name:var(--font-pixel)] text-lg underline">Portafolio</span>
+                </div>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              
+              {/* Sub-índice Programas */}
+              <div className="flex flex-col w-full bg-[#dfdfdf] border-l-2 border-[#000080]/20 hidden group-hover:flex">
+                <button 
+                  onClick={() => { setIsStartOpen(false); onMenuClick?.('projects'); }}
+                  className="flex items-center gap-3 w-full px-4 py-2 hover:bg-[#000080] hover:text-white transition-colors"
+                >
+                  <FileCode className="w-5 h-5" />
+                  <span className="font-[family-name:var(--font-pixel)] text-base">Proyectos Destacados</span>
+                </button>
+                <a 
+                  onClick={() => setIsStartOpen(false)}
+                  href="/servicios"
+                  className="flex items-center gap-3 w-full px-4 py-2 hover:bg-[#000080] hover:text-white transition-colors text-left"
+                >
+                  <BookOpen className="w-5 h-5" />
+                  <span className="font-[family-name:var(--font-pixel)] text-base">Catálogo de Servicios</span>
+                </a>
+              </div>
+            </div>
 
-        {/* Social Links as "Open Apps" */}
-        <div className="flex items-center gap-1 md:gap-2">
+            <div className="h-[1px] w-[90%] mx-auto bg-gray-400 border-b border-white my-1"></div>
+            
+            {/* Categoría: Configuración / Stats */}
+            <button 
+               onClick={() => { setIsStartOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              className="flex items-center gap-3 w-full px-2 py-2.5 hover:bg-[#000080] hover:text-white transition-colors text-left"
+            >
+              <Zap className="w-5 h-5 text-[#f5a623]" />
+              <span className="font-[family-name:var(--font-pixel)] text-lg">Habilidades y Perfil...</span>
+            </button>
+            
+            {/* Categoría: Red */}
+            <button 
+              onClick={() => { setIsStartOpen(false); onMenuClick?.('network'); }}
+              className="flex items-center gap-3 w-full px-2 py-2.5 hover:bg-[#000080] hover:text-white transition-colors text-left"
+            >
+              <MessageCircle className="w-5 h-5 text-[#25D366]" />
+              <span className="font-[family-name:var(--font-pixel)] text-lg">Conexiones a Red...</span>
+            </button>
+
+            <div className="h-0.5 w-full bg-gray-400 border-b border-white my-1 mt-auto"></div>
+
+            {/* Sistema */}
+            <button 
+              onClick={() => setIsStartOpen(false)}
+              className="flex items-center gap-3 w-full px-2 py-2 hover:bg-[#000080] hover:text-white transition-colors text-left"
+            >
+              <span className="text-2xl ml-0.5">⚠️</span>
+              <span className="font-[family-name:var(--font-pixel)] text-lg">Apagar equipo...</span>
+            </button>
+          </div>
+        </div>
+      )}
+      
+      {/* Renglón 1: Principal (Start, Reloj, Redes Sociales) */}
+      <div className="flex items-center justify-between px-1 md:px-2 py-1 h-10 w-full mb-1 relative">
+        <div className="flex items-center">
+          <button 
+            onClick={() => setIsStartOpen(!isStartOpen)}
+            className={`win95-btn flex items-center gap-2 px-2 md:px-4 py-1 font-bold text-sm h-full group ${isStartOpen ? 'win95-sunken bg-[#dfdfdf]' : ''}`}
+          >
+            <span className="text-xl group-active:scale-95">🥑</span>
+            <span className="font-[family-name:var(--font-pixel)] hidden sm:inline text-black">Start</span>
+          </button>
+          
+          {/* Timestamp movido a la izquierda */}
+          <div className="win95-sunken px-2 md:px-3 py-1 bg-white ml-2 md:ml-3">
+            <span className="font-[family-name:var(--font-pixel)] text-xs text-black whitespace-nowrap">{time}</span>
+          </div>
+
+          {/* Separator */}
+          <div className="h-8 w-0.5 bg-gray-400 border-r border-white mx-2 md:mx-3"></div>
+        </div>
+
+        {/* Social Links - PERFECTAMENTE CENTRADOS */}
+        <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-1 md:gap-2">
           {SOCIAL_LINKS.map(link => {
             const Icon = link.icon;
             return (
@@ -825,22 +923,36 @@ function Taskbar() {
                 href={link.href} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="win95-btn px-2 py-1 flex items-center gap-1.5 hover:bg-gray-300"
+                className="win95-sunken px-2 md:px-3 py-1 flex items-center gap-2 bg-white hover:bg-[#e0e0e0] active:scale-95 transition-all outline-none"
                 title={link.name}
               >
-                <Icon className="w-4 h-4 md:w-5 md:h-5" style={{ color: link.color !== '#ffffff' ? link.color : '#000000' }} />
-                <span className="font-[family-name:var(--font-pixel)] text-xs hidden md:inline">{link.name}</span>
+                <Icon className="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:scale-110" style={{ color: link.color !== '#ffffff' ? link.color : '#000000' }} />
+                <span className="font-[family-name:var(--font-pixel)] text-xs text-black hidden lg:inline">{link.name}</span>
               </a>
             )
           })}
         </div>
+        
+        {/* Espacio invisible para mantener Flex justificado y dejar aire al Chatbot */}
+        <div className="ml-auto w-10 md:w-20"></div>
       </div>
       
-      <div className="flex items-center gap-2 ml-auto">
-        <div className="win95-sunken px-2 md:px-3 py-1 bg-white">
-          <span className="font-[family-name:var(--font-pixel)] text-xs text-black">{time}</span>
+      {/* Renglón 2: Footer Legal y Copyright */}
+      <div className="flex flex-col md:flex-row items-center justify-between px-2 pt-1 border-t border-gray-400 mt-1 mb-0.5">
+        <div className="flex items-center gap-3 text-black font-[family-name:var(--font-pixel)] text-[10px] md:text-xs">
+          <a href="/aviso-legal" className="hover:underline hover:text-[#000080]">Aviso Legal</a>
+          <span>|</span>
+          <a href="/privacidad" className="hover:underline hover:text-[#000080]">Política de Privacidad</a>
+          <span>|</span>
+          <a href="/cookies" className="hover:underline hover:text-[#000080]">Uso de Cookies</a>
+        </div>
+        
+        <div className="text-gray-600 font-[family-name:var(--font-pixel)] text-[10px] md:text-xs mt-1 md:mt-0 text-center md:text-right">
+          © 2026. Protegido por derechos de autor. <br className="md:hidden" />
+          Desarrollado por <strong>Jose Guillermo Vasquez Guzman</strong>.
         </div>
       </div>
+
     </div>
   )
 }
