@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { MessageSquare, Phone, Linkedin, Mail, Github, X, Minus, Square, ChevronRight, Sword, Shield, Zap, BookOpen, Heart, Star, Instagram, BookMarked, ExternalLink } from "lucide-react"
+import { Phone, Linkedin, Mail, Github, X, Minus, Square, ChevronRight, Sword, Shield, Zap, BookOpen, Heart, Star, Instagram, BookMarked, ExternalLink } from "lucide-react"
+import Scene3D from "@/components/three/Scene3D"
 
 // ===========================================
 // SKILL DATA - Tu perfil de habilidades
@@ -108,19 +109,19 @@ function RPGStatBar({
   size?: "small" | "normal"
 }) {
   const percentage = (current / max) * 100
-  const height = size === "small" ? "h-2" : "h-3"
+  const height = size === "small" ? "h-3" : "h-4"
   
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-base md:text-lg w-10">{label}</span>
-      <div className={`flex-1 rpg-stat-bar ${height}`}>
+    <div className="flex items-center gap-3">
+      <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-lg md:text-xl w-12 drop-shadow-sm">{label}</span>
+      <div className={`flex-1 rpg-stat-bar ${height} shadow-inner`}>
         <div 
           className={`rpg-stat-bar-fill ${color}`}
           style={{ width: `${percentage}%` }}
         />
       </div>
       {showNumbers && (
-        <span className="text-[#88ff88] font-[family-name:var(--font-pixel)] text-sm md:text-base w-20 text-right">
+        <span className="text-[#88ff88] font-[family-name:var(--font-pixel)] text-base md:text-lg w-24 text-right drop-shadow-[1px_1px_1px_rgba(0,0,0,0.8)]">
           {current}/{max}
         </span>
       )}
@@ -143,19 +144,19 @@ function SkillBar({
   isSelected?: boolean
 }) {
   return (
-    <div className={`rpg-menu-item px-3 py-2 ${isSelected ? 'selected' : ''}`}>
-      <div className="flex items-center gap-2 mb-1">
+    <div className={`rpg-menu-item px-3 py-3 ${isSelected ? 'selected' : ''}`}>
+      <div className="flex items-center gap-2 mb-2">
         {isSelected && (
-          <ChevronRight className="w-3 h-3 text-[#f5a623] rpg-arrow" />
+          <ChevronRight className="w-4 h-4 text-[#f5a623] rpg-arrow drop-shadow-md" />
         )}
-        <span className={`text-white font-[family-name:var(--font-pixel)] text-sm ${isSelected ? 'text-[#f5a623]' : ''}`}>
+        <span className={`text-white font-[family-name:var(--font-pixel)] text-base md:text-lg tracking-wide ${isSelected ? 'text-[#f5a623]' : ''}`}>
           {name}
         </span>
-        <span className="text-[#88ff88] font-[family-name:var(--font-pixel)] text-xs ml-auto">
+        <span className="text-[#a8ffa8] font-[family-name:var(--font-pixel)] text-sm md:text-base ml-auto">
           Lv.{level}
         </span>
       </div>
-      <div className="rpg-stat-bar h-2 ml-5">
+      <div className="rpg-stat-bar h-3 ml-6 shadow-sm">
         <div 
           className={`rpg-stat-bar-fill ${colorClass}`}
           style={{ width: `${(level / maxLevel) * 100}%` }}
@@ -172,49 +173,37 @@ function DualSkillsPanel() {
   
   return (
     <div className="rpg-panel p-0 overflow-hidden">
-      {/* Header */}
-      <div className="flex items-center justify-center gap-3 px-4 py-2 bg-[#2a2a4a] border-b-2 border-[#4a4a6a]">
-        <Sword className="w-4 h-4 text-[#f5a623]" />
-        <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-lg">
-          SKILL TREE
-        </span>
-        <Shield className="w-4 h-4 text-[#f5a623]" />
-      </div>
+{/* Header Removido por Minimalismo del Layout Superior */}
       
       {/* Two Column Skills */}
       <div className="grid grid-cols-1 md:grid-cols-2">
         {/* Tech Skills Column */}
         <div className="border-r border-[#4a4a6a]">
-          <div className="flex items-center gap-2 px-3 py-2 bg-[#1a1a2e] border-b border-[#4a4a6a]">
-            <Zap className="w-4 h-4 text-[#00d9ff]" />
-            <span className="text-[#00d9ff] font-[family-name:var(--font-pixel)] text-sm">
+          <div className="flex items-center gap-2 px-3 lg:px-5 py-3 bg-[#1a1a2e] border-b border-[#4a4a6a]">
+            <Zap className="w-5 h-5 text-[#00d9ff]" />
+            <span className="text-[#00d9ff] font-[family-name:var(--font-pixel)] text-base md:text-lg tracking-wide">
               TECH SKILLS
             </span>
           </div>
-          <div className="max-h-[280px] overflow-y-auto">
+          <div className="max-h-[340px] overflow-y-auto">
             {DEVELOPER_SKILLS.map((skill, index) => (
               <div
                 key={skill.name}
-                className={`rpg-menu-item px-3 py-2 ${selectedDevIndex === index ? 'selected' : ''}`}
+                className={`rpg-menu-item px-3 py-3 ${selectedDevIndex === index ? 'selected bg-[#00d9ff]/10' : ''}`}
                 onMouseEnter={() => setSelectedDevIndex(index)}
               >
                 <div className="flex items-center gap-2 mb-1">
                   {selectedDevIndex === index && (
-                    <ChevronRight className="w-3 h-3 text-[#00d9ff] rpg-arrow" />
+                    <ChevronRight className="w-4 h-4 text-[#00d9ff] rpg-arrow" />
                   )}
-                  <span className={`font-[family-name:var(--font-pixel)] text-xs ${selectedDevIndex === index ? 'text-[#00d9ff]' : 'text-white'}`}>
+                  <span className={`font-[family-name:var(--font-pixel)] text-sm md:text-base ${selectedDevIndex === index ? 'text-[#00d9ff] font-bold' : 'text-[#f0f0f0]'}`}>
                     {skill.name}
                   </span>
-                  <span className="text-[#88ff88] font-[family-name:var(--font-pixel)] text-xs ml-auto">
+                  <span className="text-[#a8ffa8] font-[family-name:var(--font-pixel)] text-sm ml-auto">
                     Lv.{skill.level}
                   </span>
                 </div>
-                <div className="rpg-stat-bar h-2 ml-0">
-                  <div 
-                    className="rpg-stat-bar-fill skill-tech"
-                    style={{ width: `${(skill.level / skill.maxLevel) * 100}%` }}
-                  />
-                </div>
+{/* Barra Removida */}
               </div>
             ))}
           </div>
@@ -222,48 +211,38 @@ function DualSkillsPanel() {
         
         {/* Legal Skills Column */}
         <div>
-          <div className="flex items-center gap-2 px-3 py-2 bg-[#1a1a2e] border-b border-[#4a4a6a]">
-            <BookOpen className="w-4 h-4 text-[#f5a623]" />
-            <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-sm">
+          <div className="flex items-center gap-2 px-3 lg:px-5 py-3 bg-[#1a1a2e] border-b border-[#4a4a6a]">
+            <BookOpen className="w-5 h-5 text-[#f5a623]" />
+            <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-base md:text-lg tracking-wide">
               LEGAL SKILLS
             </span>
           </div>
-          <div className="max-h-[280px] overflow-y-auto">
+          <div className="max-h-[340px] overflow-y-auto">
             {LAWYER_SKILLS.map((skill, index) => (
               <div
                 key={skill.name}
-                className={`rpg-menu-item px-3 py-2 ${selectedLegalIndex === index ? 'selected' : ''}`}
+                className={`rpg-menu-item px-3 py-3 ${selectedLegalIndex === index ? 'selected bg-[#f5a623]/10' : ''}`}
                 onMouseEnter={() => setSelectedLegalIndex(index)}
               >
                 <div className="flex items-center gap-2 mb-1">
                   {selectedLegalIndex === index && (
-                    <ChevronRight className="w-3 h-3 text-[#f5a623] rpg-arrow" />
+                    <ChevronRight className="w-4 h-4 text-[#f5a623] rpg-arrow" />
                   )}
-                  <span className={`font-[family-name:var(--font-pixel)] text-xs ${selectedLegalIndex === index ? 'text-[#f5a623]' : 'text-white'}`}>
+                  <span className={`font-[family-name:var(--font-pixel)] text-sm md:text-base ${selectedLegalIndex === index ? 'text-[#f5a623] font-bold' : 'text-[#f0f0f0]'}`}>
                     {skill.name}
                   </span>
-                  <span className="text-[#88ff88] font-[family-name:var(--font-pixel)] text-xs ml-auto">
+                  <span className="text-[#a8ffa8] font-[family-name:var(--font-pixel)] text-sm ml-auto">
                     Lv.{skill.level}
                   </span>
                 </div>
-                <div className="rpg-stat-bar h-2 ml-0">
-                  <div 
-                    className={`rpg-stat-bar-fill ${skill.icon}`}
-                    style={{ width: `${(skill.level / skill.maxLevel) * 100}%` }}
-                  />
-                </div>
+{/* Barra Removida */}
               </div>
             ))}
           </div>
         </div>
       </div>
       
-      {/* Footer */}
-      <div className="border-t-2 border-[#4a4a6a] px-3 py-2 bg-[#0f0f1f]">
-        <p className="text-[#808080] font-[family-name:var(--font-pixel)] text-xs text-center">
-          [HOVER] Ver nivel de habilidad
-        </p>
-      </div>
+      {/* Footer Removido */}
     </div>
   )
 }
@@ -273,19 +252,8 @@ export function RPGStatsPanel() {
   return (
     <div className="space-y-4">
       <RPGStatBar label="HP" current={999} max={999} color="skill-strength" showNumbers size="normal" />
-      <p className="font-[family-name:var(--font-pixel)] text-xs md:text-sm text-[#c0c0c0] pl-12 -mt-3 mb-2">
-        Legal-Tech: Innovación, AI Governance
-      </p>
-      
       <RPGStatBar label="MP" current={850} max={999} color="skill-tech" showNumbers size="normal" />
-      <p className="font-[family-name:var(--font-pixel)] text-xs md:text-sm text-[#c0c0c0] pl-12 -mt-3 mb-2">
-        Dev: React, Python, Supabase, LLMs
-      </p>
-      
-      <RPGStatBar label="EXP" current={75} max={100} color="skill-legal" size="small" />
-      <p className="font-[family-name:var(--font-pixel)] text-xs text-[#808080] pl-12 -mt-3">
-        Siguiente Nivel: Escalar AVOCADO.AI
-      </p>
+      <RPGStatBar label="EXP" current={75} max={100} color="skill-legal" showNumbers size="small" />
     </div>
   )
 }
@@ -311,7 +279,7 @@ function CharacterStatsPanel() {
         Diseño soluciones legales con <span className="bg-[#f5f5dc] text-black px-3 py-1 rounded inline-block mt-2 md:mt-0 font-bold shadow-lg">Inteligencia Artificial</span>
       </h2>
       
-      <p className="text-[#c0c0c0] font-[family-name:var(--font-pixel)] text-sm md:text-lg mb-8 max-w-2xl">
+      <p className="text-[#dfdfdf] font-[family-name:var(--font-pixel)] text-base md:text-xl mb-8 max-w-2xl drop-shadow-[1px_1px_1px_rgba(0,0,0,0.8)]">
         Ingeniero Legal • Abogado de la Universidad de los Andes | Consultor en PI, datos, cumplimiento y Legal-Tech
       </p>
       
@@ -319,44 +287,47 @@ function CharacterStatsPanel() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl mx-auto mb-10">
         <a href="/servicios" className="group win95-btn bg-[#f5d060] hover:bg-[#e0b040] text-black p-4 flex flex-col items-center justify-center gap-3 rounded-xl border-b-4 border-r-4 border-[#b09040] transition-transform hover:-translate-y-1">
           <span className="text-4xl md:text-5xl group-hover:scale-110 transition-transform">📘</span>
-          <span className="font-[family-name:var(--font-pixel)] text-lg md:text-xl font-bold">Consulta mis servicios</span>
-          <span className="font-[family-name:var(--font-pixel)] text-xs md:text-sm opacity-80 text-center">Explora el catálogo de soluciones legales y tecnológicas</span>
+          <span className="font-[family-name:var(--font-pixel)] text-xl md:text-2xl font-bold">Consulta mis servicios</span>
+          <span className="font-[family-name:var(--font-pixel)] text-sm md:text-base font-semibold opacity-90 text-center">Explora el catálogo de soluciones legales y tecnológicas</span>
         </a>
         
         <a href="https://api.whatsapp.com/message/F5WCMM3W67FLH1?autoload=1&app_absent=0" target="_blank" rel="noopener noreferrer" className="group win95-btn bg-[#25D366] hover:bg-[#1DA851] text-white p-4 flex flex-col items-center justify-center gap-3 rounded-xl border-b-4 border-r-4 border-[#128C7E] transition-transform hover:-translate-y-1">
           <span className="text-4xl md:text-5xl group-hover:scale-110 transition-transform">💬</span>
-          <span className="font-[family-name:var(--font-pixel)] text-lg md:text-xl font-bold shadow-black drop-shadow-sm">Hablemos por WhatsApp</span>
-          <span className="font-[family-name:var(--font-pixel)] text-xs md:text-sm font-medium text-green-100 text-center">Respuesta rápida garantizada</span>
+          <span className="font-[family-name:var(--font-pixel)] text-xl md:text-2xl font-bold shadow-black drop-shadow-sm">Hablemos por WhatsApp</span>
+          <span className="font-[family-name:var(--font-pixel)] text-sm md:text-base font-semibold text-green-100 text-center">Respuesta rápida garantizada</span>
         </a>
       </div>
       
-      {/* Misión y Visión  */}
-      <div className="bg-[#f5f5dc] text-[#1a1a1a] p-8 md:p-12 w-[calc(100%+3rem)] md:w-[calc(100%+4rem)] -mx-6 md:-mx-8 -mb-6 md:-mb-8 mt-8 border-t-4 border-[#4a4a6a] shadow-inner font-[family-name:var(--font-pixel)]">
-        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+    </div>
+  )
+}
+
+// Sub-componente extraído de Misión y Visión convertido a Cuadro de Diálogo RPG compacto
+export function MissionVisionPanel() {
+  return (
+    <div className="max-w-3xl mx-auto">
+      <div className="rpg-dialog p-4 md:p-6 font-[family-name:var(--font-pixel)] shadow-2xl transition-all hover:shadow-[0_0_15px_rgba(255,203,5,0.3)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           
           {/* Misión */}
-          <div className="flex flex-col items-center text-center group">
-            <div className="w-14 h-14 bg-[#1a1a1a] rounded-full flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform">
-              <Sword className="w-7 h-7 text-[#f5f5dc]" />
+          <div className="flex flex-col text-left">
+            <div className="flex items-center gap-3 mb-3 border-b border-[#f5a623]/30 pb-2">
+              <Sword className="w-5 h-5 text-[#f5a623]" />
+              <h3 className="text-lg md:text-xl font-bold text-[#f5a623] tracking-wide">Misión</h3>
             </div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-4 border-b-4 border-[#1a1a1a] pb-2 px-8 inline-block">
-              Misión
-            </h3>
-            <p className="text-lg md:text-xl leading-relaxed font-medium">
-              Combino derecho, tecnología e innovación para diseñar <span className="bg-[#f5a623] text-black px-1">soluciones legales creativas</span> impulsadas por inteligencia artificial y legal design.
+            <p className="text-sm md:text-[0.95rem] leading-relaxed text-[#dfdfdf]">
+              Combino derecho, tecnología e innovación para diseñar <span className="text-[#f5a623] font-bold">soluciones legales creativas</span> impulsadas por inteligencia artificial y legal design.
             </p>
           </div>
 
           {/* Visión */}
-          <div className="flex flex-col items-center text-center group">
-             <div className="w-14 h-14 bg-[#1a1a1a] rounded-full flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform">
-              <Zap className="w-7 h-7 text-[#f5f5dc]" />
+          <div className="flex flex-col text-left">
+            <div className="flex items-center gap-3 mb-3 border-b border-[#00d9ff]/30 pb-2">
+              <Zap className="w-5 h-5 text-[#00d9ff]" />
+              <h3 className="text-lg md:text-xl font-bold text-[#00d9ff] tracking-wide">Visión</h3>
             </div>
-            <h3 className="text-2xl md:text-3xl font-bold mb-4 border-b-4 border-[#1a1a1a] pb-2 px-8 inline-block">
-              Visión
-            </h3>
-            <p className="text-lg md:text-xl leading-relaxed font-medium">
-              Me apasiona aplicar nuevas tecnologías al ejercicio del derecho, <span className="bg-[#00d9ff] text-black px-1">optimizando servicios legales</span> y conectando a las personas con la justicia de forma más eficiente.
+            <p className="text-sm md:text-[0.95rem] leading-relaxed text-[#dfdfdf]">
+              Me apasiona aplicar nuevas tecnologías al derecho, <span className="text-[#00d9ff] font-bold">optimizando servicios legales</span> y conectando a las personas con la justicia de forma eficiente.
             </p>
           </div>
 
@@ -408,13 +379,13 @@ function FloatingChatBubble({ onSendMessage }: { onSendMessage: (message: string
 
       return () => clearTimeout(timeout)
     } else {
-      setIsTyping(false)
+      setTimeout(() => setIsTyping(false), 0)
     }
   }, [messageIndex, currentMessage, isTyping, isOpen])
 
   useEffect(() => {
     if (messages.length === 0 && isOpen && displayedText === "") {
-      typeText(initialMessage)
+      setTimeout(() => typeText(initialMessage), 0)
     }
   }, [typeText, messages.length, isOpen, displayedText])
 
@@ -446,7 +417,7 @@ function FloatingChatBubble({ onSendMessage }: { onSendMessage: (message: string
           
           {/* Tooltip pequeño para invitar al click */}
           {hasGreeted && (
-             <div className="absolute -top-10 right-0 bg-[#f5f5dc] text-black font-[family-name:var(--font-pixel)] text-[10px] md:text-xs px-2 py-1 border-2 border-black whitespace-nowrap shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
+             <div className="absolute -top-10 right-0 bg-[#f5f5dc] text-black font-[family-name:var(--font-pixel)] text-xs md:text-sm font-bold px-3 py-1.5 border-2 border-black whitespace-nowrap shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
                Hablar con ChunGPT
              </div>
           )}
@@ -455,14 +426,14 @@ function FloatingChatBubble({ onSendMessage }: { onSendMessage: (message: string
 
       {/* Ventana de chat desplegada */}
       {isOpen && (
-        <div className="rpg-panel overflow-hidden w-[95vw] sm:w-[400px] shadow-[0_10px_30px_rgba(0,0,0,0.8)] animate-in slide-in-from-bottom-8 duration-300 mb-2">
+        <div className="rpg-panel overflow-hidden w-[95vw] sm:w-[450px] shadow-[0_10px_30px_rgba(0,0,0,0.8)] animate-in slide-in-from-bottom-8 duration-300 mb-2">
           {/* Header */}
           <div className="flex items-center justify-between px-3 md:px-4 py-3 bg-[#2a2a4a] border-b-2 border-[#4a4a6a]">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-[#006060] to-[#003030] rounded-full flex items-center justify-center border-2 border-[#f5a623]">
-                <span className="font-[family-name:var(--font-pixel)] text-xs text-[#f5a623]">CGPT</span>
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-[#006060] to-[#003030] rounded-full flex items-center justify-center border-2 border-[#f5a623]">
+                <span className="font-[family-name:var(--font-pixel)] text-xs md:text-sm font-bold text-[#f5a623]">CGPT</span>
               </div>
-              <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-sm md:text-base tracking-widest text-shadow">
+              <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-base md:text-lg font-bold tracking-widest text-shadow">
                 CHUNGPT.exe
               </span>
             </div>
@@ -481,8 +452,8 @@ function FloatingChatBubble({ onSendMessage }: { onSendMessage: (message: string
               <div className="w-8 h-8 md:w-10 md:h-10 bg-[#1a1a2e] rounded-full flex items-center justify-center shrink-0 border-2 border-[#4a4a6a]">
                 <Sword className="w-4 h-4 md:w-5 md:h-5 text-[#f5a623]" />
               </div>
-              <div className="bg-[#1a1a2e] border-2 border-[#4a4a6a] px-4 py-3 max-w-[85%] rounded-md">
-                <p className="text-white font-[family-name:var(--font-pixel)] text-sm md:text-base leading-relaxed">
+              <div className="bg-[#1a1a2e] border-2 border-[#4a4a6a] px-4 py-3 max-w-[85%] rounded-md shadow-md">
+                <p className="text-[#e0e0e0] font-[family-name:var(--font-pixel)] text-base md:text-lg leading-relaxed">
                   {messages.length === 0 ? (
                     <>
                       {displayedText}
@@ -504,18 +475,18 @@ function FloatingChatBubble({ onSendMessage }: { onSendMessage: (message: string
                     : 'bg-[#1a1a2e] border-[#4a4a6a]'
                 }`}>
                   {msg.isUser ? (
-                    <span className="font-[family-name:var(--font-pixel)] text-xs font-bold text-[#00d9ff]">TU</span>
+                    <span className="font-[family-name:var(--font-pixel)] text-xs md:text-sm font-bold text-[#00d9ff]">TU</span>
                   ) : (
                     <Sword className="w-4 h-4 md:w-5 md:h-5 text-[#f5a623]" />
                   )}
                 </div>
-                <div className={`px-4 py-3 max-w-[85%] rounded-md ${
+                <div className={`px-4 py-3 max-w-[85%] rounded-md shadow-md ${
                   msg.isUser 
                     ? 'bg-[#003030] border-2 border-[#00d9ff]' 
                     : 'bg-[#1a1a2e] border-2 border-[#4a4a6a]'
                 }`}>
-                  <p className={`font-[family-name:var(--font-pixel)] text-sm md:text-base leading-relaxed break-words ${
-                    msg.isUser ? 'text-[#00d9ff]' : 'text-white'
+                  <p className={`font-[family-name:var(--font-pixel)] text-base md:text-lg leading-relaxed break-words ${
+                    msg.isUser ? 'text-[#00d9ff] font-bold' : 'text-[#e0e0e0]'
                   }`}>
                     {msg.text}
                   </p>
@@ -817,14 +788,14 @@ function SpecialAbilitiesPanel({ type }: { type: 'legal' | 'tech' }) {
   )
 }
 
-// Win95 Taskbar Rediseñada
+// Taskbar (Win95 Footer Modificado)
 function Taskbar() {
   const [time, setTime] = useState("")
 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date()
-      setTime(now.toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" }))
+      setTime(now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
     }
     updateTime()
     const interval = setInterval(updateTime, 1000)
@@ -832,12 +803,13 @@ function Taskbar() {
   }, [])
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-12 bg-[#c0c0c0] win95-raised flex items-center justify-between px-2 z-50">
-      <div className="flex items-center gap-2">
-        {/* Start Button */}
-        <button className="win95-btn px-2 md:px-3 py-1 flex items-center gap-2 font-[family-name:var(--font-pixel)] text-sm md:text-base font-bold">
-          <Heart className="w-4 h-4 text-red-500" />
-          <span className="hidden sm:inline">Inicio</span>
+    <div className="fixed bottom-0 left-0 right-0 h-auto bg-[#c0c0c0] border-t-2 border-[#dfdfdf] flex flex-col z-[50] win95-raised p-1">
+      
+      {/* Renglón Principal (Start Button e Info Central) */}
+      <div className="flex items-center justify-between px-1 md:px-2 py-1 h-10 w-full mb-1">
+        <button className="win95-btn flex items-center gap-2 px-2 md:px-4 py-1 font-bold text-sm h-full group">
+          <span className="text-xl group-active:scale-95">🥑</span>
+          <span className="font-[family-name:var(--font-pixel)] hidden sm:inline text-black">Start</span>
         </button>
         
         {/* Separator */}
@@ -893,7 +865,7 @@ function DesktopIcon({ icon, label, onClick }: { icon: string; label: string; on
       <span className="text-4xl md:text-5xl drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)] transition-transform group-hover:scale-110">
         {icon}
       </span>
-      <span className="font-[family-name:var(--font-pixel)] text-sm md:text-base text-white drop-shadow-[1px_1px_0_#000] group-hover:bg-[#000080] px-2 py-0.5 text-center leading-tight">
+      <span className="font-[family-name:var(--font-pixel)] text-base md:text-lg text-white drop-shadow-[1px_1px_0_#000] group-hover:bg-[#000080] px-2 py-0.5 text-center leading-tight">
         {label}
       </span>
     </button>
@@ -905,7 +877,7 @@ function DesktopIcon({ icon, label, onClick }: { icon: string; label: string; on
 // ===========================================
 
 export default function AvocadoCenter() {
-  const [activeWindow, setActiveWindow] = useState<'proyectos' | 'skills' | 'network' | 'ia' | null>(null)
+  const [activeWindow, setActiveWindow] = useState<'proyectos' | 'skills' | 'network' | 'ia' | null>('proyectos')
 
   const handleSendMessage = (message: string) => {
     console.log("Message sent:", message)
@@ -916,7 +888,17 @@ export default function AvocadoCenter() {
   }
 
   return (
-    <main className="min-h-screen bg-[#008080] pb-24 relative battle-grid overflow-x-hidden">
+    <main className="min-h-screen pb-24 relative overflow-clip">
+      
+      {/* Capa 1: Imagen de la Colina Windows Bliss (Fondo retro) */}
+      <div className="absolute inset-0 bg-[url('/bg-bliss.png')] bg-cover bg-fixed bg-center bg-no-repeat pointer-events-none z-0"></div>
+      
+      {/* Capa 2: Filtro de Sombra para preservar contraste del texto (Oscuridad Suave) */}
+      <div className="absolute inset-0 bg-[#0a0a14]/30 pointer-events-none z-0"></div>
+      
+      {/* Capa 3: Grilla de Batalla clásica (Transparente para mirar al cielo) */}
+      <div className="absolute inset-0 battle-grid !bg-transparent opacity-60 pointer-events-none z-0"></div>
+      
       <ScanlinesOverlay />
 
       {/* Main Content - Mobile First Container */}
@@ -924,17 +906,23 @@ export default function AvocadoCenter() {
         
         {/* Header - Battle Title */}
         <div className="text-center mb-8">
-          <h1 className="font-[family-name:var(--font-pixel)] text-4xl md:text-5xl text-[#f5a623] rpg-glow tracking-wider">
-            AVOCADO CENTER
-          </h1>
-          <p className="font-[family-name:var(--font-pixel)] text-sm md:text-base text-[#88ff88] mt-2">
+          <h1 className="font-[family-name:var(--font-pixel)] text-2xl md:text-4xl text-[#f5a623] rpg-glow tracking-wider">
             ~ Un héroe legal-tech aparece ~
-          </p>
+          </h1>
         </div>
 
         {/* Character Profile (FIRST) */}
         <div className="mb-10 w-full animate-in slide-in-from-bottom-4 duration-500">
           <CharacterStatsPanel />
+        </div>
+      </div> {/* <-- FIN DEL CONTENEDOR ESTRECHO (Header & Perfil) */}
+
+      {/* CONTENEDOR DE BLOQUES AMPLIOS (Misión, Navegación y Ventanas) */}
+      <div className="w-full max-w-[1200px] mx-auto px-2 sm:px-4 pb-16 relative z-10">
+        
+        {/* Misión y Visión (Aprovecha todo el ancho del nuevo contenedor 1200px) */}
+        <div className="mb-10 w-full animate-in slide-in-from-bottom-6">
+          <MissionVisionPanel />
         </div>
 
         {/* Desktop Navigation Menu (Win95 Icons) */}
@@ -946,7 +934,7 @@ export default function AvocadoCenter() {
 
         {/* Active Window Render Area */}
         {activeWindow === 'proyectos' && (
-          <div className="mb-10 animate-in slide-in-from-bottom-4">
+          <div className="mb-10 max-w-3xl mx-auto animate-in slide-in-from-bottom-4">
             <Win95Window title="Proyectos_Destacados.exe" onClose={() => setActiveWindow(null)}>
               <div className="p-2 sm:p-4 bg-[#0a0a14]">
                  <FeaturedProjectsPanel />
@@ -955,39 +943,88 @@ export default function AvocadoCenter() {
           </div>
         )}
 
+        {/* ===== NUEVO LAYOUT RPG: SPLIT SCREEN STICKY (Personaje Te Acompaña / Stats Limpios Der) ===== */}
         {activeWindow === 'skills' && (
-          <div className="mb-10 space-y-4 animate-in slide-in-from-bottom-4">
-            <Win95Window title="Core_Stats.exe" onClose={() => setActiveWindow(null)}>
-              <div className="p-4 bg-[#0a0a14]">
-                <RPGStatsPanel />
+          <div className="mb-10 w-[95vw] lg:w-[1100px] max-w-full mx-auto animate-in slide-in-from-bottom-4 relative bg-transparent border-2 border-[#4a4a6a]">
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+              
+              {/* LADO IZQUIERDO: Pantalla del Personaje STICKY (Con un 95% de transparencia -> bg-color/5) */}
+              <div className="relative h-[300px] sm:h-[400px] lg:h-[calc(100vh-80px)] lg:sticky lg:top-10 border-b-2 lg:border-b-0 lg:border-r-2 border-[#4a4a6a] bg-[#0a0a14]/5">
+                
+                {/* Etiqueta de Nombre Clásica arriba del personaje */}
+                <div className="absolute top-4 left-4 z-10 bg-[#000080] border-2 border-white px-3 py-1 text-white font-[family-name:var(--font-pixel)] text-sm shadow-md">
+                  Lv.99 Abogado-Dev
+                </div>
+
+                <div className="w-full h-full">
+                  <Scene3D />
+                </div>
               </div>
-            </Win95Window>
-            <DualSkillsPanel />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Win95Window title="Skills_Legal.exe" onClose={() => setActiveWindow(null)}>
-                <SpecialAbilitiesPanel type="legal" />
-              </Win95Window>
-              <Win95Window title="Skills_Tech.exe" onClose={() => setActiveWindow(null)}>
-                <SpecialAbilitiesPanel type="tech" />
-              </Win95Window>
+
+              {/* LADO DERECHO: Menú de Estadísticas (Fluye Naturalmente) */}
+              <div className="relative p-4 lg:p-8 bg-[#05050a]">
+                
+                <h2 className="font-[family-name:var(--font-pixel)] text-2xl text-[#88ff88] mb-8 border-b-2 border-[#4a4a6a] pb-2">
+                  PERFIL DE CLASE
+                </h2>
+
+                <div className="flex flex-col gap-8">
+                  {/* Panel 1: Stats Principales (Limpios) */}
+                  <div>
+                    <h3 className="font-[family-name:var(--font-pixel)] text-sm text-[gray] mb-3 uppercase tracking-widest">Estadísticas Vitales</h3>
+                    <div className="bg-[#0a0a14] border-2 border-gray-600 p-4 rounded-sm">
+                      <RPGStatsPanel />
+                    </div>
+                  </div>
+
+                  {/* Panel 2: Clase Desarrollador */}
+                  <div>
+                    <h3 className="font-[family-name:var(--font-pixel)] text-sm text-[#00d9ff] mb-3 uppercase tracking-widest">Rama: Engineer</h3>
+                    <div className="bg-[#0a0a14] border border-[#00d9ff]/30 p-2 lg:p-4 rounded-sm">
+                      <SpecialAbilitiesPanel type="tech" />
+                    </div>
+                  </div>
+
+                  {/* Panel 3: Clase Abogado */}
+                  <div className="pb-8 lg:pb-0">
+                    <h3 className="font-[family-name:var(--font-pixel)] text-sm text-[#ffd700] mb-3 uppercase tracking-widest">Rama: Legal</h3>
+                    <div className="bg-[#0a0a14] border border-[#ffd700]/30 p-2 lg:p-4 rounded-sm">
+                      <SpecialAbilitiesPanel type="legal" />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            {/* SECCIÓN INFERIOR DE ANCHO COMPLETO: Sinergia */}
+            <div className="p-4 lg:p-8 border-t-2 border-[#4a4a6a] bg-[#05050a]">
+               <h3 className="font-[family-name:var(--font-pixel)] text-lg text-purple-400 mb-6 uppercase tracking-widest text-center border-b border-[#4a4a6a] pb-2">
+                 <i className="w-2 h-4 inline-block bg-purple-400 animate-pulse mr-2"></i> 
+                 Sinergia Completa (Tech + Legal)
+               </h3>
+               <div className="bg-[#0a0a14] p-4 lg:p-8 rounded-sm">
+                 <DualSkillsPanel />
+               </div>
+            </div>
+
           </div>
         )}
 
         {activeWindow === 'network' && (
-          <div className="mb-10 animate-in slide-in-from-bottom-4">
+          <div className="mb-10 max-w-xl mx-auto animate-in slide-in-from-bottom-4">
             <Win95Window title="Network_Contacto.exe" onClose={() => setActiveWindow(null)}>
               <div className="p-4 bg-[#1a1a2e] border-2 border-[#4a4a6a] text-center space-y-4">
                  <h3 className="font-[family-name:var(--font-pixel)] text-xl text-[#88ff88] mb-2">🤝 Invitación al Guild Formada</h3>
-                 <p className="font-[family-name:var(--font-pixel)] text-sm text-[#c0c0c0] leading-relaxed">
+                 <p className="font-[family-name:var(--font-pixel)] text-base text-[#ffffff] leading-relaxed drop-shadow-sm">
                    ¿Buscas colaborar en proyectos Legal-Tech, discutir sobre IA aplicada al derecho, o necesitas consultoría en compliance?
                  </p>
-                 <div className="flex flex-col gap-2 max-w-xs mx-auto mt-4">
-                    <a href="mailto:jguillervg@avocado.center" className="win95-btn px-4 py-2 font-[family-name:var(--font-pixel)] text-xs sm:text-sm text-black flex items-center justify-center gap-2">
-                      <Mail className="w-4 h-4" /> Enviar Correo (Email)
+                 <div className="flex flex-col gap-2 max-w-sm mx-auto mt-4">
+                    <a href="mailto:jguillervg@avocado.center" className="win95-btn px-4 py-3 font-[family-name:var(--font-pixel)] text-sm md:text-base text-black flex items-center justify-center gap-2">
+                      <Mail className="w-5 h-5" /> Enviar Correo (Email)
                     </a>
-                    <a href="https://linkedin.com/in/joseguillermovasquez" target="_blank" rel="noopener noreferrer" className="win95-btn px-4 py-2 font-[family-name:var(--font-pixel)] text-xs sm:text-sm text-black flex items-center justify-center gap-2">
-                       <Linkedin className="w-4 h-4" /> Conectar en LinkedIn
+                    <a href="https://linkedin.com/in/joseguillermovasquez" target="_blank" rel="noopener noreferrer" className="win95-btn px-4 py-3 font-[family-name:var(--font-pixel)] text-sm md:text-base text-black flex items-center justify-center gap-2">
+                       <Linkedin className="w-5 h-5" /> Conectar en LinkedIn
                     </a>
                  </div>
               </div>
