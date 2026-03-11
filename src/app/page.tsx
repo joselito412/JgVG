@@ -263,7 +263,7 @@ function CharacterStatsPanel() {
   return (
     <div className="rpg-panel p-6 md:p-8 flex flex-col items-center text-center">
       {/* Avatar Central */}
-      <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#60b080] mb-4 shadow-[0_0_15px_rgba(96,176,128,0.5)] bg-[#6CBA89] relative">
+      <div className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-4 md:border-[6px] border-[#60b080] mb-6 shadow-[0_0_25px_rgba(96,176,128,0.6)] bg-[#6CBA89] relative transition-transform hover:scale-105 duration-300">
         <img 
           src="/profile.png" 
           alt="Jose Guillermo Vasquez" 
