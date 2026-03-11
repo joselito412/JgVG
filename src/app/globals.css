@@ -4,40 +4,54 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Win95 Color Palette */
-  --win95-desktop: #008080;
-  --win95-window: #c0c0c0;
-  --win95-titlebar: #000080;
-  --win95-titlebar-inactive: #808080;
-  --win95-text: #000000;
+  /* Marca Personal Palette */
+  --brand-blue-base: #3466AF;
+  --brand-blue-mid: #21386E;
+  --brand-blue-dark: #1D2C5E;
+  --brand-yellow-light: #FFCB05;
+  --brand-yellow-dark: #C7A008;
+
+  /* Pokemon Creative Palette */
+  --poke-red: #EE1515;
+  --poke-blue: #3890F8;
+  --poke-green: #78C850;
+  --poke-purple: #A040A0;
+  --poke-orange: #F08030;
+
+  /* Win95 Color Palette mapped to brand */
+  --win95-desktop: var(--brand-blue-dark);
+  --win95-window: var(--brand-blue-base);
+  --win95-titlebar: var(--brand-blue-mid);
+  --win95-titlebar-inactive: var(--brand-blue-base);
+  --win95-text: #ffffff;
   --win95-text-light: #ffffff;
-  --win95-border-light: #ffffff;
-  --win95-border-dark: #404040;
-  --win95-border-darker: #808080;
-  --win95-input-bg: #ffffff;
-  --win95-rpg-bg: #0a0a14;
-  --win95-rpg-border: #f0f0f0;
-  --win95-rpg-text: #f5a623;
+  --win95-border-light: #608cd6; /* lighter blue for top-left bevel */
+  --win95-border-dark: var(--brand-yellow-dark);
+  --win95-border-darker: var(--brand-blue-dark);
+  --win95-input-bg: var(--brand-blue-mid);
+  --win95-rpg-bg: var(--brand-blue-dark);
+  --win95-rpg-border: var(--brand-yellow-light);
+  --win95-rpg-text: var(--brand-yellow-light);
   
-  --background: #008080;
-  --foreground: #000000;
-  --card: #c0c0c0;
-  --card-foreground: #000000;
-  --popover: #c0c0c0;
-  --popover-foreground: #000000;
-  --primary: #000080;
+  --background: var(--brand-blue-dark);
+  --foreground: #ffffff;
+  --card: var(--brand-blue-base);
+  --card-foreground: #ffffff;
+  --popover: var(--brand-blue-base);
+  --popover-foreground: #ffffff;
+  --primary: var(--brand-blue-mid);
   --primary-foreground: #ffffff;
-  --secondary: #c0c0c0;
-  --secondary-foreground: #000000;
-  --muted: #808080;
-  --muted-foreground: #404040;
-  --accent: #000080;
-  --accent-foreground: #ffffff;
-  --destructive: #ff0000;
+  --secondary: var(--brand-blue-base);
+  --secondary-foreground: #ffffff;
+  --muted: var(--brand-blue-mid);
+  --muted-foreground: #e0e0e0;
+  --accent: var(--brand-yellow-light);
+  --accent-foreground: var(--brand-blue-dark);
+  --destructive: var(--poke-red);
   --destructive-foreground: #ffffff;
-  --border: #808080;
-  --input: #ffffff;
-  --ring: #000080;
+  --border: var(--brand-yellow-dark);
+  --input: var(--brand-blue-mid);
+  --ring: var(--brand-yellow-light);
   --radius: 0;
 }
 
@@ -45,6 +59,16 @@
   --font-sans: var(--font-mono), 'Space Mono', 'Courier New', monospace;
   --font-mono: var(--font-mono), 'Space Mono', 'Courier New', monospace;
   --font-pixel: var(--font-pixel), 'VT323', monospace;
+  --color-brand-blue-base: var(--brand-blue-base);
+  --color-brand-blue-mid: var(--brand-blue-mid);
+  --color-brand-blue-dark: var(--brand-blue-dark);
+  --color-brand-yellow-light: var(--brand-yellow-light);
+  --color-brand-yellow-dark: var(--brand-yellow-dark);
+  --color-poke-red: var(--poke-red);
+  --color-poke-blue: var(--poke-blue);
+  --color-poke-green: var(--poke-green);
+  --color-poke-purple: var(--poke-purple);
+  --color-poke-orange: var(--poke-orange);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -76,7 +100,7 @@
     box-sizing: border-box;
   }
   body {
-    @apply bg-[#008080] text-black;
+    @apply bg-background text-foreground;
     image-rendering: pixelated;
     -webkit-font-smoothing: none;
   }
@@ -102,40 +126,41 @@
 /* Win95 Bevel Effects */
 .win95-raised {
   border: 2px solid;
-  border-color: #ffffff #404040 #404040 #ffffff;
+  border-color: var(--win95-border-light) var(--win95-border-dark) var(--win95-border-dark) var(--win95-border-light);
 }
 
 .win95-sunken {
   border: 2px solid;
-  border-color: #404040 #ffffff #ffffff #404040;
+  border-color: var(--win95-border-dark) var(--win95-border-light) var(--win95-border-light) var(--win95-border-dark);
 }
 
 .win95-btn {
   border: 2px solid;
-  border-color: #ffffff #404040 #404040 #ffffff;
-  background-color: #c0c0c0;
+  border-color: var(--win95-border-light) var(--win95-border-dark) var(--win95-border-dark) var(--win95-border-light);
+  background-color: var(--win95-window);
   cursor: pointer;
+  color: var(--win95-text);
 }
 
 .win95-btn:active {
-  border-color: #404040 #ffffff #ffffff #404040;
+  border-color: var(--win95-border-dark) var(--win95-border-light) var(--win95-border-light) var(--win95-border-dark);
 }
 
 /* RPG Dialog Box */
 .rpg-dialog {
-  background: linear-gradient(180deg, #0a0a14 0%, #0f0f1f 100%);
-  border: 4px double #f0f0f0;
-  box-shadow: inset 0 0 20px rgba(245, 166, 35, 0.1);
+  background: linear-gradient(180deg, var(--brand-blue-dark) 0%, #152046 100%);
+  border: 4px double var(--brand-yellow-light);
+  box-shadow: inset 0 0 20px rgba(255, 203, 5, 0.1);
 }
 
 /* RPG Menu Panel - Classic JRPG style */
 .rpg-panel {
-  background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1f 100%);
-  border: 3px solid #4a4a6a;
+  background: linear-gradient(180deg, var(--brand-blue-mid) 0%, var(--brand-blue-dark) 100%);
+  border: 3px solid var(--brand-yellow-dark);
   box-shadow: 
-    inset 2px 2px 0 #2a2a4a,
-    inset -2px -2px 0 #0a0a14,
-    0 0 0 2px #0a0a14,
+    inset 2px 2px 0 rgba(255, 255, 255, 0.1),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.5),
+    0 0 0 2px var(--brand-blue-dark),
     4px 4px 0 rgba(0,0,0,0.5);
   position: relative;
 }
@@ -144,16 +169,16 @@
   content: '';
   position: absolute;
   inset: 2px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   pointer-events: none;
 }
 
 /* RPG Stat Bar */
 .rpg-stat-bar {
   height: 12px;
-  background: #1a1a2e;
-  border: 2px solid #4a4a6a;
-  box-shadow: inset 1px 1px 0 #0a0a14;
+  background: var(--brand-blue-dark);
+  border: 2px solid var(--brand-blue-mid);
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.3);
   position: relative;
   overflow: hidden;
 }
@@ -175,16 +200,17 @@
 }
 
 /* Skill Colors */
-.skill-legal { background: linear-gradient(90deg, #f5a623 0%, #d4830a 100%); }
-.skill-tech { background: linear-gradient(90deg, #00d9ff 0%, #0099cc 100%); }
-.skill-wisdom { background: linear-gradient(90deg, #a855f7 0%, #7c3aed 100%); }
-.skill-charisma { background: linear-gradient(90deg, #ec4899 0%, #be185d 100%); }
-.skill-strength { background: linear-gradient(90deg, #ef4444 0%, #b91c1c 100%); }
-.skill-dexterity { background: linear-gradient(90deg, #22c55e 0%, #15803d 100%); }
+.skill-legal { background: linear-gradient(90deg, var(--brand-yellow-light) 0%, var(--brand-yellow-dark) 100%); }
+.skill-tech { background: linear-gradient(90deg, var(--poke-blue) 0%, #1a71ca 100%); }
+.skill-wisdom { background: linear-gradient(90deg, var(--poke-purple) 0%, #822a82 100%); }
+.skill-charisma { background: linear-gradient(90deg, var(--poke-orange) 0%, #c4601c 100%); }
+.skill-strength { background: linear-gradient(90deg, var(--poke-red) 0%, #b20a0a 100%); }
+.skill-dexterity { background: linear-gradient(90deg, var(--poke-green) 0%, #5ba037 100%); }
 
 /* RPG Selection Arrow Animation */
 .rpg-arrow {
   animation: arrow-bounce 0.5s ease-in-out infinite alternate;
+  color: var(--brand-yellow-light);
 }
 
 @keyframes arrow-bounce {
@@ -199,39 +225,40 @@
 }
 
 .rpg-menu-item:hover {
-  background: rgba(245, 166, 35, 0.15);
+  background: rgba(255, 203, 5, 0.15);
 }
 
 .rpg-menu-item.selected {
-  background: rgba(245, 166, 35, 0.25);
+  background: rgba(255, 203, 5, 0.25);
 }
 
 /* Pixel Art Border */
 .pixel-border {
   box-shadow:
-    0 -4px 0 0 #f0f0f0,
-    0 4px 0 0 #f0f0f0,
-    -4px 0 0 0 #f0f0f0,
-    4px 0 0 0 #f0f0f0,
-    -4px -4px 0 0 #f0f0f0,
-    4px -4px 0 0 #f0f0f0,
-    -4px 4px 0 0 #f0f0f0,
-    4px 4px 0 0 #f0f0f0;
+    0 -4px 0 0 var(--brand-yellow-light),
+    0 4px 0 0 var(--brand-yellow-light),
+    -4px 0 0 0 var(--brand-yellow-light),
+    4px 0 0 0 var(--brand-yellow-light),
+    -4px -4px 0 0 var(--brand-yellow-light),
+    4px -4px 0 0 var(--brand-yellow-light),
+    -4px 4px 0 0 var(--brand-yellow-light),
+    4px 4px 0 0 var(--brand-yellow-light);
 }
 
 /* Glowing text effect for RPG */
 .rpg-glow {
   text-shadow: 
-    0 0 5px currentColor,
-    0 0 10px currentColor,
-    0 0 20px currentColor;
+    0 0 5px var(--brand-yellow-light),
+    0 0 10px var(--brand-yellow-light),
+    0 0 20px var(--brand-yellow-light);
 }
 
 /* Battle scene grid pattern */
 .battle-grid {
+  background-color: var(--brand-blue-dark);
   background-image: 
-    linear-gradient(rgba(0, 128, 128, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 128, 128, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(52, 102, 175, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52, 102, 175, 0.2) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
@@ -240,7 +267,7 @@
   display: inline-block;
   width: 2px;
   height: 1.2em;
-  background-color: #f5a623;
+  background-color: var(--brand-yellow-light);
   margin-left: 2px;
   animation: blink 0.7s infinite;
 }
@@ -252,9 +279,10 @@
 
 /* Level badge */
 .level-badge {
-  background: linear-gradient(180deg, #f5a623 0%, #d4830a 100%);
+  background: linear-gradient(180deg, var(--poke-red) 0%, #b20a0a 100%);
   border: 2px solid #fff;
-  box-shadow: 2px 2px 0 #000;
+  box-shadow: 2px 2px 0 var(--brand-blue-dark);
+  color: #fff;
 }
 
 /* Custom scrollbar Win95 style */
@@ -264,24 +292,24 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #c0c0c0;
-  border: 1px solid #808080;
+  background: var(--brand-blue-dark);
+  border: 1px solid var(--brand-yellow-dark);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c0c0c0;
+  background: var(--brand-blue-base);
   border: 2px solid;
-  border-color: #ffffff #404040 #404040 #ffffff;
+  border-color: var(--win95-border-light) var(--win95-border-dark) var(--win95-border-dark) var(--win95-border-light);
 }
 
 ::-webkit-scrollbar-thumb:active {
-  border-color: #404040 #ffffff #ffffff #404040;
+  border-color: var(--win95-border-dark) var(--win95-border-light) var(--win95-border-light) var(--win95-border-dark);
 }
 
 ::-webkit-scrollbar-button {
-  background: #c0c0c0;
+  background: var(--brand-blue-base);
   border: 2px solid;
-  border-color: #ffffff #404040 #404040 #ffffff;
+  border-color: var(--win95-border-light) var(--win95-border-dark) var(--win95-border-dark) var(--win95-border-light);
   width: 16px;
   height: 16px;
 }
