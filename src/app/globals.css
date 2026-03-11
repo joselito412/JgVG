@@ -99,10 +99,24 @@
     @apply border-border outline-ring/50;
     box-sizing: border-box;
   }
+  
+  /* Incremento global masivo del Root REM scale para accesibilidad con Pixel Fonts */
+  html {
+    font-size: 18px; 
+  }
+  
+  @media (min-width: 768px) {
+    html {
+      font-size: 20px; /* Incrementa todo (fuentes, peddings y grids) un 25% extra en Desktop */
+    }
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-[#ffffff];
     image-rendering: pixelated;
     -webkit-font-smoothing: none;
+    /* Sombra de contorno sutil en todo el texto para matar la ilegibilidad por contraste */
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
   }
 }
 
