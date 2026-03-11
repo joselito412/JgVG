@@ -406,7 +406,7 @@ function FloatingChatBubble({ onSendMessage }: { onSendMessage: (message: string
   }
 
   return (
-    <div className="fixed bottom-24 md:bottom-[4.5rem] lg:bottom-28 right-4 md:right-6 z-[60] flex flex-col items-end">
+    <div className="fixed bottom-16 md:bottom-[4.5rem] lg:bottom-20 right-4 md:right-6 z-[60] flex flex-col items-end">
       {/* Botón flotante (Avatar Icono) */}
       {!isOpen && (
         <button 
@@ -806,7 +806,7 @@ function Taskbar() {
   return (
     <div className="fixed bottom-0 left-0 right-0 h-auto bg-[#c0c0c0] border-t-2 border-[#dfdfdf] flex flex-col z-[50] win95-raised p-1">
       
-      {/* Renglón 1: Principal (Start, Redes Sociales, Reloj) */}
+      {/* Renglón 1: Principal (Start, Reloj, Redes Sociales) */}
       <div className="flex items-center justify-between px-1 md:px-2 py-1 h-10 w-full mb-1">
         <div className="flex items-center">
           <button className="win95-btn flex items-center gap-2 px-2 md:px-4 py-1 font-bold text-sm h-full group">
@@ -814,8 +814,13 @@ function Taskbar() {
             <span className="font-[family-name:var(--font-pixel)] hidden sm:inline text-black">Start</span>
           </button>
           
+          {/* Timestamp movido a la izquierda */}
+          <div className="win95-sunken px-2 md:px-3 py-1 bg-white ml-2 md:ml-3">
+            <span className="font-[family-name:var(--font-pixel)] text-xs text-black whitespace-nowrap">{time}</span>
+          </div>
+
           {/* Separator */}
-          <div className="h-8 w-0.5 bg-gray-400 border-r border-white mx-1 md:mx-2"></div>
+          <div className="h-8 w-0.5 bg-gray-400 border-r border-white mx-2 md:mx-3"></div>
         </div>
 
         {/* Social Links - PERFECTAMENTE CENTRADOS */}
@@ -838,12 +843,8 @@ function Taskbar() {
           })}
         </div>
         
-        {/* Timestamp */}
-        <div className="flex items-center gap-2 ml-auto">
-          <div className="win95-sunken px-2 md:px-3 py-1 bg-white">
-            <span className="font-[family-name:var(--font-pixel)] text-xs text-black whitespace-nowrap">{time}</span>
-          </div>
-        </div>
+        {/* Espacio invisible para mantener Flex justificado y dejar aire al Chatbot */}
+        <div className="ml-auto w-10 md:w-20"></div>
       </div>
       
       {/* Renglón 2: Footer Legal y Copyright */}
