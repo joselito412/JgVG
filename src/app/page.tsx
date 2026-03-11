@@ -791,8 +791,18 @@ function SpecialAbilitiesPanel({ type }: { type: 'legal' | 'tech' }) {
 }
 
 // Taskbar (Win95 Footer Modificado)
-function Taskbar() {
+function Taskbar({ onMenuClick }: { onMenuClick?: (section: string) => void }) {
   const [time, setTime] = useState("")
+  const [isStartOpen, setIsStartOpen] = useState(false)
+
+  // Cerrar menú con ESC
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsStartOpen(false)
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   useEffect(() => {
     const updateTime = () => {
@@ -806,11 +816,90 @@ function Taskbar() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 h-auto bg-[#c0c0c0] border-t-2 border-[#dfdfdf] flex flex-col z-[50] win95-raised p-1">
+      {/* === MENÚ DE INICIO WIN95 === */}
+      {isStartOpen && (
+        <div className="absolute bottom-full left-0 mb-1 w-64 bg-[#c0c0c0] win95-raised flex flex-row z-[100] animate-in slide-in-from-bottom-2 shadow-2xl">
+          {/* Banda lateral azul */}
+          <div className="w-8 bg-gradient-to-b from-[#000080] to-[#1084d0] flex flex-col justify-end pb-2 overflow-hidden">
+            <span className="text-[#c0c0c0] font-bold text-xl -rotate-90 transform origin-bottom-left whitespace-nowrap mb-2 ml-1 tracking-widest font-sans">
+              Proyectos <span className="text-white">95</span>
+            </span>
+          </div>
+          
+          {/* Opciones del menú (Estructura de Índice Win95) */}
+          <div className="flex-1 p-1 flex flex-col pt-2 text-black">
+            
+            {/* Categoría: Programas */}
+            <div className="group relative">
+              <button className="flex items-center justify-between w-full px-2 py-2 hover:bg-[#000080] hover:text-white transition-colors cursor-default">
+                <div className="flex items-center gap-3">
+                  <span className="text-xl -mt-1">📁</span>
+                  <span className="font-[family-name:var(--font-pixel)] text-lg underline">Portafolio</span>
+                </div>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              
+              {/* Sub-índice Programas */}
+              <div className="flex flex-col w-full bg-[#dfdfdf] border-l-2 border-[#000080]/20 hidden group-hover:flex">
+                <button 
+                  onClick={() => { setIsStartOpen(false); onMenuClick?.('projects'); }}
+                  className="flex items-center gap-3 w-full px-4 py-2 hover:bg-[#000080] hover:text-white transition-colors"
+                >
+                  <FileCode className="w-5 h-5" />
+                  <span className="font-[family-name:var(--font-pixel)] text-base">Proyectos Destacados</span>
+                </button>
+                <a 
+                  onClick={() => setIsStartOpen(false)}
+                  href="/servicios"
+                  className="flex items-center gap-3 w-full px-4 py-2 hover:bg-[#000080] hover:text-white transition-colors text-left"
+                >
+                  <BookOpen className="w-5 h-5" />
+                  <span className="font-[family-name:var(--font-pixel)] text-base">Catálogo de Servicios</span>
+                </a>
+              </div>
+            </div>
+
+            <div className="h-[1px] w-[90%] mx-auto bg-gray-400 border-b border-white my-1"></div>
+            
+            {/* Categoría: Configuración / Stats */}
+            <button 
+               onClick={() => { setIsStartOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              className="flex items-center gap-3 w-full px-2 py-2.5 hover:bg-[#000080] hover:text-white transition-colors text-left"
+            >
+              <Zap className="w-5 h-5 text-[#f5a623]" />
+              <span className="font-[family-name:var(--font-pixel)] text-lg">Habilidades y Perfil...</span>
+            </button>
+            
+            {/* Categoría: Red */}
+            <button 
+              onClick={() => { setIsStartOpen(false); onMenuClick?.('network'); }}
+              className="flex items-center gap-3 w-full px-2 py-2.5 hover:bg-[#000080] hover:text-white transition-colors text-left"
+            >
+              <MessageCircle className="w-5 h-5 text-[#25D366]" />
+              <span className="font-[family-name:var(--font-pixel)] text-lg">Conexiones a Red...</span>
+            </button>
+
+            <div className="h-0.5 w-full bg-gray-400 border-b border-white my-1 mt-auto"></div>
+
+            {/* Sistema */}
+            <button 
+              onClick={() => setIsStartOpen(false)}
+              className="flex items-center gap-3 w-full px-2 py-2 hover:bg-[#000080] hover:text-white transition-colors text-left"
+            >
+              <span className="text-2xl ml-0.5">⚠️</span>
+              <span className="font-[family-name:var(--font-pixel)] text-lg">Apagar equipo...</span>
+            </button>
+          </div>
+        </div>
+      )}
       
       {/* Renglón 1: Principal (Start, Reloj, Redes Sociales) */}
-      <div className="flex items-center justify-between px-1 md:px-2 py-1 h-10 w-full mb-1">
+      <div className="flex items-center justify-between px-1 md:px-2 py-1 h-10 w-full mb-1 relative">
         <div className="flex items-center">
-          <button className="win95-btn flex items-center gap-2 px-2 md:px-4 py-1 font-bold text-sm h-full group">
+          <button 
+            onClick={() => setIsStartOpen(!isStartOpen)}
+            className={`win95-btn flex items-center gap-2 px-2 md:px-4 py-1 font-bold text-sm h-full group ${isStartOpen ? 'win95-sunken bg-[#dfdfdf]' : ''}`}
+          >
             <span className="text-xl group-active:scale-95">🥑</span>
             <span className="font-[family-name:var(--font-pixel)] hidden sm:inline text-black">Start</span>
           </button>
