@@ -406,14 +406,14 @@ function FloatingChatBubble({ onSendMessage }: { onSendMessage: (message: string
   }
 
   return (
-    <div className="fixed bottom-20 right-4 z-50 flex flex-col items-end">
+    <div className="fixed bottom-24 md:bottom-[4.5rem] lg:bottom-28 right-4 md:right-6 z-[60] flex flex-col items-end">
       {/* Botón flotante (Avatar Icono) */}
       {!isOpen && (
         <button 
           onClick={() => setIsOpen(true)}
-          className="group relative bg-[#1a1a2e] border-2 border-[#f5a623] w-14 h-14 md:w-16 md:h-16 rounded-full flex flex-col items-center justify-center shadow-[0_0_15px_rgba(245,166,35,0.4)] hover:scale-110 transition-transform cursor-pointer animate-in zoom-in"
+          className="group relative bg-[#1a1a2e] border-2 border-[#f5a623] w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full flex flex-col items-center justify-center shadow-[0_0_15px_rgba(245,166,35,0.4)] hover:scale-110 transition-transform cursor-pointer animate-in zoom-in"
         >
-          <span className="text-2xl md:text-3xl drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">🤖</span>
+          <span className="text-xl md:text-2xl lg:text-3xl drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">🤖</span>
           <span className="w-3 h-3 bg-[#88ff88] rounded-full absolute bottom-0 right-0 border-2 border-[#1a1a2e] animate-pulse"></span>
           
           {/* Tooltip pequeño para invitar al click */}
@@ -816,26 +816,26 @@ function Taskbar() {
           
           {/* Separator */}
           <div className="h-8 w-0.5 bg-gray-400 border-r border-white mx-1 md:mx-2"></div>
+        </div>
 
-          {/* Social Links as "Open Apps" */}
-          <div className="flex items-center gap-1 md:gap-2">
-            {SOCIAL_LINKS.map(link => {
-              const Icon = link.icon;
-              return (
-                <a 
-                  key={link.name} 
-                  href={link.href} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="win95-sunken px-2 md:px-3 py-1 flex items-center gap-2 bg-white hover:bg-[#e0e0e0] active:scale-95 transition-all outline-none"
-                  title={link.name}
-                >
-                  <Icon className="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:scale-110" style={{ color: link.color !== '#ffffff' ? link.color : '#000000' }} />
-                  <span className="font-[family-name:var(--font-pixel)] text-xs text-black hidden lg:inline">{link.name}</span>
-                </a>
-              )
-            })}
-          </div>
+        {/* Social Links - PERFECTAMENTE CENTRADOS */}
+        <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-1 md:gap-2">
+          {SOCIAL_LINKS.map(link => {
+            const Icon = link.icon;
+            return (
+              <a 
+                key={link.name} 
+                href={link.href} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="win95-sunken px-2 md:px-3 py-1 flex items-center gap-2 bg-white hover:bg-[#e0e0e0] active:scale-95 transition-all outline-none"
+                title={link.name}
+              >
+                <Icon className="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:scale-110" style={{ color: link.color !== '#ffffff' ? link.color : '#000000' }} />
+                <span className="font-[family-name:var(--font-pixel)] text-xs text-black hidden lg:inline">{link.name}</span>
+              </a>
+            )
+          })}
         </div>
         
         {/* Timestamp */}
