@@ -263,11 +263,12 @@ function CharacterStatsPanel() {
   return (
     <div className="rpg-panel p-6 md:p-8 flex flex-col items-center text-center">
       {/* Avatar Central */}
-      <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#60b080] mb-4 shadow-[0_0_15px_rgba(96,176,128,0.5)]">
-        {/* Usamos un color solido/gradiente mientras tanto como placeholder del rostro */}
-        <div className="w-full h-full bg-gradient-to-br from-[#2a4a3a] to-[#1a2a2a] flex items-center justify-center">
-          <span className="font-[family-name:var(--font-pixel)] text-3xl md:text-5xl text-[#60b080]">JV</span>
-        </div>
+      <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#60b080] mb-4 shadow-[0_0_15px_rgba(96,176,128,0.5)] bg-[#6CBA89] relative">
+        <img 
+          src="/profile.png" 
+          alt="Jose Guillermo Vasquez" 
+          className="w-full h-full object-cover object-center"
+        />
       </div>
       
       {/* Nombres y Titulos */}
