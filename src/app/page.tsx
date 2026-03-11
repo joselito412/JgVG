@@ -791,7 +791,7 @@ function SpecialAbilitiesPanel({ type }: { type: 'legal' | 'tech' }) {
 }
 
 // Taskbar (Win95 Footer Modificado)
-function Taskbar({ onMenuClick }: { onMenuClick?: (section: string) => void }) {
+function Taskbar({ onMenuClick, isAuthenticated, userRole }: { onMenuClick?: (section: string) => void, isAuthenticated?: boolean, userRole?: string | null }) {
   const [time, setTime] = useState("")
   const [isStartOpen, setIsStartOpen] = useState(false)
 
@@ -813,6 +813,8 @@ function Taskbar({ onMenuClick }: { onMenuClick?: (section: string) => void }) {
     const interval = setInterval(updateTime, 1000)
     return () => clearInterval(interval)
   }, [])
+
+  const profileHref = isAuthenticated ? (userRole === 'admin' ? '/admin/terminal' : '/profile') : '/login'
 
   return (
     <div className="fixed bottom-0 left-0 right-0 h-auto bg-[#c0c0c0] border-t-2 border-[#dfdfdf] flex flex-col z-[50] win95-raised p-1">
@@ -869,6 +871,14 @@ function Taskbar({ onMenuClick }: { onMenuClick?: (section: string) => void }) {
               <Zap className="w-5 h-5 text-[#f5a623]" />
               <span className="font-[family-name:var(--font-pixel)] text-lg">Habilidades y Perfil...</span>
             </button>
+            <a 
+               onClick={() => { setIsStartOpen(false); }}
+               href={profileHref}
+              className="flex items-center gap-3 w-full px-2 py-2.5 hover:bg-[#000080] hover:text-white transition-colors text-left"
+            >
+              <span className="text-xl ml-0.5">👤</span>
+              <span className="font-[family-name:var(--font-pixel)] text-lg">{isAuthenticated ? (userRole === 'admin' ? "Terminal Admin..." : "Mi Perfil...") : "Acceso Cuenta..."}</span>
+            </a>
             
             {/* Categoría: Red */}
             <button 
@@ -990,6 +1000,47 @@ function DesktopIcon({ icon, label, onClick }: { icon: string; label: string; on
 
 export default function AvocadoCenter() {
   const [activeWindow, setActiveWindow] = useState<'proyectos' | 'skills' | 'network' | 'ia' | null>('proyectos')
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [userRole, setUserRole] = useState<string | null>(null)
+
+  useEffect(() => {
+    const checkSession = async () => {
+      // Import dynamically to avoid SSR issues with some client hooks if needed, 
+      // but standard import is fine since we are in a use client file.
+      const { createClient } = await import('@/modules/database/client')
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+      
+      setIsAuthenticated(!!session)
+
+      if (session?.user) {
+        // Fetch extended user data
+        const { data, error } = await supabase
+          .from('users')
+          .select('role')
+          .eq('id', session.user.id)
+          .single()
+          
+        if (data && !error) {
+           setUserRole(data.role)
+        }
+      }
+
+      // Listen for auth changes to update the menu in real-time
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+        setIsAuthenticated(!!session)
+        if (session?.user) {
+           const { data } = await supabase.from('users').select('role').eq('id', session.user.id).single()
+           setUserRole(data?.role || null)
+        } else {
+           setUserRole(null)
+        }
+      })
+
+      return () => subscription.unsubscribe()
+    }
+    checkSession()
+  }, [])
 
   const handleSendMessage = (message: string) => {
     console.log("Message sent:", message)
@@ -1148,7 +1199,7 @@ export default function AvocadoCenter() {
       </div>
 
       <FloatingChatBubble onSendMessage={handleSendMessage} />
-      <Taskbar />
+      <Taskbar isAuthenticated={isAuthenticated} userRole={userRole} />
     </main>
   )
 }
