@@ -826,11 +826,11 @@ function Taskbar() {
                 href={link.href} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="win95-btn px-2 py-1 flex items-center gap-1.5 bg-white hover:bg-gray-100 transition-colors"
+                className="win95-sunken px-2 md:px-3 py-1 flex items-center gap-2 bg-white hover:bg-[#e0e0e0] active:scale-95 transition-all outline-none"
                 title={link.name}
               >
-                <Icon className="w-4 h-4 md:w-5 md:h-5" style={{ color: link.color !== '#ffffff' ? link.color : '#000000' }} />
-                <span className="font-[family-name:var(--font-pixel)] text-xs text-black hidden md:inline">{link.name}</span>
+                <Icon className="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:scale-110" style={{ color: link.color !== '#ffffff' ? link.color : '#000000' }} />
+                <span className="font-[family-name:var(--font-pixel)] text-xs text-black hidden lg:inline">{link.name}</span>
               </a>
             )
           })}
