@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { Phone, Linkedin, Mail, Github, X, Minus, Square, ChevronRight, Sword, Shield, Zap, BookOpen, Heart, Star, Instagram, BookMarked, ExternalLink } from "lucide-react"
+import { Phone, Linkedin, Mail, Github, X, Minus, Square, ChevronRight, Sword, Shield, Zap, BookOpen, Heart, Star, Instagram, BookMarked, ExternalLink, MessageCircle } from "lucide-react"
 import Scene3D from "@/components/three/Scene3D"
 
 // ===========================================
@@ -528,7 +528,7 @@ const SOCIAL_LINKS = [
   { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/in/joseguillermovasquez", color: "#0077b5" },
   { name: "GitHub", icon: Github, href: "https://github.com/joselito412", color: "#ffffff" },
   { name: "Instagram", icon: Instagram, href: "https://instagram.com/avocado.center", color: "#e4405f" },
-  { name: "Blog", icon: BookMarked, href: "https://avocado.center/", color: "#f5a623" }
+  { name: "WhatsApp", icon: MessageCircle, href: "https://wa.me/message/M72SDBBNYNDDJ1", color: "#25D366" }
 ]
 
 // Removed old RPGFooter
