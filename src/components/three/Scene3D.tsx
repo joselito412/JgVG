@@ -6,8 +6,8 @@ import { OrbitControls, Html, ContactShadows, Float, useTexture } from "@react-t
 import * as THREE from "three"
 
 // Avatar en Pixel Art (Sprite / 2.5D)
-// Carga la textura desde public/models/avatar_v2.jpg
-function AvatarSprite({ url = "/models/avatar_v2.jpg" }: { url?: string }) {
+// Carga la textura desde public/models/avatar_v3.png
+function AvatarSprite({ url = "/models/avatar_v3.png" }: { url?: string }) {
   const [imgError, setImgError] = useState(false)
   const meshRef = useRef<THREE.Mesh>(null)
   
@@ -29,7 +29,7 @@ function AvatarSprite({ url = "/models/avatar_v2.jpg" }: { url?: string }) {
           <meshStandardMaterial color="#f5a623" wireframe side={THREE.DoubleSide} />
           <Html position={[0, 0, 0]} center>
             <div className="bg-[#000080] text-white font-[family-name:var(--font-pixel)] text-xs px-2 py-1 border-2 border-white whitespace-nowrap text-center">
-              Falta Imagen <br/> public/models/avatar_v2.jpg
+              Falta Imagen <br/> public/models/avatar_v3.png
             </div>
           </Html>
         </mesh>
