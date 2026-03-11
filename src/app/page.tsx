@@ -806,42 +806,62 @@ function Taskbar() {
   return (
     <div className="fixed bottom-0 left-0 right-0 h-auto bg-[#c0c0c0] border-t-2 border-[#dfdfdf] flex flex-col z-[50] win95-raised p-1">
       
-      {/* Renglón Principal (Start Button e Info Central) */}
+      {/* Renglón 1: Principal (Start, Redes Sociales, Reloj) */}
       <div className="flex items-center justify-between px-1 md:px-2 py-1 h-10 w-full mb-1">
-        <button className="win95-btn flex items-center gap-2 px-2 md:px-4 py-1 font-bold text-sm h-full group">
-          <span className="text-xl group-active:scale-95">🥑</span>
-          <span className="font-[family-name:var(--font-pixel)] hidden sm:inline text-black">Start</span>
-        </button>
-        
-        {/* Separator */}
-        <div className="h-8 w-0.5 bg-gray-400 border-r border-white mx-1"></div>
+        <div className="flex items-center">
+          <button className="win95-btn flex items-center gap-2 px-2 md:px-4 py-1 font-bold text-sm h-full group">
+            <span className="text-xl group-active:scale-95">🥑</span>
+            <span className="font-[family-name:var(--font-pixel)] hidden sm:inline text-black">Start</span>
+          </button>
+          
+          {/* Separator */}
+          <div className="h-8 w-0.5 bg-gray-400 border-r border-white mx-1 md:mx-2"></div>
 
-        {/* Social Links as "Open Apps" */}
-        <div className="flex items-center gap-1 md:gap-2">
-          {SOCIAL_LINKS.map(link => {
-            const Icon = link.icon;
-            return (
-              <a 
-                key={link.name} 
-                href={link.href} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="win95-sunken px-2 md:px-3 py-1 flex items-center gap-2 bg-white hover:bg-[#e0e0e0] active:scale-95 transition-all outline-none"
-                title={link.name}
-              >
-                <Icon className="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:scale-110" style={{ color: link.color !== '#ffffff' ? link.color : '#000000' }} />
-                <span className="font-[family-name:var(--font-pixel)] text-xs text-black hidden lg:inline">{link.name}</span>
-              </a>
-            )
-          })}
+          {/* Social Links as "Open Apps" */}
+          <div className="flex items-center gap-1 md:gap-2">
+            {SOCIAL_LINKS.map(link => {
+              const Icon = link.icon;
+              return (
+                <a 
+                  key={link.name} 
+                  href={link.href} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="win95-sunken px-2 md:px-3 py-1 flex items-center gap-2 bg-white hover:bg-[#e0e0e0] active:scale-95 transition-all outline-none"
+                  title={link.name}
+                >
+                  <Icon className="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:scale-110" style={{ color: link.color !== '#ffffff' ? link.color : '#000000' }} />
+                  <span className="font-[family-name:var(--font-pixel)] text-xs text-black hidden lg:inline">{link.name}</span>
+                </a>
+              )
+            })}
+          </div>
+        </div>
+        
+        {/* Timestamp */}
+        <div className="flex items-center gap-2 ml-auto">
+          <div className="win95-sunken px-2 md:px-3 py-1 bg-white">
+            <span className="font-[family-name:var(--font-pixel)] text-xs text-black whitespace-nowrap">{time}</span>
+          </div>
         </div>
       </div>
       
-      <div className="flex items-center gap-2 ml-auto">
-        <div className="win95-sunken px-2 md:px-3 py-1 bg-white">
-          <span className="font-[family-name:var(--font-pixel)] text-xs text-black">{time}</span>
+      {/* Renglón 2: Footer Legal y Copyright */}
+      <div className="flex flex-col md:flex-row items-center justify-between px-2 pt-1 border-t border-gray-400 mt-1 mb-0.5">
+        <div className="flex items-center gap-3 text-black font-[family-name:var(--font-pixel)] text-[10px] md:text-xs">
+          <a href="/aviso-legal" className="hover:underline hover:text-[#000080]">Aviso Legal</a>
+          <span>|</span>
+          <a href="/privacidad" className="hover:underline hover:text-[#000080]">Política de Privacidad</a>
+          <span>|</span>
+          <a href="/cookies" className="hover:underline hover:text-[#000080]">Uso de Cookies</a>
+        </div>
+        
+        <div className="text-gray-600 font-[family-name:var(--font-pixel)] text-[10px] md:text-xs mt-1 md:mt-0 text-center md:text-right">
+          © 2026. Protegido por derechos de autor. <br className="md:hidden" />
+          Desarrollado por <strong>Jose Guillermo Vasquez Guzman</strong>.
         </div>
       </div>
+
     </div>
   )
 }
