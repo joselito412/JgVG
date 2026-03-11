@@ -112,7 +112,7 @@ function RPGStatBar({
   
   return (
     <div className="flex items-center gap-2">
-      <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-sm w-8">{label}</span>
+      <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-base md:text-lg w-10">{label}</span>
       <div className={`flex-1 rpg-stat-bar ${height}`}>
         <div 
           className={`rpg-stat-bar-fill ${color}`}
@@ -120,7 +120,7 @@ function RPGStatBar({
         />
       </div>
       {showNumbers && (
-        <span className="text-[#88ff88] font-[family-name:var(--font-pixel)] text-xs w-20 text-right">
+        <span className="text-[#88ff88] font-[family-name:var(--font-pixel)] text-sm md:text-base w-20 text-right">
           {current}/{max}
         </span>
       )}
@@ -268,87 +268,107 @@ function DualSkillsPanel() {
   )
 }
 
-// Panel de Stats base del personaje
+// Nuevo panel de Stats aislado (que irá en la sección Skills)
+export function RPGStatsPanel() {
+  return (
+    <div className="space-y-4">
+      <RPGStatBar label="HP" current={999} max={999} color="skill-strength" showNumbers size="normal" />
+      <p className="font-[family-name:var(--font-pixel)] text-xs md:text-sm text-[#c0c0c0] pl-12 -mt-3 mb-2">
+        Legal-Tech: Innovación, AI Governance
+      </p>
+      
+      <RPGStatBar label="MP" current={850} max={999} color="skill-tech" showNumbers size="normal" />
+      <p className="font-[family-name:var(--font-pixel)] text-xs md:text-sm text-[#c0c0c0] pl-12 -mt-3 mb-2">
+        Dev: React, Python, Supabase, LLMs
+      </p>
+      
+      <RPGStatBar label="EXP" current={75} max={100} color="skill-legal" size="small" />
+      <p className="font-[family-name:var(--font-pixel)] text-xs text-[#808080] pl-12 -mt-3">
+        Siguiente Nivel: Escalar AVOCADO.AI
+      </p>
+    </div>
+  )
+}
+
+// Tarjeta de Presentación Principal (Nueva Iteración 4)
 function CharacterStatsPanel() {
   return (
-    <div className="rpg-panel p-4">
-      {/* Character Header */}
-      <div className="flex items-center gap-4 mb-4 pb-3 border-b border-[#4a4a6a]">
-        {/* Avatar Frame */}
-        <div className="relative">
-          <div className="w-20 h-20 bg-[#1a1a2e] border-2 border-[#4a4a6a] flex items-center justify-center overflow-hidden">
-            <div className="w-full h-full bg-gradient-to-br from-[#006060] to-[#003030] flex items-center justify-center">
-              <span className="font-[family-name:var(--font-pixel)] text-3xl text-[#f5a623]">JV</span>
-            </div>
-          </div>
-          <div className="absolute -bottom-2 -right-2 level-badge px-2 py-0.5">
-            <span className="font-[family-name:var(--font-pixel)] text-xs text-black font-bold">Lv.99</span>
-          </div>
+    <div className="rpg-panel p-6 md:p-8 flex flex-col items-center text-center">
+      {/* Avatar Central */}
+      <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-[#60b080] mb-4 shadow-[0_0_15px_rgba(96,176,128,0.5)]">
+        {/* Usamos un color solido/gradiente mientras tanto como placeholder del rostro */}
+        <div className="w-full h-full bg-gradient-to-br from-[#2a4a3a] to-[#1a2a2a] flex items-center justify-center">
+          <span className="font-[family-name:var(--font-pixel)] text-3xl md:text-5xl text-[#60b080]">JV</span>
         </div>
+      </div>
+      
+      {/* Nombres y Titulos */}
+      <h1 className="text-white font-[family-name:var(--font-pixel)] text-3xl md:text-6xl mb-4 tracking-wide shadow-black drop-shadow-md">
+        Jose Guillermo Vasquez Guzman
+      </h1>
+      
+      <h2 className="text-white font-[family-name:var(--font-pixel)] text-2xl md:text-3xl mb-5 leading-tight max-w-3xl mx-auto">
+        Diseño soluciones legales con <span className="bg-[#f5f5dc] text-black px-3 py-1 rounded inline-block mt-2 md:mt-0 font-bold shadow-lg">Inteligencia Artificial</span>
+      </h2>
+      
+      <p className="text-[#c0c0c0] font-[family-name:var(--font-pixel)] text-sm md:text-lg mb-8 max-w-2xl">
+        Ingeniero Legal • Abogado de la Universidad de los Andes | Consultor en PI, datos, cumplimiento y Legal-Tech
+      </p>
+      
+      {/* Action Buttons / Main CTAs (Tarjetas Grandes) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl mx-auto mb-10">
+        <a href="/servicios" className="group win95-btn bg-[#f5d060] hover:bg-[#e0b040] text-black p-4 flex flex-col items-center justify-center gap-3 rounded-xl border-b-4 border-r-4 border-[#b09040] transition-transform hover:-translate-y-1">
+          <span className="text-4xl md:text-5xl group-hover:scale-110 transition-transform">📘</span>
+          <span className="font-[family-name:var(--font-pixel)] text-lg md:text-xl font-bold">Consulta mis servicios</span>
+          <span className="font-[family-name:var(--font-pixel)] text-xs md:text-sm opacity-80 text-center">Explora el catálogo de soluciones legales y tecnológicas</span>
+        </a>
         
-        {/* Character Info */}
-        <div className="flex-1">
-          <h2 className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-2xl mb-1">
-            JOSE G. VASQUEZ
-          </h2>
-          <p className="text-[#88ff88] font-[family-name:var(--font-pixel)] text-sm">
-            Clase: Abogado-Desarrollador IA
-          </p>
-          <p className="text-[#808080] font-[family-name:var(--font-pixel)] text-xs mt-1">
-            Guild: AVOCADO.AI | Colombia
-          </p>
-        </div>
+        <a href="https://api.whatsapp.com/message/F5WCMM3W67FLH1?autoload=1&app_absent=0" target="_blank" rel="noopener noreferrer" className="group win95-btn bg-[#25D366] hover:bg-[#1DA851] text-white p-4 flex flex-col items-center justify-center gap-3 rounded-xl border-b-4 border-r-4 border-[#128C7E] transition-transform hover:-translate-y-1">
+          <span className="text-4xl md:text-5xl group-hover:scale-110 transition-transform">💬</span>
+          <span className="font-[family-name:var(--font-pixel)] text-lg md:text-xl font-bold shadow-black drop-shadow-sm">Hablemos por WhatsApp</span>
+          <span className="font-[family-name:var(--font-pixel)] text-xs md:text-sm font-medium text-green-100 text-center">Respuesta rápida garantizada</span>
+        </a>
       </div>
       
-      {/* HP/MP/EXP Bars */}
-      <div className="space-y-2 mb-4">
-        <RPGStatBar 
-          label="HP" 
-          current={CHARACTER_STATS.hp.current} 
-          max={CHARACTER_STATS.hp.max}
-          color="skill-strength"
-        />
-        <RPGStatBar 
-          label="MP" 
-          current={CHARACTER_STATS.mp.current} 
-          max={CHARACTER_STATS.mp.max}
-          color="skill-tech"
-        />
-        <RPGStatBar 
-          label="EXP" 
-          current={CHARACTER_STATS.exp.current} 
-          max={CHARACTER_STATS.exp.max}
-          color="skill-legal"
-        />
-      </div>
-      
-      {/* Base Stats Grid */}
-      <div className="grid grid-cols-3 gap-2">
-        {BASE_STATS.map((stat) => (
-          <div 
-            key={stat.name} 
-            className="bg-[#0f0f1f] border border-[#4a4a6a] p-2 text-center group relative"
-          >
-            <div className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-xs mb-1">
-              {stat.name}
+      {/* Misión y Visión  */}
+      <div className="bg-[#f5f5dc] text-[#1a1a1a] p-8 md:p-12 w-[calc(100%+3rem)] md:w-[calc(100%+4rem)] -mx-6 md:-mx-8 -mb-6 md:-mb-8 mt-8 border-t-4 border-[#4a4a6a] shadow-inner font-[family-name:var(--font-pixel)]">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+          
+          {/* Misión */}
+          <div className="flex flex-col items-center text-center group">
+            <div className="w-14 h-14 bg-[#1a1a1a] rounded-full flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform">
+              <Sword className="w-7 h-7 text-[#f5f5dc]" />
             </div>
-            <div className="text-white font-[family-name:var(--font-pixel)] text-xl">
-              {stat.value}
-            </div>
-            {/* Tooltip on hover */}
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black border border-[#f5a623] text-[#f5a623] text-xs font-[family-name:var(--font-pixel)] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-              {stat.description}
-            </div>
+            <h3 className="text-2xl md:text-3xl font-bold mb-4 border-b-4 border-[#1a1a1a] pb-2 px-8 inline-block">
+              Misión
+            </h3>
+            <p className="text-lg md:text-xl leading-relaxed font-medium">
+              Combino derecho, tecnología e innovación para diseñar <span className="bg-[#f5a623] text-black px-1">soluciones legales creativas</span> impulsadas por inteligencia artificial y legal design.
+            </p>
           </div>
-        ))}
+
+          {/* Visión */}
+          <div className="flex flex-col items-center text-center group">
+             <div className="w-14 h-14 bg-[#1a1a1a] rounded-full flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform">
+              <Zap className="w-7 h-7 text-[#f5f5dc]" />
+            </div>
+            <h3 className="text-2xl md:text-3xl font-bold mb-4 border-b-4 border-[#1a1a1a] pb-2 px-8 inline-block">
+              Visión
+            </h3>
+            <p className="text-lg md:text-xl leading-relaxed font-medium">
+              Me apasiona aplicar nuevas tecnologías al ejercicio del derecho, <span className="bg-[#00d9ff] text-black px-1">optimizando servicios legales</span> y conectando a las personas con la justicia de forma más eficiente.
+            </p>
+          </div>
+
+        </div>
       </div>
     </div>
   )
 }
 
-// RPG Chat Bubble - Floating Sticky
-function RPGChatBubble({ onSendMessage }: { onSendMessage: (message: string) => void }) {
-  const initialMessage = "Saludos, viajero. Soy el Agente IA de Jose. En que puedo ayudarte?"
+// RPG Chat Bubble - Botón flotante interactivo
+function FloatingChatBubble({ onSendMessage }: { onSendMessage: (message: string) => void }) {
+  const initialMessage = "¡Ji, ji, ji! Saludos, viajero. Soy ChunGPT, el duende inmortal y familiar tecno-arcano de este reino. Mi maestro, José Guillermo, está en las profundidades de las mazmorras corporativas, luchando contra temibles Project Bosses y forjando Smart Contracts en la fragua digital. ¿Deseas que lo invoque para una nueva misión, o prefieres que husmee en su inventario para contarte sobre él?"
   
   const [isOpen, setIsOpen] = useState(false)
   const [displayedText, setDisplayedText] = useState("")
@@ -357,6 +377,7 @@ function RPGChatBubble({ onSendMessage }: { onSendMessage: (message: string) => 
   const [currentMessage, setCurrentMessage] = useState(initialMessage)
   const [messageIndex, setMessageIndex] = useState(0)
   const [messages, setMessages] = useState<{text: string, isUser: boolean}[]>([])
+  const [hasGreeted, setHasGreeted] = useState(false)
 
   const typeText = useCallback((text: string) => {
     setDisplayedText("")
@@ -365,8 +386,19 @@ function RPGChatBubble({ onSendMessage }: { onSendMessage: (message: string) => 
     setCurrentMessage(text)
   }, [])
 
+  // Auto-greet on load (show bubble after 5s)
   useEffect(() => {
-    if (!isTyping) return
+    if (!hasGreeted) {
+      const timer = setTimeout(() => {
+        setIsOpen(true)
+        setHasGreeted(true)
+      }, 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [hasGreeted])
+
+  useEffect(() => {
+    if (!isTyping || !isOpen) return
 
     if (messageIndex < currentMessage.length) {
       const timeout = setTimeout(() => {
@@ -378,13 +410,13 @@ function RPGChatBubble({ onSendMessage }: { onSendMessage: (message: string) => 
     } else {
       setIsTyping(false)
     }
-  }, [messageIndex, currentMessage, isTyping])
+  }, [messageIndex, currentMessage, isTyping, isOpen])
 
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
+    if (messages.length === 0 && isOpen && displayedText === "") {
       typeText(initialMessage)
     }
-  }, [isOpen, typeText, messages.length])
+  }, [typeText, messages.length, isOpen, displayedText])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -395,342 +427,215 @@ function RPGChatBubble({ onSendMessage }: { onSendMessage: (message: string) => 
     setInputValue("")
     
     setTimeout(() => {
-      const response = "* Invocando hechizo de conexion... * Procesando en los servidores arcanos de AVOCADO..."
+      const response = "* Procesando en los servidores arcanos... *"
       setMessages(prev => [...prev, { text: response, isUser: false }])
       typeText(response)
     }, 500)
   }
 
   return (
-    <>
-      {/* Floating Bubble Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-16 right-4 z-50 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 ${
-          isOpen 
-            ? 'bg-[#4a4a6a] rotate-0' 
-            : 'bg-gradient-to-br from-[#f5a623] to-[#d4830a] hover:scale-110 animate-pulse'
-        }`}
-        style={{
-          boxShadow: isOpen 
-            ? '0 4px 20px rgba(74, 74, 106, 0.5)' 
-            : '0 4px 20px rgba(245, 166, 35, 0.5), 0 0 40px rgba(245, 166, 35, 0.3)'
-        }}
-      >
-        {isOpen ? (
-          <X className="w-6 h-6 text-white" />
-        ) : (
-          <MessageSquare className="w-6 h-6 text-black" />
-        )}
-      </button>
-
-      {/* Chat Bubble Panel */}
-      {isOpen && (
-        <div 
-          className="fixed bottom-32 right-4 z-50 w-80 sm:w-96 animate-in slide-in-from-bottom-4 fade-in duration-300"
-          style={{
-            filter: 'drop-shadow(0 10px 40px rgba(0,0,0,0.5))'
-          }}
+    <div className="fixed bottom-20 right-4 z-50 flex flex-col items-end">
+      {/* Botón flotante (Avatar Icono) */}
+      {!isOpen && (
+        <button 
+          onClick={() => setIsOpen(true)}
+          className="group relative bg-[#1a1a2e] border-2 border-[#f5a623] w-14 h-14 md:w-16 md:h-16 rounded-full flex flex-col items-center justify-center shadow-[0_0_15px_rgba(245,166,35,0.4)] hover:scale-110 transition-transform cursor-pointer animate-in zoom-in"
         >
-          {/* Bubble shape with RPG styling */}
-          <div className="rpg-panel overflow-hidden">
-            {/* Header */}
-            <div className="flex items-center gap-2 px-3 py-2 bg-[#2a2a4a] border-b-2 border-[#4a4a6a]">
+          <span className="text-2xl md:text-3xl drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">🤖</span>
+          <span className="w-3 h-3 bg-[#88ff88] rounded-full absolute bottom-0 right-0 border-2 border-[#1a1a2e] animate-pulse"></span>
+          
+          {/* Tooltip pequeño para invitar al click */}
+          {hasGreeted && (
+             <div className="absolute -top-10 right-0 bg-[#f5f5dc] text-black font-[family-name:var(--font-pixel)] text-[10px] md:text-xs px-2 py-1 border-2 border-black whitespace-nowrap shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
+               Hablar con ChunGPT
+             </div>
+          )}
+        </button>
+      )}
+
+      {/* Ventana de chat desplegada */}
+      {isOpen && (
+        <div className="rpg-panel overflow-hidden w-[95vw] sm:w-[400px] shadow-[0_10px_30px_rgba(0,0,0,0.8)] animate-in slide-in-from-bottom-8 duration-300 mb-2">
+          {/* Header */}
+          <div className="flex items-center justify-between px-3 md:px-4 py-3 bg-[#2a2a4a] border-b-2 border-[#4a4a6a]">
+            <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-gradient-to-br from-[#006060] to-[#003030] rounded-full flex items-center justify-center border-2 border-[#f5a623]">
-                <span className="font-[family-name:var(--font-pixel)] text-xs text-[#f5a623]">IA</span>
+                <span className="font-[family-name:var(--font-pixel)] text-xs text-[#f5a623]">CGPT</span>
               </div>
-              <div className="flex-1">
-                <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-sm">
-                  AGENTE_IA.exe
-                </span>
-                <div className="flex items-center gap-1">
-                  <span className="w-2 h-2 bg-[#88ff88] rounded-full animate-pulse" />
-                  <span className="text-[#88ff88] font-[family-name:var(--font-pixel)] text-xs">
-                    Online
-                  </span>
-                </div>
-              </div>
-              <button 
-                onClick={() => setIsOpen(false)}
-                className="text-[#808080] hover:text-white transition-colors"
-              >
-                <Minus className="w-4 h-4" />
-              </button>
+              <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-sm md:text-base tracking-widest text-shadow">
+                CHUNGPT.exe
+              </span>
             </div>
-            
-            {/* Messages Area */}
-            <div className="h-64 overflow-y-auto p-3 space-y-3 bg-[#0a0a14]">
-              {/* Initial AI Message */}
-              <div className="flex gap-2">
-                <div className="w-6 h-6 bg-[#1a1a2e] rounded-full flex items-center justify-center shrink-0 border border-[#4a4a6a]">
-                  <Sword className="w-3 h-3 text-[#f5a623]" />
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="text-[#c0c0c0] hover:text-white hover:bg-[#ff0000] px-3 py-1 rounded transition-colors font-[family-name:var(--font-pixel)] text-lg"
+            >
+              X
+            </button>
+          </div>
+          
+          {/* Messages Area */}
+          <div className="h-[50vh] max-h-[400px] overflow-y-auto p-4 space-y-4 bg-[#0a0a14]">
+            {/* Initial AI Message */}
+            <div className="flex gap-3">
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-[#1a1a2e] rounded-full flex items-center justify-center shrink-0 border-2 border-[#4a4a6a]">
+                <Sword className="w-4 h-4 md:w-5 md:h-5 text-[#f5a623]" />
+              </div>
+              <div className="bg-[#1a1a2e] border-2 border-[#4a4a6a] px-4 py-3 max-w-[85%] rounded-md">
+                <p className="text-white font-[family-name:var(--font-pixel)] text-sm md:text-base leading-relaxed">
+                  {messages.length === 0 ? (
+                    <>
+                      {displayedText}
+                      {isTyping && <span className="typewriter-cursor" />}
+                    </>
+                  ) : (
+                    initialMessage
+                  )}
+                </p>
+              </div>
+            </div>
+
+            {/* Conversation Messages */}
+            {messages.map((msg, index) => (
+              <div key={index} className={`flex gap-3 ${msg.isUser ? 'flex-row-reverse' : ''}`}>
+                <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center shrink-0 border-2 ${
+                  msg.isUser 
+                    ? 'bg-[#006060] border-[#00d9ff]' 
+                    : 'bg-[#1a1a2e] border-[#4a4a6a]'
+                }`}>
+                  {msg.isUser ? (
+                    <span className="font-[family-name:var(--font-pixel)] text-xs font-bold text-[#00d9ff]">TU</span>
+                  ) : (
+                    <Sword className="w-4 h-4 md:w-5 md:h-5 text-[#f5a623]" />
+                  )}
                 </div>
-                <div className="bg-[#1a1a2e] border border-[#4a4a6a] px-3 py-2 max-w-[85%]">
-                  <p className="text-white font-[family-name:var(--font-pixel)] text-sm leading-relaxed">
-                    {messages.length === 0 ? (
-                      <>
-                        {displayedText}
-                        {isTyping && <span className="typewriter-cursor" />}
-                      </>
-                    ) : (
-                      initialMessage
-                    )}
+                <div className={`px-4 py-3 max-w-[85%] rounded-md ${
+                  msg.isUser 
+                    ? 'bg-[#003030] border-2 border-[#00d9ff]' 
+                    : 'bg-[#1a1a2e] border-2 border-[#4a4a6a]'
+                }`}>
+                  <p className={`font-[family-name:var(--font-pixel)] text-sm md:text-base leading-relaxed break-words ${
+                    msg.isUser ? 'text-[#00d9ff]' : 'text-white'
+                  }`}>
+                    {msg.text}
                   </p>
                 </div>
               </div>
-
-              {/* Conversation Messages */}
-              {messages.map((msg, index) => (
-                <div key={index} className={`flex gap-2 ${msg.isUser ? 'flex-row-reverse' : ''}`}>
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 border ${
-                    msg.isUser 
-                      ? 'bg-[#006060] border-[#00d9ff]' 
-                      : 'bg-[#1a1a2e] border-[#4a4a6a]'
-                  }`}>
-                    {msg.isUser ? (
-                      <span className="font-[family-name:var(--font-pixel)] text-xs text-[#00d9ff]">TU</span>
-                    ) : (
-                      <Sword className="w-3 h-3 text-[#f5a623]" />
-                    )}
-                  </div>
-                  <div className={`px-3 py-2 max-w-[85%] ${
-                    msg.isUser 
-                      ? 'bg-[#003030] border border-[#00d9ff]' 
-                      : 'bg-[#1a1a2e] border border-[#4a4a6a]'
-                  }`}>
-                    <p className={`font-[family-name:var(--font-pixel)] text-sm leading-relaxed ${
-                      msg.isUser ? 'text-[#00d9ff]' : 'text-white'
-                    }`}>
-                      {msg.text}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {/* Input Area */}
-            <form onSubmit={handleSubmit} className="p-2 bg-[#1a1a2e] border-t-2 border-[#4a4a6a]">
-              <div className="flex gap-2">
-                <div className="flex-1 relative">
-                  <ChevronRight className="absolute left-2 top-1/2 -translate-y-1/2 w-3 h-3 text-[#f5a623] rpg-arrow" />
-                  <input
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    placeholder="Escribe aqui..."
-                    className="w-full bg-[#0f0f1f] border-2 border-[#4a4a6a] text-white pl-7 pr-3 py-2 font-[family-name:var(--font-pixel)] text-xs placeholder:text-[#4a4a6a] focus:outline-none focus:border-[#f5a623]"
-                  />
-                </div>
-                <button 
-                  type="submit"
-                  className="bg-[#f5a623] hover:bg-[#d4830a] text-black px-3 py-2 font-[family-name:var(--font-pixel)] text-xs border-2 border-[#fff] flex items-center gap-1 transition-colors shrink-0"
-                >
-                  <Sword className="w-3 h-3" />
-                </button>
-              </div>
-            </form>
+            ))}
           </div>
           
-          {/* Bubble tail/pointer */}
-          <div className="absolute -bottom-2 right-8 w-4 h-4 bg-[#1a1a2e] border-r-2 border-b-2 border-[#4a4a6a] transform rotate-45" />
-        </div>
-      )}
-    </>
-  )
-}
-
-// Social Links Cards - Horizontal Layout
-function SocialLinksCards() {
-  const [hoveredItem, setHoveredItem] = useState<number | null>(null)
-  
-  const items = [
-    { 
-      name: "LinkedIn", 
-      description: "Red profesional",
-      effect: "+50 Networking",
-      icon: Linkedin,
-      color: "#0077b5",
-      href: "https://linkedin.com/in/joseguillermovasquez",
-      rarity: "Epico"
-    },
-    { 
-      name: "GitHub", 
-      description: "15 repositorios",
-      effect: "+40 Open Source",
-      icon: Github,
-      color: "#ffffff",
-      href: "https://github.com/joselito412",
-      rarity: "Legendario"
-    },
-    { 
-      name: "Instagram", 
-      description: "Contenido visual",
-      effect: "+30 Social",
-      icon: Instagram,
-      color: "#e4405f",
-      href: "https://instagram.com/avocado.center",
-      rarity: "Raro"
-    },
-    { 
-      name: "Blog", 
-      description: "LegalTech articles",
-      effect: "+60 Sabiduria",
-      icon: BookMarked,
-      color: "#f5a623",
-      href: "https://avocado.center/",
-      rarity: "Mitico"
-    },
-  ]
-
-  const rarityBorders: Record<string, string> = {
-    "Raro": "border-[#0070dd] hover:shadow-[0_0_20px_rgba(0,112,221,0.4)]",
-    "Epico": "border-[#a335ee] hover:shadow-[0_0_20px_rgba(163,53,238,0.4)]",
-    "Legendario": "border-[#ff8000] hover:shadow-[0_0_20px_rgba(255,128,0,0.4)]",
-    "Mitico": "border-[#e6cc80] hover:shadow-[0_0_20px_rgba(230,204,128,0.4)]"
-  }
-
-  const rarityGlow: Record<string, string> = {
-    "Raro": "text-[#0070dd]",
-    "Epico": "text-[#a335ee]",
-    "Legendario": "text-[#ff8000]",
-    "Mitico": "text-[#e6cc80]"
-  }
-  
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {items.map((item, index) => {
-        const IconComponent = item.icon
-        const isHovered = hoveredItem === index
-        
-        return (
-          <a
-            key={item.name}
-            href={item.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`group relative bg-[#1a1a2e] border-2 p-4 transition-all duration-300 ${rarityBorders[item.rarity]} ${isHovered ? 'scale-105 -translate-y-1' : ''}`}
-            onMouseEnter={() => setHoveredItem(index)}
-            onMouseLeave={() => setHoveredItem(null)}
-          >
-            {/* Rarity glow effect */}
-            {isHovered && (
-              <div className="absolute inset-0 opacity-20 animate-pulse" 
-                style={{ background: `radial-gradient(circle at center, ${item.color} 0%, transparent 70%)` }} 
-              />
-            )}
-            
-            {/* Icon */}
-            <div className="flex justify-center mb-3">
-              <div 
-                className={`w-14 h-14 flex items-center justify-center border-2 transition-all duration-300 ${
-                  isHovered ? 'border-[#f5a623] bg-[#2a2a4a]' : 'border-[#4a4a6a] bg-[#0f0f1f]'
-                }`}
-              >
-                <IconComponent 
-                  className="w-7 h-7 transition-transform duration-300 group-hover:scale-110" 
-                  style={{ color: item.color }} 
+          {/* Input Area */}
+          <form onSubmit={handleSubmit} className="p-3 bg-[#1a1a2e] border-t-4 border-[#4a4a6a]">
+            <div className="flex gap-2">
+              <div className="flex-1 relative">
+                <ChevronRight className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#f5a623] rpg-arrow" />
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder="Escribe tu mensaje..."
+                  className="w-full bg-[#0f0f1f] border-2 border-[#4a4a6a] text-white pl-9 pr-4 py-3 md:py-4 font-[family-name:var(--font-pixel)] text-sm md:text-lg placeholder:text-[#4a4a6a] focus:outline-none focus:border-[#f5a623]"
                 />
               </div>
+              <button 
+                type="submit"
+                className="bg-[#f5a623] hover:bg-[#d4830a] text-black px-4 py-3 md:py-4 font-[family-name:var(--font-pixel)] border-2 border-[#fff] flex items-center justify-center gap-1 transition-colors shrink-0"
+              >
+                <Sword className="w-5 h-5 md:w-6 md:h-6" />
+              </button>
             </div>
-            
-            {/* Name */}
-            <h3 className={`font-[family-name:var(--font-pixel)] text-center text-lg mb-1 transition-colors ${
-              isHovered ? 'text-white' : 'text-[#c0c0c0]'
-            }`}>
-              {item.name}
-            </h3>
-            
-            {/* Rarity Badge */}
-            <div className="text-center mb-2">
-              <span className={`font-[family-name:var(--font-pixel)] text-xs ${rarityGlow[item.rarity]}`}>
-                [{item.rarity}]
-              </span>
-            </div>
-            
-            {/* Stats on hover */}
-            <div className={`text-center transition-all duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-              <p className="text-[#88ff88] font-[family-name:var(--font-pixel)] text-xs">
-                {item.effect}
-              </p>
-            </div>
-            
-            {/* External link indicator */}
-            <ExternalLink className={`absolute top-2 right-2 w-3 h-3 transition-opacity ${
-              isHovered ? 'opacity-100 text-[#f5a623]' : 'opacity-30 text-[#808080]'
-            }`} />
-          </a>
-        )
-      })}
+          </form>
+        </div>
+      )}
     </div>
   )
 }
 
-// RPG Footer
-function RPGFooter() {
+// Exported Social Links to use in Taskbar
+const SOCIAL_LINKS = [
+  { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/in/joseguillermovasquez", color: "#0077b5" },
+  { name: "GitHub", icon: Github, href: "https://github.com/joselito412", color: "#ffffff" },
+  { name: "Instagram", icon: Instagram, href: "https://instagram.com/avocado.center", color: "#e4405f" },
+  { name: "Blog", icon: BookMarked, href: "https://avocado.center/", color: "#f5a623" }
+]
+
+// Removed old RPGFooter
+
+// Panel de Proyectos Destacados
+function FeaturedProjectsPanel() {
+  const projects = [
+    {
+      name: "AVOCADO.AI",
+      role: "Founder & CEO, Lead Developer",
+      desc: "Plataforma Legal-Tech que democratiza el acceso a servicios legales combinando agentes IA autónomos y abogados expertos via WhatsApp.",
+      tech: ["Python", "React", "Vector DBs", "LLM APIs"],
+      link: "https://avocado.center/",
+      logo: "/projects/avocado-logo.png" // Sube aquí tu imagen
+    },
+    {
+      name: "Aldana Hernandez Legal",
+      role: "Legal & Tech Consultant",
+      desc: "Implementación tecnológica y automatización de procesos para el prestigioso despacho legal corporativo.",
+      tech: ["AI Agents", "Legal Engineering", "Automation"],
+      link: "https://aldanahernandezlegal.com/",
+      logo: "/projects/aldana-logo.png"  // Sube aquí tu imagen
+    }
+  ]
   return (
-    <footer className="mt-8 border-t-4 border-double border-[#4a4a6a] bg-gradient-to-b from-[#0a0a14] to-[#050508]">
-      {/* Social Cards Section */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-6">
-          <h2 className="font-[family-name:var(--font-pixel)] text-2xl text-[#f5a623] mb-2">
-            INVENTARIO DE CONEXIONES
-          </h2>
-          <p className="font-[family-name:var(--font-pixel)] text-sm text-[#808080]">
-            ~ Selecciona un item para conectar ~
-          </p>
-        </div>
-        
-        <SocialLinksCards />
-      </div>
-      
-      {/* Bottom Footer */}
-      <div className="border-t-2 border-[#4a4a6a] bg-[#0f0f1f]">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            {/* Left - Logo/Brand */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#006060] to-[#003030] flex items-center justify-center border-2 border-[#f5a623]">
-                <span className="font-[family-name:var(--font-pixel)] text-sm text-[#f5a623]">JV</span>
+    <div className="space-y-4">
+      {projects.map((proj, idx) => (
+        <div key={idx} className="bg-[#1a1a2e] border-2 border-[#4a4a6a] p-4 group hover:border-[#f5a623] transition-colors">
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+            
+            {/* Contenedor Izquierdo: Logo + Titulos */}
+            <div className="flex items-center gap-4">
+              {/* Espacio reservado para el Logo */}
+              <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 bg-[#0a0a14] border-2 border-[#4a4a6a] flex items-center justify-center p-1 rounded-sm overflow-hidden group-hover:border-[#f5a623] transition-colors">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
+                  src={proj.logo} 
+                  alt={`Logo de ${proj.name}`}
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    // Fallback visual si la imagen no existe aún
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement!.innerHTML = `<span class="font-[family-name:var(--font-pixel)] text-[10px] text-[#4a4a6a] text-center leading-tight">Mising<br/>img</span>`;
+                  }}
+                />
               </div>
+
               <div>
-                <p className="font-[family-name:var(--font-pixel)] text-sm text-[#f5a623]">
-                  AVOCADO.AI
-                </p>
-                <p className="font-[family-name:var(--font-pixel)] text-xs text-[#808080]">
-                  Legal-Tech Guild
-                </p>
+                 <h3 className="font-[family-name:var(--font-pixel)] text-lg sm:text-xl lg:text-2xl text-[#f5a623] group-hover:text-white transition-colors drop-shadow-md leading-tight max-w-[180px] sm:max-w-none">
+                   {proj.name}
+                 </h3>
+                 <p className="font-[family-name:var(--font-pixel)] text-xs sm:text-sm text-[#88ff88] mt-1 shadow-black drop-shadow-sm">
+                   {proj.role}
+                 </p>
               </div>
             </div>
-            
-            {/* Center - Stats */}
-            <div className="flex items-center gap-6">
-              <div className="text-center">
-                <p className="font-[family-name:var(--font-pixel)] text-xs text-[#808080]">QUESTS</p>
-                <p className="font-[family-name:var(--font-pixel)] text-lg text-[#88ff88]">150+</p>
-              </div>
-              <div className="text-center">
-                <p className="font-[family-name:var(--font-pixel)] text-xs text-[#808080]">REPOS</p>
-                <p className="font-[family-name:var(--font-pixel)] text-lg text-[#00d9ff]">15</p>
-              </div>
-              <div className="text-center">
-                <p className="font-[family-name:var(--font-pixel)] text-xs text-[#808080]">LEVEL</p>
-                <p className="font-[family-name:var(--font-pixel)] text-lg text-[#f5a623]">99</p>
-              </div>
-            </div>
-            
-            {/* Right - Copyright */}
-            <div className="text-center md:text-right">
-              <p className="font-[family-name:var(--font-pixel)] text-xs text-[#808080]">
-                Colombia
-              </p>
-              <p className="font-[family-name:var(--font-pixel)] text-xs text-[#4a4a6a]">
-                SAVE DATA: 2024
-              </p>
-            </div>
+
+            <a 
+              href={proj.link} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="win95-btn px-3 py-1 bg-[#c0c0c0] text-black font-[family-name:var(--font-pixel)] text-xs flex items-center justify-center gap-1 w-fit md:shrink-0 mt-2 md:mt-0"
+            >
+              VISITAR <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+          <p className="font-[family-name:var(--font-pixel)] text-sm text-[#c0c0c0] leading-relaxed mb-3">
+            {proj.desc}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {proj.tech.map((t, i) => (
+              <span key={i} className="px-2 py-0.5 border border-[#4a4a6a] bg-[#0a0a14] font-[family-name:var(--font-pixel)] text-[10px] text-[#00d9ff]">
+                {t}
+              </span>
+            ))}
           </div>
         </div>
-      </div>
-    </footer>
+      ))}
+    </div>
   )
 }
 
@@ -912,7 +817,7 @@ function SpecialAbilitiesPanel({ type }: { type: 'legal' | 'tech' }) {
   )
 }
 
-// Win95 Taskbar
+// Win95 Taskbar Rediseñada
 function Taskbar() {
   const [time, setTime] = useState("")
 
@@ -927,17 +832,40 @@ function Taskbar() {
   }, [])
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-10 bg-[#c0c0c0] win95-raised flex items-center justify-between px-2 z-50">
-      <button className="win95-btn px-3 py-1 flex items-center gap-2 font-[family-name:var(--font-pixel)] text-sm font-bold">
-        <Heart className="w-4 h-4 text-red-500" />
-        Inicio
-      </button>
-      
+    <div className="fixed bottom-0 left-0 right-0 h-12 bg-[#c0c0c0] win95-raised flex items-center justify-between px-2 z-50">
       <div className="flex items-center gap-2">
-        <span className="font-[family-name:var(--font-pixel)] text-xs text-black hidden sm:inline">
-          AVOCADO_CENTER.exe
-        </span>
-        <div className="win95-sunken px-3 py-1">
+        {/* Start Button */}
+        <button className="win95-btn px-2 md:px-3 py-1 flex items-center gap-2 font-[family-name:var(--font-pixel)] text-sm md:text-base font-bold">
+          <Heart className="w-4 h-4 text-red-500" />
+          <span className="hidden sm:inline">Inicio</span>
+        </button>
+        
+        {/* Separator */}
+        <div className="h-8 w-0.5 bg-gray-400 border-r border-white mx-1"></div>
+
+        {/* Social Links as "Open Apps" */}
+        <div className="flex items-center gap-1 md:gap-2">
+          {SOCIAL_LINKS.map(link => {
+            const Icon = link.icon;
+            return (
+              <a 
+                key={link.name} 
+                href={link.href} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="win95-btn px-2 py-1 flex items-center gap-1.5 hover:bg-gray-300"
+                title={link.name}
+              >
+                <Icon className="w-4 h-4 md:w-5 md:h-5" style={{ color: link.color !== '#ffffff' ? link.color : '#000000' }} />
+                <span className="font-[family-name:var(--font-pixel)] text-xs hidden md:inline">{link.name}</span>
+              </a>
+            )
+          })}
+        </div>
+      </div>
+      
+      <div className="flex items-center gap-2 ml-auto">
+        <div className="win95-sunken px-2 md:px-3 py-1 bg-white">
           <span className="font-[family-name:var(--font-pixel)] text-xs text-black">{time}</span>
         </div>
       </div>
@@ -955,15 +883,17 @@ function ScanlinesOverlay() {
   )
 }
 
-// Desktop Icon
+// Desktop Icon Nav
 function DesktopIcon({ icon, label, onClick }: { icon: string; label: string; onClick?: () => void }) {
   return (
     <button 
       onClick={onClick}
-      className="flex flex-col items-center gap-1 p-2 hover:bg-[#000080]/30 group w-20"
+      className="flex flex-col items-center justify-start gap-2 p-2 hover:bg-[#000080]/30 group transition-colors"
     >
-      <span className="text-2xl">{icon}</span>
-      <span className="font-[family-name:var(--font-pixel)] text-xs text-white drop-shadow-[1px_1px_0_#000] group-hover:bg-[#000080] px-1 text-center leading-tight">
+      <span className="text-4xl md:text-5xl drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)] transition-transform group-hover:scale-110">
+        {icon}
+      </span>
+      <span className="font-[family-name:var(--font-pixel)] text-sm md:text-base text-white drop-shadow-[1px_1px_0_#000] group-hover:bg-[#000080] px-2 py-0.5 text-center leading-tight">
         {label}
       </span>
     </button>
@@ -975,68 +905,102 @@ function DesktopIcon({ icon, label, onClick }: { icon: string; label: string; on
 // ===========================================
 
 export default function AvocadoCenter() {
+  const [activeWindow, setActiveWindow] = useState<'proyectos' | 'skills' | 'network' | 'ia' | null>(null)
+
   const handleSendMessage = (message: string) => {
-    // TODO: Connect to real AI backend
     console.log("Message sent:", message)
   }
 
-  return (
-    <main className="min-h-screen bg-[#008080] pb-14 relative battle-grid">
-      <ScanlinesOverlay />
-      
-      {/* Desktop Icons - Left side */}
-      <div className="fixed top-4 left-4 space-y-2 hidden lg:flex flex-col z-40">
-        <DesktopIcon icon="📁" label="Proyectos" />
-        <DesktopIcon icon="📄" label="CV.pdf" />
-        <DesktopIcon icon="💾" label="Portfolio" />
-        <DesktopIcon icon="🗑️" label="Papelera" />
-      </div>
+  const handleIconClick = (windowName: 'proyectos' | 'skills' | 'network' | 'ia') => {
+    setActiveWindow(windowName === activeWindow ? null : windowName)
+  }
 
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-4 lg:pl-28">
+  return (
+    <main className="min-h-screen bg-[#008080] pb-24 relative battle-grid overflow-x-hidden">
+      <ScanlinesOverlay />
+
+      {/* Main Content - Mobile First Container */}
+      <div className="w-full max-w-xl mx-auto px-4 py-8 relative z-10">
+        
         {/* Header - Battle Title */}
-        <div className="text-center mb-4">
-          <h1 className="font-[family-name:var(--font-pixel)] text-3xl md:text-5xl text-[#f5a623] rpg-glow tracking-wider">
+        <div className="text-center mb-8">
+          <h1 className="font-[family-name:var(--font-pixel)] text-4xl md:text-5xl text-[#f5a623] rpg-glow tracking-wider">
             AVOCADO CENTER
           </h1>
-          <p className="font-[family-name:var(--font-pixel)] text-sm md:text-lg text-[#88ff88] mt-1">
+          <p className="font-[family-name:var(--font-pixel)] text-sm md:text-base text-[#88ff88] mt-2">
             ~ Un héroe legal-tech aparece ~
           </p>
         </div>
 
-        {/* Battle Layout - RPG Style */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-          
-          {/* Left Column - Character Profile (FIRST) */}
-          <div className="lg:col-span-4 space-y-4 order-1">
-            <CharacterStatsPanel />
-          </div>
+        {/* Character Profile (FIRST) */}
+        <div className="mb-10 w-full animate-in slide-in-from-bottom-4 duration-500">
+          <CharacterStatsPanel />
+        </div>
 
-          {/* Center Column - Skills (Both visible) */}
-          <div className="lg:col-span-8 space-y-4 order-2">
+        {/* Desktop Navigation Menu (Win95 Icons) */}
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-10 w-full animate-in slide-in-from-bottom-8 duration-700 max-w-sm mx-auto">
+           <DesktopIcon icon="🗂️" label="Proyectos" onClick={() => handleIconClick('proyectos')} />
+           <DesktopIcon icon="💻" label="Skills" onClick={() => handleIconClick('skills')} />
+           <DesktopIcon icon="🌐" label="Network" onClick={() => handleIconClick('network')} />
+        </div>
+
+        {/* Active Window Render Area */}
+        {activeWindow === 'proyectos' && (
+          <div className="mb-10 animate-in slide-in-from-bottom-4">
+            <Win95Window title="Proyectos_Destacados.exe" onClose={() => setActiveWindow(null)}>
+              <div className="p-2 sm:p-4 bg-[#0a0a14]">
+                 <FeaturedProjectsPanel />
+              </div>
+            </Win95Window>
+          </div>
+        )}
+
+        {activeWindow === 'skills' && (
+          <div className="mb-10 space-y-4 animate-in slide-in-from-bottom-4">
+            <Win95Window title="Core_Stats.exe" onClose={() => setActiveWindow(null)}>
+              <div className="p-4 bg-[#0a0a14]">
+                <RPGStatsPanel />
+              </div>
+            </Win95Window>
             <DualSkillsPanel />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Win95Window title="Skills_Legal.exe" onClose={() => setActiveWindow(null)}>
+                <SpecialAbilitiesPanel type="legal" />
+              </Win95Window>
+              <Win95Window title="Skills_Tech.exe" onClose={() => setActiveWindow(null)}>
+                <SpecialAbilitiesPanel type="tech" />
+              </Win95Window>
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Special Abilities Section - Full Width */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
-          <Win95Window title="Habilidades_Legal.exe" className="h-fit">
-            <SpecialAbilitiesPanel type="legal" />
-          </Win95Window>
-          <Win95Window title="Habilidades_Tech.exe" className="h-fit">
-            <SpecialAbilitiesPanel type="tech" />
-          </Win95Window>
-        </div>
+        {activeWindow === 'network' && (
+          <div className="mb-10 animate-in slide-in-from-bottom-4">
+            <Win95Window title="Network_Contacto.exe" onClose={() => setActiveWindow(null)}>
+              <div className="p-4 bg-[#1a1a2e] border-2 border-[#4a4a6a] text-center space-y-4">
+                 <h3 className="font-[family-name:var(--font-pixel)] text-xl text-[#88ff88] mb-2">🤝 Invitación al Guild Formada</h3>
+                 <p className="font-[family-name:var(--font-pixel)] text-sm text-[#c0c0c0] leading-relaxed">
+                   ¿Buscas colaborar en proyectos Legal-Tech, discutir sobre IA aplicada al derecho, o necesitas consultoría en compliance?
+                 </p>
+                 <div className="flex flex-col gap-2 max-w-xs mx-auto mt-4">
+                    <a href="mailto:jguillervg@avocado.center" className="win95-btn px-4 py-2 font-[family-name:var(--font-pixel)] text-xs sm:text-sm text-black flex items-center justify-center gap-2">
+                      <Mail className="w-4 h-4" /> Enviar Correo (Email)
+                    </a>
+                    <a href="https://linkedin.com/in/joseguillermovasquez" target="_blank" rel="noopener noreferrer" className="win95-btn px-4 py-2 font-[family-name:var(--font-pixel)] text-xs sm:text-sm text-black flex items-center justify-center gap-2">
+                       <Linkedin className="w-4 h-4" /> Conectar en LinkedIn
+                    </a>
+                 </div>
+              </div>
+            </Win95Window>
+          </div>
+        )}
 
+        {/* Fin del render Area */}
       </div>
 
-      {/* RPG Footer with Social Cards */}
-      <RPGFooter />
-
-      {/* Floating Chat Bubble */}
-      <RPGChatBubble onSendMessage={handleSendMessage} />
-
+      <FloatingChatBubble onSendMessage={handleSendMessage} />
       <Taskbar />
     </main>
   )
 }
+
