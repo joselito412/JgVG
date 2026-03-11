@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { MessageSquare, Phone, Linkedin, Mail, Github, X, Minus, Square, ChevronRight, Sword, Shield, Zap, BookOpen, Heart, Star, Instagram, BookMarked, ExternalLink } from "lucide-react"
+import { Phone, Linkedin, Mail, Github, X, Minus, Square, ChevronRight, Sword, Shield, Zap, BookOpen, Heart, Star, Instagram, BookMarked, ExternalLink } from "lucide-react"
+import Scene3D from "@/components/three/Scene3D"
 
 // ===========================================
 // SKILL DATA - Tu perfil de habilidades
@@ -172,14 +173,7 @@ function DualSkillsPanel() {
   
   return (
     <div className="rpg-panel p-0 overflow-hidden">
-      {/* Header */}
-      <div className="flex items-center justify-center gap-3 px-4 py-2 bg-[#2a2a4a] border-b-2 border-[#4a4a6a]">
-        <Sword className="w-4 h-4 text-[#f5a623]" />
-        <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-lg">
-          SKILL TREE
-        </span>
-        <Shield className="w-4 h-4 text-[#f5a623]" />
-      </div>
+{/* Header Removido por Minimalismo del Layout Superior */}
       
       {/* Two Column Skills */}
       <div className="grid grid-cols-1 md:grid-cols-2">
@@ -209,12 +203,7 @@ function DualSkillsPanel() {
                     Lv.{skill.level}
                   </span>
                 </div>
-                <div className="rpg-stat-bar h-2 ml-0">
-                  <div 
-                    className="rpg-stat-bar-fill skill-tech"
-                    style={{ width: `${(skill.level / skill.maxLevel) * 100}%` }}
-                  />
-                </div>
+{/* Barra Removida */}
               </div>
             ))}
           </div>
@@ -246,24 +235,14 @@ function DualSkillsPanel() {
                     Lv.{skill.level}
                   </span>
                 </div>
-                <div className="rpg-stat-bar h-2 ml-0">
-                  <div 
-                    className={`rpg-stat-bar-fill ${skill.icon}`}
-                    style={{ width: `${(skill.level / skill.maxLevel) * 100}%` }}
-                  />
-                </div>
+{/* Barra Removida */}
               </div>
             ))}
           </div>
         </div>
       </div>
       
-      {/* Footer */}
-      <div className="border-t-2 border-[#4a4a6a] px-3 py-2 bg-[#0f0f1f]">
-        <p className="text-[#808080] font-[family-name:var(--font-pixel)] text-xs text-center">
-          [HOVER] Ver nivel de habilidad
-        </p>
-      </div>
+      {/* Footer Removido */}
     </div>
   )
 }
@@ -273,19 +252,8 @@ export function RPGStatsPanel() {
   return (
     <div className="space-y-4">
       <RPGStatBar label="HP" current={999} max={999} color="skill-strength" showNumbers size="normal" />
-      <p className="font-[family-name:var(--font-pixel)] text-xs md:text-sm text-[#c0c0c0] pl-12 -mt-3 mb-2">
-        Legal-Tech: Innovación, AI Governance
-      </p>
-      
       <RPGStatBar label="MP" current={850} max={999} color="skill-tech" showNumbers size="normal" />
-      <p className="font-[family-name:var(--font-pixel)] text-xs md:text-sm text-[#c0c0c0] pl-12 -mt-3 mb-2">
-        Dev: React, Python, Supabase, LLMs
-      </p>
-      
-      <RPGStatBar label="EXP" current={75} max={100} color="skill-legal" size="small" />
-      <p className="font-[family-name:var(--font-pixel)] text-xs text-[#808080] pl-12 -mt-3">
-        Siguiente Nivel: Escalar AVOCADO.AI
-      </p>
+      <RPGStatBar label="EXP" current={75} max={100} color="skill-legal" showNumbers size="small" />
     </div>
   )
 }
@@ -408,13 +376,13 @@ function FloatingChatBubble({ onSendMessage }: { onSendMessage: (message: string
 
       return () => clearTimeout(timeout)
     } else {
-      setIsTyping(false)
+      setTimeout(() => setIsTyping(false), 0)
     }
   }, [messageIndex, currentMessage, isTyping, isOpen])
 
   useEffect(() => {
     if (messages.length === 0 && isOpen && displayedText === "") {
-      typeText(initialMessage)
+      setTimeout(() => typeText(initialMessage), 0)
     }
   }, [typeText, messages.length, isOpen, displayedText])
 
@@ -916,7 +884,7 @@ export default function AvocadoCenter() {
   }
 
   return (
-    <main className="min-h-screen bg-[#008080] pb-24 relative battle-grid overflow-x-hidden">
+    <main className="min-h-screen bg-[#008080] pb-24 relative battle-grid overflow-clip">
       <ScanlinesOverlay />
 
       {/* Main Content - Mobile First Container */}
@@ -955,22 +923,71 @@ export default function AvocadoCenter() {
           </div>
         )}
 
+        {/* ===== NUEVO LAYOUT RPG: SPLIT SCREEN STICKY (Personaje Te Acompaña / Stats Limpios Der) ===== */}
         {activeWindow === 'skills' && (
-          <div className="mb-10 space-y-4 animate-in slide-in-from-bottom-4">
-            <Win95Window title="Core_Stats.exe" onClose={() => setActiveWindow(null)}>
-              <div className="p-4 bg-[#0a0a14]">
-                <RPGStatsPanel />
+          <div className="mb-10 w-[95vw] lg:w-[1100px] max-w-full mx-auto animate-in slide-in-from-bottom-4 relative bg-[#0a0a14] border-2 border-[#4a4a6a]">
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+              
+              {/* LADO IZQUIERDO: Pantalla del Personaje STICKY (Te sigue al hacer scroll en Desktop) */}
+              <div className="relative h-[300px] sm:h-[400px] lg:h-[calc(100vh-80px)] lg:sticky lg:top-10 border-b-2 lg:border-b-0 lg:border-r-2 border-[#4a4a6a] bg-[url('/bg-pattern.png')] bg-repeat bg-center">
+                
+                {/* Etiqueta de Nombre Clásica arriba del personaje */}
+                <div className="absolute top-4 left-4 z-10 bg-[#000080] border-2 border-white px-3 py-1 text-white font-[family-name:var(--font-pixel)] text-sm shadow-md">
+                  Lv.99 Abogado-Dev
+                </div>
+
+                <div className="w-full h-full">
+                  <Scene3D />
+                </div>
               </div>
-            </Win95Window>
-            <DualSkillsPanel />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Win95Window title="Skills_Legal.exe" onClose={() => setActiveWindow(null)}>
-                <SpecialAbilitiesPanel type="legal" />
-              </Win95Window>
-              <Win95Window title="Skills_Tech.exe" onClose={() => setActiveWindow(null)}>
-                <SpecialAbilitiesPanel type="tech" />
-              </Win95Window>
+
+              {/* LADO DERECHO: Menú de Estadísticas (Fluye Naturalmente) */}
+              <div className="relative p-4 lg:p-8 bg-[#05050a]">
+                
+                <h2 className="font-[family-name:var(--font-pixel)] text-2xl text-[#88ff88] mb-8 border-b-2 border-[#4a4a6a] pb-2">
+                  PERFIL DE CLASE
+                </h2>
+
+                <div className="flex flex-col gap-8">
+                  {/* Panel 1: Stats Principales (Limpios) */}
+                  <div>
+                    <h3 className="font-[family-name:var(--font-pixel)] text-sm text-[gray] mb-3 uppercase tracking-widest">Estadísticas Vitales</h3>
+                    <div className="bg-[#0a0a14] border-2 border-gray-600 p-4 rounded-sm">
+                      <RPGStatsPanel />
+                    </div>
+                  </div>
+
+                  {/* Panel 2: Clase Desarrollador */}
+                  <div>
+                    <h3 className="font-[family-name:var(--font-pixel)] text-sm text-[#00d9ff] mb-3 uppercase tracking-widest">Rama: Engineer</h3>
+                    <div className="bg-[#0a0a14] border border-[#00d9ff]/30 p-2 lg:p-4 rounded-sm">
+                      <SpecialAbilitiesPanel type="tech" />
+                    </div>
+                  </div>
+
+                  {/* Panel 3: Clase Abogado */}
+                  <div className="pb-8 lg:pb-0">
+                    <h3 className="font-[family-name:var(--font-pixel)] text-sm text-[#ffd700] mb-3 uppercase tracking-widest">Rama: Legal</h3>
+                    <div className="bg-[#0a0a14] border border-[#ffd700]/30 p-2 lg:p-4 rounded-sm">
+                      <SpecialAbilitiesPanel type="legal" />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            {/* SECCIÓN INFERIOR DE ANCHO COMPLETO: Sinergia */}
+            <div className="p-4 lg:p-8 border-t-2 border-[#4a4a6a] bg-[#05050a]">
+               <h3 className="font-[family-name:var(--font-pixel)] text-lg text-purple-400 mb-6 uppercase tracking-widest text-center border-b border-[#4a4a6a] pb-2">
+                 <i className="w-2 h-4 inline-block bg-purple-400 animate-pulse mr-2"></i> 
+                 Sinergia Completa (Tech + Legal)
+               </h3>
+               <div className="bg-[#0a0a14] p-4 lg:p-8 rounded-sm">
+                 <DualSkillsPanel />
+               </div>
+            </div>
+
           </div>
         )}
 
