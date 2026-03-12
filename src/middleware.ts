@@ -32,17 +32,23 @@ export async function middleware(request: NextRequest) {
   // IMPORTANTE: NO eliminar. refresh() evalúa el token JWT guardado.
   // Sin esto, una sesión falsificada podría mantenerse.
   const {
-    data: { user: _user },
+    data: { user },
   } = await supabase.auth.getUser();
 
-  // Ejemplo de protección de rutas:
-  // Si el usuario no está logueado y trata de entrar a /dashboard (o cualquier ruta dentro de portfolio administrativa)
-  // lo redirigimos a la página de login (que crearemos luego).
-  // if (!user && request.nextUrl.pathname.startsWith('/dashboard')) {
-  //   const url = request.nextUrl.clone()
-  //   url.pathname = '/login'
-  //   return NextResponse.redirect(url)
-  // }
+  // Protect routes like /profile
+  if (!user && request.nextUrl.pathname.startsWith('/profile')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/login'
+    return NextResponse.redirect(url)
+  }
+
+  // Basic redirection from login to profile if already authenticated
+  // Detailed onboarding checks are now handled by Server Components (e.g. AuthGuard)
+  if (user && request.nextUrl.pathname === '/login') {
+     const url = request.nextUrl.clone()
+     url.pathname = '/profile'
+     return NextResponse.redirect(url)
+  }
 
   return supabaseResponse;
 }
