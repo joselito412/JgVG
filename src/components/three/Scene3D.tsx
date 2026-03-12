@@ -91,7 +91,7 @@ function Loader() {
 }
 
 // Escena principal 3D/2.5D
-export default function Scene3D() {
+function Scene3D() {
   return (
     <div className="w-full h-full relative cursor-default">
       <Canvas shadows camera={{ position: [0, 1.3, 3.5], fov: 45 }}>
@@ -135,5 +135,10 @@ export default function Scene3D() {
   )
 }
 
-// Precargar el modelo por defecto si existe (opcional)
-// useGLTF.preload("/models/avatar.glb")
+// Ensure the 3D scene is only loaded on the client side, avoiding hydration issues and saving initial bundle size
+import dynamic from 'next/dynamic'
+
+export default dynamic(() => Promise.resolve(Scene3D), {
+  ssr: false,
+  loading: () => <div className="w-full h-full flex items-center justify-center text-xs font-press-start text-blue-400 animate-pulse">CARGANDO 3D...</div>
+})
