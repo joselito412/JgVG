@@ -38,6 +38,8 @@ export const metadata: Metadata = {
   },
 }
 
+import { Toaster } from "@/components/ui/toaster"
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -47,6 +49,7 @@ export default function RootLayout({
     <html lang="en" className={`${vt323.variable} ${spaceMono.variable}`}>
       <body className="font-mono antialiased">
         {children}
+        <Toaster />
         <Analytics />
       </body>
     </html>

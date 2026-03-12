@@ -6,8 +6,8 @@ import { OrbitControls, Html, ContactShadows, Float, useTexture } from "@react-t
 import * as THREE from "three"
 
 // Avatar en Pixel Art (Sprite / 2.5D)
-// Carga la textura desde public/models/avatar_v2.jpg
-function AvatarSprite({ url = "/models/avatar_v2.jpg" }: { url?: string }) {
+// Carga la textura desde public/models/avatar_v3.png
+function AvatarSprite({ url = "/models/avatar_v3.png" }: { url?: string }) {
   const [imgError, setImgError] = useState(false)
   const meshRef = useRef<THREE.Mesh>(null)
   
@@ -29,7 +29,7 @@ function AvatarSprite({ url = "/models/avatar_v2.jpg" }: { url?: string }) {
           <meshStandardMaterial color="#f5a623" wireframe side={THREE.DoubleSide} />
           <Html position={[0, 0, 0]} center>
             <div className="bg-[#000080] text-white font-[family-name:var(--font-pixel)] text-xs px-2 py-1 border-2 border-white whitespace-nowrap text-center">
-              Falta Imagen <br/> public/models/avatar_v2.jpg
+              Falta Imagen <br/> public/models/avatar_v3.png
             </div>
           </Html>
         </mesh>
@@ -91,7 +91,7 @@ function Loader() {
 }
 
 // Escena principal 3D/2.5D
-export default function Scene3D() {
+function Scene3D() {
   return (
     <div className="w-full h-full relative cursor-default">
       <Canvas shadows camera={{ position: [0, 1.3, 3.5], fov: 45 }}>
@@ -135,5 +135,10 @@ export default function Scene3D() {
   )
 }
 
-// Precargar el modelo por defecto si existe (opcional)
-// useGLTF.preload("/models/avatar.glb")
+// Ensure the 3D scene is only loaded on the client side, avoiding hydration issues and saving initial bundle size
+import dynamic from 'next/dynamic'
+
+export default dynamic(() => Promise.resolve(Scene3D), {
+  ssr: false,
+  loading: () => <div className="w-full h-full flex items-center justify-center text-xs font-press-start text-blue-400 animate-pulse">CARGANDO 3D...</div>
+})
