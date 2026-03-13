@@ -26,7 +26,7 @@ export async function AuthGuard({ children, requireOnboarding = true }: AuthGuar
   if (!dbUser) {
     const { ensureUserRecord } = await import('@/modules/database/user-actions');
     const { onboarded } = await ensureUserRecord(user.id, user.email!, user.user_metadata || {});
-    dbUser = { ...user, onboarded } as any; // mock structure to pass logic
+    dbUser = { ...user, onboarded } as unknown as typeof users.$inferSelect; // mock structure to pass logic
   }
 
   // 3. Onboarding Flow Logic

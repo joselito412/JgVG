@@ -21,8 +21,8 @@ export async function GET(request: Request) {
 
     if (res.ok) {
        // Import missing functions
-       const { createClient } = require('@/modules/database/server');
-       const { ensureUserRecord } = require('@/modules/database/user-actions');
+       const { createClient } = await import('@/modules/database/server');
+       const { ensureUserRecord } = await import('@/modules/database/user-actions');
        
        const supabase = await createClient();
        const { data: { user } } = await supabase.auth.getUser();

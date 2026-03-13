@@ -1,5 +1,5 @@
 import { getAdminStats, getRecentVisitors } from '@/modules/database/admin-actions';
-import { Terminal, Users, Database, Clock, RefreshCcw, LogOut, ChevronRight, Hash } from 'lucide-react';
+import { Terminal, Users, Database, Clock, RefreshCcw, Hash } from 'lucide-react';
 import { SignOutButton } from '@/modules/auth/components/SignOutButton';
 import Link from 'next/link';
 
@@ -94,7 +94,7 @@ export async function AdminDashboard() {
                   <td colSpan={5} className="text-center py-8 text-green-800">No data found in relation.</td>
                 </tr>
               ) : (
-                visitors.map((v, i) => (
+                visitors.map((v) => (
                   <tr key={v.id} className="border-b border-green-900/50 hover:bg-green-900/20 transition-colors text-sm">
                     <td className="py-3 px-2">
                       <span className={`px-2 py-0.5 text-[10px] uppercase border ${v.role === 'admin' ? 'border-red-500 text-red-500' : 'border-green-700 text-green-600'}`}>

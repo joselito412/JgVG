@@ -42,7 +42,7 @@ export function LocalLoginForm() {
         }
         router.refresh();
       }
-    } catch (err) {
+    } catch {
       toast({
         title: 'Error de Red',
         description: 'No se pudo conectar al sistema.',

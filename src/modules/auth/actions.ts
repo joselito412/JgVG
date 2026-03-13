@@ -38,7 +38,7 @@ export async function signInWithEmail(email: string, password?: string) {
   }
 
   // Try sign in first
-  const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+  const { error: signInError } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
@@ -52,12 +52,13 @@ export async function signInWithEmail(email: string, password?: string) {
   let onboarded = false;
   if (user) {
     try {
-      const { ensureUserRecord } = require('@/modules/database/user-actions');
+      const { ensureUserRecord } = await import('@/modules/database/user-actions');
       const record = await ensureUserRecord(user.id, user.email!, user.user_metadata || {});
       onboarded = record.onboarded;
-    } catch (dbErr: any) {
+    } catch (dbErr: unknown) {
       console.error("DB INSERT ERROR FROM ACTION:", dbErr);
-      return { error: `DB Sync Error: ${dbErr.message || 'Unknown DB Error'}` };
+      const isError = dbErr instanceof Error;
+      return { error: `DB Sync Error: ${isError ? dbErr.message : 'Unknown DB Error'}` };
     }
   }
 
@@ -84,12 +85,13 @@ export async function signUpWithEmail(email: string, password?: string) {
   let onboarded = false;
   if (signUpData.user) {
      try {
-       const { ensureUserRecord } = require('@/modules/database/user-actions');
+       const { ensureUserRecord } = await import('@/modules/database/user-actions');
        const record = await ensureUserRecord(signUpData.user.id, signUpData.user.email!, signUpData.user.user_metadata || {});
        onboarded = record.onboarded;
-     } catch (dbErr: any) {
+     } catch (dbErr: unknown) {
        console.error("DB INSERT ERROR FROM SIGNUP:", dbErr);
-       return { error: `DB Sync Error: ${dbErr.message || 'Unknown DB Error'}` };
+       const isError = dbErr instanceof Error;
+       return { error: `DB Sync Error: ${isError ? dbErr.message : 'Unknown DB Error'}` };
      }
   }
 

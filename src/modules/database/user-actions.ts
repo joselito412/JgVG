@@ -7,7 +7,7 @@ import { users } from './schema';
 export async function ensureUserRecord(
   userId: string,
   email: string,
-  userMetadata: any
+  userMetadata: { full_name?: string; avatar_url?: string } | null
 ) {
   // Check if user exists
   const existingUser = await db.query.users.findFirst({

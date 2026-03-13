@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { updateUserOnboarding } from '@/modules/database/user-actions';
@@ -9,7 +8,6 @@ import { createClient } from '@/modules/database/client';
 
 export default function OnboardingForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({

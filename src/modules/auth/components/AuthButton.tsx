@@ -13,7 +13,7 @@ export function AuthButton() {
     setIsLoading(true);
     try {
       await signInWithGoogle();
-    } catch (error) {
+    } catch { // Changed from `catch (error)` as the error object itself was not used in the toast message
       toast({
         title: 'Error de autenticación',
         description: 'No se pudo iniciar sesión con Google.',

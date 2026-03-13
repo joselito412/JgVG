@@ -1,10 +1,19 @@
 import { AuthGuard } from '@/modules/auth/components/AuthGuard';
-import { Terminal, MapPin, Clock, ChevronRight, User as UserIcon } from 'lucide-react';
+import { User as UserIcon } from 'lucide-react';
 import { SignOutButton } from '@/modules/auth/components/SignOutButton';
 import Link from 'next/link';
+import Image from 'next/image';
+
+interface VisitorUserData {
+  avatarUrl?: string;
+  fullName?: string;
+  role?: string;
+  occupation?: string;
+  createdAt?: string;
+}
 
 // Component receives the user data from the parent page
-export function VisitorProfile({ dbUser }: { dbUser: any }) {
+export function VisitorProfile({ dbUser }: { dbUser: VisitorUserData }) {
   return (
     <AuthGuard requireOnboarding={true}>
       <div className="flex min-h-[80vh] flex-col items-center justify-center p-4">
@@ -41,7 +50,7 @@ export function VisitorProfile({ dbUser }: { dbUser: any }) {
               <div className="flex flex-col items-center gap-2">
                 <div className="w-32 h-32 win95-sunken bg-gray-200 flex items-center justify-center overflow-hidden">
                   {dbUser?.avatarUrl ? (
-                    <img src={dbUser.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                    <Image src={dbUser.avatarUrl} alt="Avatar" width={128} height={128} className="w-full h-full object-cover" />
                   ) : (
                     <UserIcon className="w-16 h-16 text-gray-500" />
                   )}
@@ -81,7 +90,7 @@ export function VisitorProfile({ dbUser }: { dbUser: any }) {
                      <div className="flex flex-col">
                        <span className="text-gray-600 text-[10px]">Fecha de Alta:</span>
                        <span className="font-bold text-black uppercase">
-                          {new Date(dbUser?.createdAt || Date.now()).toLocaleDateString()}
+                          {dbUser?.createdAt ? new Date(dbUser.createdAt).toLocaleDateString() : 'Desconocida'}
                        </span>
                      </div>
                   </div>
