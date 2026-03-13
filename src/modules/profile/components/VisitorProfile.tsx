@@ -5,11 +5,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 interface VisitorUserData {
-  avatarUrl?: string;
-  fullName?: string;
-  role?: string;
-  occupation?: string;
-  createdAt?: string;
+  avatarUrl?: string | null;
+  fullName?: string | null;
+  role?: string | null;
+  occupation?: string | null;
+  createdAt?: string | Date | null;
 }
 
 // Component receives the user data from the parent page
