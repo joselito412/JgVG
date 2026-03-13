@@ -20,7 +20,7 @@ export default function DesktopIcon({
            icon
         )}
       </div>
-      <span className={`font-pixel text-sm sm:text-base md:text-xl px-2 sm:px-4 py-1.5 text-center leading-tight rounded-md border-2 transition-all mt-auto shadow-black ${isActive ? 'text-[#f5a623] border-[#f5a623] bg-[#0a0a14] drop-shadow-[2px_2px_0_#f5a623] font-bold' : 'text-white border-transparent drop-shadow-[1px_2px_0_#000] group-hover:bg-[#000080] group-hover:border-white group-hover:text-white'}`}>
+      <span className={`font-[family-name:var(--font-pixel)] text-sm sm:text-base md:text-xl px-2 sm:px-4 py-1.5 text-center leading-tight rounded-md border-2 transition-all mt-auto shadow-black ${isActive ? 'text-[#f5a623] border-[#f5a623] bg-[#0a0a14] drop-shadow-[2px_2px_0_#f5a623] font-bold' : 'text-white border-transparent drop-shadow-[1px_2px_0_#000] group-hover:bg-[#000080] group-hover:border-white group-hover:text-white'}`}>
         {label}
       </span>
     </div>
