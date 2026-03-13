@@ -1,4 +1,4 @@
-import { X, Minus, Square } from "lucide-react"
+import { Cancel, Minus, Square } from "pixelarticons/react"
 
 export default function Win95Window({ 
   title, 
@@ -19,16 +19,16 @@ export default function Win95Window({
         </span>
         <div className="flex gap-1 shrink-0">
           <button className="win95-btn w-5 h-5 flex items-center justify-center p-0">
-            <Minus className="w-3 h-3 text-black" />
+            <Minus className="pixelated w-3 h-3 text-black" />
           </button>
           <button className="win95-btn w-5 h-5 flex items-center justify-center p-0">
-            <Square className="w-2.5 h-2.5 text-black" />
+            <Square className="pixelated w-2.5 h-2.5 text-black" />
           </button>
           <button 
             className="win95-btn w-5 h-5 flex items-center justify-center p-0"
             onClick={onClose}
           >
-            <X className="w-3 h-3 text-black" />
+            <Cancel className="pixelated w-3 h-3 text-black" />
           </button>
         </div>
       </div>

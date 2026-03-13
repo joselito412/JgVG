@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { BookOpen, Lock, Shield, ChevronRight, PlayCircle, FileText, CheckCircle2, Sword, Zap } from "lucide-react"
+import { BookOpen, Lock, Shield, ChevronRight, Play, FileText, CheckDouble, Sword, Zap } from "pixelarticons/react"
 import { getEducationContent, getPromptsLibrary } from "@/modules/database/content-actions"
 
 export interface ClaseData {
@@ -60,7 +60,7 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
   };
 
   return (
-    <div className="bg-[#c0c0c0] w-full min-h-[500px] flex flex-col md:flex-row text-black">
+    <div className="bg-[#c0c0c0] win95-raised p-1 w-full min-h-[500px] flex flex-col md:flex-row text-black gap-1">
       {/* Authwall Modal */}
       {showAuthwall && (
         <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in">
@@ -70,7 +70,7 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
               <button onClick={() => setShowAuthwall(false)} className="bg-[#c0c0c0] text-black w-5 h-5 flex items-center justify-center border-t border-l border-white border-b border-r border-[#808080] font-bold">X</button>
             </div>
             <div className="p-4 bg-white m-1 text-center font-sans space-y-4">
-               <Lock className="w-12 h-12 text-[#f5a623] mx-auto drop-shadow-sm" />
+               <Lock className="pixelated w-12 h-12 text-[#f5a623] mx-auto drop-shadow-sm" />
                <h3 className="font-[family-name:var(--font-pixel)] text-lg text-[#000080]">Contenido Exclusivo</h3>
                <p className="text-sm text-gray-700 font-mono">Para acceder a las videoclases, material de estudio y templates, debes identificarte en el sistema.</p>
                
@@ -79,7 +79,7 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
                    onClick={() => setShowAuthwall(false)}
                    className="w-full bg-[#0aa05a] hover:bg-[#088048] text-white font-[family-name:var(--font-pixel)] py-2 px-4 shadow-[inset_1px_1px_0_rgba(255,255,255,0.4),2px_2px_0_rgba(0,0,0,0.8)] transition-all active:translate-y-[2px] active:shadow-[0_0_0_rgba(0,0,0,0)] flex items-center justify-center gap-2 text-sm"
                  >
-                   <Shield className="w-4 h-4" /> Crear Perfil / Login
+                   <Shield className="pixelated w-4 h-4" /> Crear Perfil / Login
                  </button>
                </div>
             </div>
@@ -88,42 +88,42 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
       )}
 
       {/* Sidebar de Exploración Win95 */}
-      <div className="w-full md:w-64 bg-white border-r-2 border-b-2 md:border-b-0 border-[#808080] shadow-[inset_-1px_-1px_0_#dfdfdf] flex flex-col z-10">
-        <div className="bg-[#000080] text-white px-2 py-1 font-[family-name:var(--font-pixel)] text-sm tracking-wide flex items-center gap-2">
-          <BookOpen className="w-4 h-4" /> Explorador de Áreas
+      <div className="w-full md:w-64 bg-[#c0c0c0] win95-raised p-1 flex flex-col z-10">
+        <div className="bg-[#000080] text-white px-2 py-1 font-[family-name:var(--font-pixel)] text-sm tracking-wide flex items-center gap-2 mb-1">
+          <BookOpen className="pixelated w-4 h-4" /> Explorador de Áreas
         </div>
         
-        <div className="p-2 flex-1 font-[family-name:var(--font-pixel)] text-base space-y-3">
+        <div className="p-2 flex-1 font-[family-name:var(--font-pixel)] text-base space-y-1 bg-white win95-sunken">
           <button 
              onClick={() => { setActiveTab('legal'); setSelectedClase(null); setExpandedModuloIndex(null); }}
-             className={`w-full text-left px-3 py-3 flex items-center gap-3 border-2 transition-all ${activeTab === 'legal' ? 'bg-[#ffd700] border-white text-black shadow-[2px_2px_0_#000]' : 'bg-[#e0e0e0] border-transparent hover:border-[#808080] hover:bg-[#d0d0d0] text-gray-800'}`}
+             className={`w-full text-left px-2 py-2 flex items-center gap-3 border border-transparent transition-all focus:outline-none ${activeTab === 'legal' ? 'bg-[#000080] text-white' : 'hover:border-dotted hover:border-black text-black'}`}
           >
-            <span className="text-3xl -mt-1 drop-shadow-sm">⚖️</span>
+            <span className="text-2xl drop-shadow-sm -mt-1">⚖️</span>
             <span className="font-bold tracking-wide">Derecho</span>
           </button>
           
           <button 
              onClick={() => { setActiveTab('tech'); setSelectedClase(null); setExpandedModuloIndex(null); }}
-             className={`w-full text-left px-3 py-3 flex items-center gap-3 border-2 transition-all ${activeTab === 'tech' ? 'bg-[#00d9ff] border-white text-black shadow-[2px_2px_0_#000]' : 'bg-[#e0e0e0] border-transparent hover:border-[#808080] hover:bg-[#d0d0d0] text-gray-800'}`}
+             className={`w-full text-left px-2 py-2 flex items-center gap-3 border border-transparent transition-all focus:outline-none ${activeTab === 'tech' ? 'bg-[#000080] text-white' : 'hover:border-dotted hover:border-black text-black'}`}
           >
-            <span className="text-3xl -mt-1 drop-shadow-sm">💻</span>
+            <span className="text-2xl drop-shadow-sm -mt-1">💻</span>
             <span className="font-bold tracking-wide">Tech & Dev</span>
           </button>
           
-          <div className="py-2"><div className="h-0.5 bg-gray-400 border-b border-white mx-2"></div></div>
+          <div className="py-2"><div className="h-px bg-gray-300 mx-2"></div></div>
           
           <button 
              onClick={() => { setActiveTab('recursos'); setSelectedClase(null); }}
-             className={`w-full text-left px-3 py-3 flex items-center gap-3 border-2 transition-all ${activeTab === 'recursos' ? 'bg-[#000080] border-white text-white shadow-[2px_2px_0_#000]' : 'bg-[#c0c0c0] border border-[#808080] hover:bg-[#a0a0a0] text-black'}`}
+             className={`w-full text-left px-2 py-2 flex items-center gap-3 border border-transparent transition-all focus:outline-none ${activeTab === 'recursos' ? 'bg-[#000080] text-white' : 'hover:border-dotted hover:border-black text-black'}`}
           >
-            <span className="text-2xl -mt-1 drop-shadow-sm">📚</span>
+            <span className="text-xl drop-shadow-sm -mt-1">📚</span>
             <span>Librería de Recursos</span>
           </button>
         </div>
       </div>
 
       {/* Contenedor Principal */}
-      <div className="flex-1 bg-[#ffffff] p-4 md:p-8 pb-12 overflow-visible shadow-[inset_2px_2px_4px_rgba(0,0,0,0.1)] relative border-t-2 md:border-t-0 md:border-l-2 border-[#808080]">
+      <div className="flex-1 bg-white win95-sunken p-4 md:p-8 pb-12 overflow-visible relative">
         
         {/* VISTA DE UNA CLASE SELECCIONADA */}
         {isLoading ? (
@@ -151,7 +151,7 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
 
              {/* Video Placeholder */}
              <div className="w-full aspect-video bg-[#0a0a14] flex flex-col items-center justify-center border-4 border-[#808080] mb-6 shadow-md relative overflow-hidden group">
-               <PlayCircle className="w-16 h-16 text-white/50 group-hover:text-white group-hover:scale-110 transition-all cursor-pointer" />
+               <Play className="pixelated w-16 h-16 text-white/50 group-hover:text-white group-hover:scale-110 transition-all cursor-pointer" />
                <p className="font-[family-name:var(--font-pixel)] text-gray-400 text-sm mt-4 tracking-widest text-center px-4">
                  VIDEO REPRODUCTOR <br/> <span className="text-xs text-[#88ff88]">(Próximamente Integrado)</span>
                </p>
@@ -166,13 +166,13 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
                 <ul className="space-y-2">
                   {selectedClase.clase.recursos.map((rec: string, i: number) => (
                     <li key={i} className="flex items-center gap-2 font-sans text-sm text-[#000080] hover:underline cursor-pointer">
-                      <FileText className="w-4 h-4 text-gray-500" /> {rec}
+                      <FileText className="pixelated w-4 h-4 text-gray-500" /> {rec}
                     </li>
                   ))}
                 </ul>
 
                 <button className="mt-6 font-[family-name:var(--font-pixel)] text-sm bg-white border-2 border-gray-400 px-4 py-2 hover:bg-[#e0e0e0] flex items-center gap-2 transition-colors">
-                  <CheckCircle2 className="w-4 h-4 text-green-600" /> Marcar como Completada
+                  <CheckDouble className="pixelated w-4 h-4 text-green-600" /> Marcar como Completada
                 </button>
              </div>
           </div>
@@ -213,9 +213,9 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
                             >
                                <div className="flex items-center gap-2">
                                  {isAuthenticated ? (
-                                   <PlayCircle className="w-4 h-4 text-gray-400 group-hover:text-[#f5a623]" />
+                                   <Play className="pixelated w-4 h-4 text-gray-400 group-hover:text-[#f5a623]" />
                                  ) : (
-                                   <Lock className="w-4 h-4 text-red-500/70" />
+                                   <Lock className="pixelated w-4 h-4 text-red-500/70" />
                                  )}
                                  <span className="font-sans text-sm text-gray-800 group-hover:text-black font-medium">{clase.titulo}</span>
                                </div>
@@ -264,9 +264,9 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
                             >
                                <div className="flex items-center gap-2">
                                  {isAuthenticated ? (
-                                   <PlayCircle className="w-4 h-4 text-gray-400 group-hover:text-[#f5a623]" />
+                                   <Play className="pixelated w-4 h-4 text-gray-400 group-hover:text-[#f5a623]" />
                                  ) : (
-                                   <Lock className="w-4 h-4 text-red-500/70" />
+                                   <Lock className="pixelated w-4 h-4 text-red-500/70" />
                                  )}
                                  <span className="font-sans text-sm text-gray-800 group-hover:text-black font-medium">{clase.titulo}</span>
                                </div>
@@ -289,7 +289,7 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
                 
                 <div className="mb-8">
                   <h2 className="font-[family-name:var(--font-pixel)] text-xl text-[#000080] mb-4 flex items-center gap-2">
-                    <Sword className="w-5 h-5" /> Librería de Prompts Profesionales (Legal)
+                    <Sword className="pixelated w-5 h-5" /> Librería de Prompts Profesionales (Legal)
                   </h2>
                   <p className="font-mono text-sm md:text-base text-gray-700 mb-4 bg-gray-100 p-2 border border-gray-300 leading-relaxed tracking-tight">
                     La ingeniería de prompts es una extensión de la argumentación lógica. Aquí comparto arquitecturas de prompts testeados para automatización legal.
@@ -318,7 +318,7 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
 
                             <div className="bg-[#fff3cd] border border-[#ffeeba] p-3 rounded-sm">
                                <span className="font-[family-name:var(--font-pixel)] text-[10px] text-amber-800 uppercase tracking-wider block mb-1 flex items-center gap-1">
-                                 <Zap className="w-3 h-3" /> Tips de Completado
+                                 <Zap className="pixelated w-3 h-3" /> Tips de Completado
                                </span>
                                <p className="font-mono text-xs text-amber-900 leading-relaxed">{recurso.tips}</p>
                             </div>
