@@ -41,7 +41,7 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
             <div className="p-4 bg-white m-1 text-center font-sans space-y-4">
                <Lock className="w-12 h-12 text-[#f5a623] mx-auto drop-shadow-sm" />
                <h3 className="font-[family-name:var(--font-pixel)] text-lg text-[#000080]">Contenido Exclusivo</h3>
-               <p className="text-sm text-gray-700">Para acceder a las videoclases, material de estudio y templates, debes identificarte en el sistema.</p>
+               <p className="text-sm text-gray-700 font-mono">Para acceder a las videoclases, material de estudio y templates, debes identificarte en el sistema.</p>
                
                <div className="pt-2">
                  <button 
@@ -149,7 +149,7 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
                 <h1 className="font-[family-name:var(--font-pixel)] text-2xl md:text-3xl text-black border-b-2 border-black pb-2 mb-6 flex items-center gap-3">
                   <span className="text-4xl">⚖️</span> Derecho
                 </h1>
-                <p className="mb-6 bg-[#f0f0f5] p-3 border-l-4 border-[#000080] text-sm font-sans text-gray-800">
+                <p className="mb-6 bg-[#f0f0f5] p-3 border-l-4 border-[#000080] text-sm font-mono text-gray-800">
                   Exploraremos cómo la regulación alcanza las nuevas fronteras de la tecnología, dotando de seguridad jurídica al despliegue de software. Selecciona un Módulo para ver las clases:
                 </p>
                 <div className="space-y-4">
@@ -200,7 +200,7 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
                 <h1 className="font-[family-name:var(--font-pixel)] text-2xl md:text-3xl text-black border-b-2 border-black pb-2 mb-6 flex items-center gap-3">
                   <span className="text-4xl">💻</span> Tech & Dev
                 </h1>
-                <p className="mb-6 bg-[#f0f0f5] p-3 border-l-4 border-[#000080] text-sm font-sans text-gray-800">
+                <p className="mb-6 bg-[#f0f0f5] p-3 border-l-4 border-[#000080] text-sm font-mono text-gray-800">
                   Ingresando a la terminal de desarrollo. Este módulo cubre desde los fundamentos teóricos de los LLMs hasta arquitecturas de agentes autónomos en producción.
                 </p>
                 <div className="space-y-4">
@@ -256,7 +256,7 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
                   <h2 className="font-[family-name:var(--font-pixel)] text-xl text-[#000080] mb-4 flex items-center gap-2">
                     <Sword className="w-5 h-5" /> Librería de Prompts Profesionales (Legal)
                   </h2>
-                  <p className="font-[family-name:var(--font-pixel)] text-sm text-gray-700 mb-4 bg-gray-100 p-2 border border-gray-300 leading-relaxed">
+                  <p className="font-mono text-sm md:text-base text-gray-700 mb-4 bg-gray-100 p-2 border border-gray-300 leading-relaxed tracking-tight">
                     La ingeniería de prompts es una extensión de la argumentación lógica. Aquí comparto arquitecturas de prompts testeados para automatización legal.
                   </p>
 
@@ -271,7 +271,7 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
                          <div className="p-3 sm:p-4 space-y-4">
                             <div>
                               <span className="font-[family-name:var(--font-pixel)] text-[10px] text-gray-500 uppercase tracking-wider block mb-1">Propósito Estratégico</span>
-                              <p className="font-sans text-sm text-gray-800">{recurso.proposito}</p>
+                              <p className="font-mono text-sm text-gray-800">{recurso.proposito}</p>
                             </div>
                             
                             <div>
@@ -285,7 +285,7 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
                                <span className="font-[family-name:var(--font-pixel)] text-[10px] text-amber-800 uppercase tracking-wider block mb-1 flex items-center gap-1">
                                  <Zap className="w-3 h-3" /> Tips de Completado
                                </span>
-                               <p className="font-sans text-xs text-amber-900 leading-relaxed">{recurso.tips}</p>
+                               <p className="font-mono text-xs text-amber-900 leading-relaxed">{recurso.tips}</p>
                             </div>
                          </div>
                       </div>
@@ -295,7 +295,7 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
 
                 <div className="mt-8 pt-6 border-t border-gray-300">
                    <h2 className="font-[family-name:var(--font-pixel)] text-lg text-[#000080] mb-2">Bibliografía Dev</h2>
-                   <p className="font-sans text-xs text-gray-600 italic">Los protocolos MLOps y documentación de arquitecturas LangGraph están en proceso de desclasificación. Estarán disponibles pronto.</p>
+                   <p className="font-mono text-xs text-gray-600 italic">Los protocolos MLOps y documentación de arquitecturas LangGraph están en proceso de desclasificación. Estarán disponibles pronto.</p>
                 </div>
 
               </div>

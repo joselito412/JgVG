@@ -22,7 +22,7 @@ export default function CatalogoServiciosPanel() {
         <h2 className="font-[family-name:var(--font-pixel)] text-2xl md:text-3xl text-white drop-shadow-[2px_2px_0_#f5a623] mb-3 tracking-wide flex items-center justify-center gap-3">
           <BookOpen className="w-6 h-6 text-[#f5a623]" /> Catálogo Profesional
         </h2>
-        <p className="text-[#a0a0c0] font-sans text-sm md:text-base max-w-2xl mx-auto">
+        <p className="text-[#a0a0c0] font-mono text-sm md:text-base max-w-2xl mx-auto">
           Explora mis servicios especializados. Usa el buscador o los filtros para encontrar rápidamente la solución a tu medida.
         </p>
       </div>
@@ -65,7 +65,7 @@ export default function CatalogoServiciosPanel() {
       {filteredServicios.length === 0 ? (
         <div className="text-center py-16 border-2 border-dashed border-[#4a4a6a] rounded-sm bg-[#0a0a14]/50">
           <p className="font-[family-name:var(--font-pixel)] text-[#f5a623] text-lg mb-2">0 Resultados Encontrados</p>
-          <p className="font-sans text-gray-400 text-sm">Intenta con otros términos de búsqueda o cambia el filtro de categoría.</p>
+          <p className="font-mono text-gray-400 text-sm">Intenta con otros términos de búsqueda o cambia el filtro de categoría.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -93,7 +93,7 @@ export default function CatalogoServiciosPanel() {
                       {servicio.title}
                     </h3>
                     
-                    <p className="text-[#b0b0d0] font-sans text-sm leading-relaxed flex-1">
+                    <p className="text-[#b0b0d0] font-mono text-sm leading-relaxed flex-1">
                       {servicio.desc}
                     </p>
                     
