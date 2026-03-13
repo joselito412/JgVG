@@ -34,7 +34,7 @@ function DualSkillsPanel() {
         <div className="border-r border-[#4a4a6a]">
           <div className="flex items-center gap-2 px-3 lg:px-5 py-3 bg-[#1a1a2e] border-b border-[#4a4a6a]">
             <Zap className="w-5 h-5 text-[#00d9ff]" />
-            <span className="text-[#00d9ff] font-pixel text-base md:text-lg tracking-wide">
+            <span className="text-[#00d9ff] font-[family-name:var(--font-pixel)] text-base md:text-lg tracking-wide">
               TECH SKILLS
             </span>
           </div>
@@ -49,10 +49,10 @@ function DualSkillsPanel() {
                   {selectedDevIndex === index && (
                     <ChevronRight className="w-4 h-4 text-[#00d9ff] rpg-arrow" />
                   )}
-                  <span className={`font-pixel text-sm md:text-base ${selectedDevIndex === index ? 'text-[#00d9ff] font-bold' : 'text-[#f0f0f0]'}`}>
+                  <span className={`font-[family-name:var(--font-pixel)] text-sm md:text-base ${selectedDevIndex === index ? 'text-[#00d9ff] font-bold' : 'text-[#f0f0f0]'}`}>
                     {skill.name}
                   </span>
-                  <span className="text-[#a8ffa8] font-pixel text-sm ml-auto">
+                  <span className="text-[#a8ffa8] font-[family-name:var(--font-pixel)] text-sm ml-auto">
                     Lv.{skill.level}
                   </span>
                 </div>
@@ -66,7 +66,7 @@ function DualSkillsPanel() {
         <div>
           <div className="flex items-center gap-2 px-3 lg:px-5 py-3 bg-[#1a1a2e] border-b border-[#4a4a6a]">
             <BookOpen className="w-5 h-5 text-[#f5a623]" />
-            <span className="text-[#f5a623] font-pixel text-base md:text-lg tracking-wide">
+            <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-base md:text-lg tracking-wide">
               LEGAL SKILLS
             </span>
           </div>
@@ -81,10 +81,10 @@ function DualSkillsPanel() {
                   {selectedLegalIndex === index && (
                     <ChevronRight className="w-4 h-4 text-[#f5a623] rpg-arrow" />
                   )}
-                  <span className={`font-pixel text-sm md:text-base ${selectedLegalIndex === index ? 'text-[#f5a623] font-bold' : 'text-[#f0f0f0]'}`}>
+                  <span className={`font-[family-name:var(--font-pixel)] text-sm md:text-base ${selectedLegalIndex === index ? 'text-[#f5a623] font-bold' : 'text-[#f0f0f0]'}`}>
                     {skill.name}
                   </span>
-                  <span className="text-[#a8ffa8] font-pixel text-sm ml-auto">
+                  <span className="text-[#a8ffa8] font-[family-name:var(--font-pixel)] text-sm ml-auto">
                     Lv.{skill.level}
                   </span>
                 </div>
@@ -128,25 +128,25 @@ function CharacterStatsPanel() {
       </div>
       
       {/* Nombres y Titulos */}
-      <h1 className="text-white font-pixel text-3xl md:text-6xl mb-4 tracking-wide shadow-black drop-shadow-md">
+      <h1 className="text-white font-[family-name:var(--font-pixel)] text-3xl md:text-6xl mb-4 tracking-wide shadow-black drop-shadow-md">
         Jose Guillermo Vasquez Guzman
       </h1>
       
-      <h2 className="text-white font-pixel text-2xl md:text-3xl mb-5 leading-tight max-w-3xl mx-auto">
+      <h2 className="text-white font-[family-name:var(--font-pixel)] text-2xl md:text-3xl mb-5 leading-tight max-w-3xl mx-auto">
         Diseño soluciones legales con <span className="bg-[#f5f5dc] text-black px-3 py-1 rounded inline-block mt-2 md:mt-0 font-bold shadow-lg">Inteligencia Artificial</span>
       </h2>
       
       {/* Sobre Mi Integrado */}
-      <div className="bg-[#0a0a14] border-2 border-[#4a4a6a] p-5 md:p-8 w-full font-pixel max-w-4xl text-left mt-2 mb-2 shadow-inner hover:border-[#f5a623] transition-colors">
+      <div className="bg-[#0a0a14] border-2 border-[#4a4a6a] p-5 md:p-8 w-full font-[family-name:var(--font-pixel)] max-w-4xl text-left mt-2 mb-2 shadow-inner hover:border-[#f5a623] transition-colors">
         <h3 className="text-[#f5a623] text-xl md:text-2xl mb-4 flex items-center gap-3 border-b border-[#4a4a6a] pb-3">
           <span className="text-2xl md:text-3xl">⚔️</span> Abogado e Ingeniero Legal <span className="text-sm md:text-lg text-gray-400 font-normal">(Legal-Tech Dev)</span>
         </h3>
         
-        <p className="text-sm md:text-base text-[#dfdfdf] leading-relaxed mb-5">
+        <p className="text-sm md:text-base text-[#dfdfdf] leading-relaxed mb-5 font-mono">
           Especialista en la intersección entre derecho y tecnología. Como <span className="text-[#00d9ff] font-bold">abogado tecnológico</span>, ofrezco consultoría en <span className="text-[#00d9ff] font-bold">propiedad intelectual</span>, <span className="text-[#00d9ff] font-bold">cumplimiento normativo (Compliance)</span>, y redacción de <span className="text-[#00d9ff] font-bold">contratos SaaS</span> y de software.
         </p>
         
-        <p className="text-sm md:text-base text-[#dfdfdf] leading-relaxed">
+        <p className="text-sm md:text-base text-[#dfdfdf] leading-relaxed font-mono">
           Como <span className="text-[#f5a623] font-bold">desarrollador Fullstack (Next.js, Python)</span>, diseño y programo plataformas digitales, automatizaciones corporativas, y construyo <span className="text-[#f5a623] font-bold">agentes de Inteligencia Artificial (LLMs, LangChain)</span> para optimizar operaciones empresariales y servicios legales.
         </p>
       </div>
@@ -223,7 +223,7 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
   }
 
   return (
-    <div className="fixed bottom-16 md:bottom-18 lg:bottom-20 right-4 md:right-6 z-60 flex flex-col items-end">
+    <div className="fixed bottom-16 md:bottom-[4.5rem] lg:bottom-20 right-4 md:right-6 z-[30] flex flex-col items-end">
       {/* Botón flotante (Avatar Icono) */}
       {!isOpen && (
         <button 
@@ -235,7 +235,7 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
           
           {/* Tooltip pequeño para invitar al click */}
           {hasGreeted && (
-             <div className="absolute -top-10 right-0 bg-[#f5f5dc] text-black font-pixel text-xs md:text-sm font-bold px-3 py-1.5 border-2 border-black whitespace-nowrap shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
+             <div className="absolute -top-10 right-0 bg-[#f5f5dc] text-black font-[family-name:var(--font-pixel)] text-xs md:text-sm font-bold px-3 py-1.5 border-2 border-black whitespace-nowrap shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
                Hablar con ChunGPT
              </div>
           )}
@@ -249,15 +249,15 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
           <div className="flex items-center justify-between px-3 md:px-4 py-3 bg-[#2a2a4a] border-b-2 border-[#4a4a6a]">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 md:w-10 md:h-10 bg-linear-to-br from-[#006060] to-[#003030] rounded-full flex items-center justify-center border-2 border-[#f5a623]">
-                <span className="font-pixel text-xs md:text-sm font-bold text-[#f5a623]">CGPT</span>
+                <span className="font-[family-name:var(--font-pixel)] text-xs md:text-sm font-bold text-[#f5a623]">CGPT</span>
               </div>
-              <span className="text-[#f5a623] font-pixel text-base md:text-lg font-bold tracking-widest text-shadow">
+              <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-base md:text-lg font-bold tracking-widest text-shadow">
                 CHUNGPT.exe
               </span>
             </div>
             <button 
               onClick={() => setIsOpen(false)}
-              className="text-[#c0c0c0] hover:text-white hover:bg-[#ff0000] px-3 py-1 rounded transition-colors font-pixel text-lg"
+              className="text-[#c0c0c0] hover:text-white hover:bg-[#ff0000] px-3 py-1 rounded transition-colors font-[family-name:var(--font-pixel)] text-lg"
             >
               X
             </button>
@@ -271,7 +271,7 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
                 <Sword className="w-4 h-4 md:w-5 md:h-5 text-[#f5a623]" />
               </div>
               <div className="bg-[#1a1a2e] border-2 border-[#4a4a6a] px-4 py-3 max-w-[85%] rounded-md shadow-md">
-                <p className="text-[#e0e0e0] font-pixel text-base md:text-lg leading-relaxed">
+                <p className="text-[#e0e0e0] font-mono text-sm md:text-base leading-relaxed tracking-tight">
                   {messages.length === 0 ? (
                     <>
                       {displayedText}
@@ -293,7 +293,7 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
                     : 'bg-[#1a1a2e] border-[#4a4a6a]'
                 }`}>
                   {msg.isUser ? (
-                    <span className="font-pixel text-xs md:text-sm font-bold text-[#00d9ff]">TU</span>
+                    <span className="font-[family-name:var(--font-pixel)] text-xs md:text-sm font-bold text-[#00d9ff]">TU</span>
                   ) : (
                     <Sword className="w-4 h-4 md:w-5 md:h-5 text-[#f5a623]" />
                   )}
@@ -303,7 +303,7 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
                     ? 'bg-[#003030] border-2 border-[#00d9ff]' 
                     : 'bg-[#1a1a2e] border-2 border-[#4a4a6a]'
                 }`}>
-                  <p className={`font-pixel text-base md:text-lg leading-relaxed wrap-break-word ${
+                  <p className={`font-mono text-sm md:text-base leading-relaxed tracking-tight break-words ${
                     msg.isUser ? 'text-[#00d9ff] font-bold' : 'text-[#e0e0e0]'
                   }`}>
                     {msg.text}
@@ -323,12 +323,12 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder="Escribe tu mensaje..."
-                  className="w-full bg-[#0f0f1f] border-2 border-[#4a4a6a] text-white pl-9 pr-4 py-3 md:py-4 font-pixel text-sm md:text-lg placeholder:text-[#4a4a6a] focus:outline-none focus:border-[#f5a623]"
+                  className="w-full bg-[#0f0f1f] border-2 border-[#4a4a6a] text-white pl-9 pr-4 py-3 md:py-4 font-mono text-sm md:text-base placeholder:text-[#4a4a6a] focus:outline-none focus:border-[#f5a623]"
                 />
               </div>
               <button 
                 type="submit"
-                className="bg-[#f5a623] hover:bg-[#d4830a] text-black px-4 py-3 md:py-4 font-pixel border-2 border-white flex items-center justify-center gap-1 transition-colors shrink-0"
+                className="bg-[#f5a623] hover:bg-[#d4830a] text-black px-4 py-3 md:py-4 font-[family-name:var(--font-pixel)] border-2 border-white flex items-center justify-center gap-1 transition-colors shrink-0"
               >
                 <Sword className="w-5 h-5 md:w-6 md:h-6" />
               </button>
@@ -378,17 +378,17 @@ function FeaturedProjectsPanel() {
                 className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)]"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
-                  e.currentTarget.parentElement!.innerHTML = `<span class="font-pixel text-sm text-[#4a4a6a] text-center leading-tight">Missing<br/>img</span>`;
+                  e.currentTarget.parentElement!.innerHTML = `<span class="font-[family-name:var(--font-pixel)] text-sm text-[#4a4a6a] text-center leading-tight">Missing<br/>img</span>`;
                 }}
               />
             </div>
 
             <div className="w-full flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                 <h3 className="font-pixel text-xl sm:text-2xl lg:text-3xl text-[#f5a623] group-hover:text-white transition-colors drop-shadow-md leading-tight">
+                 <h3 className="font-[family-name:var(--font-pixel)] text-xl sm:text-2xl lg:text-3xl text-[#f5a623] group-hover:text-white transition-colors drop-shadow-md leading-tight">
                    {proj.name}
                  </h3>
-                 <p className="font-pixel text-sm sm:text-base text-[#88ff88] mt-2 shadow-black drop-shadow-sm">
+                 <p className="font-[family-name:var(--font-pixel)] text-sm sm:text-base text-[#88ff88] mt-2 shadow-black drop-shadow-sm">
                    {proj.role}
                  </p>
               </div>
@@ -397,18 +397,18 @@ function FeaturedProjectsPanel() {
                 href={proj.link} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="win95-btn px-4 py-2 bg-[#c0c0c0] hover:bg-[#d0d0d0] text-black font-pixel text-sm flex items-center justify-center gap-2 w-full md:w-auto shrink-0 transition-colors"
+                className="win95-btn px-4 py-2 bg-[#c0c0c0] hover:bg-[#d0d0d0] text-black font-[family-name:var(--font-pixel)] text-sm flex items-center justify-center gap-2 w-full md:w-auto shrink-0 transition-colors"
               >
                 VISITAR <ExternalLink className="w-4 h-4" />
               </a>
             </div>
           </div>
-          <p className="font-pixel text-sm md:text-base text-[#c0c0c0] leading-relaxed mb-4">
+          <p className="font-mono text-sm md:text-base text-[#c0c0c0] leading-relaxed mb-4">
             {proj.desc}
           </p>
           <div className="flex flex-wrap gap-2">
             {proj.tech.map((t, i) => (
-              <span key={i} className="px-2 py-1 border border-[#4a4a6a] bg-[#0a0a14] font-pixel text-xs md:text-sm text-[#00d9ff]">
+              <span key={i} className="px-2 py-1 border border-[#4a4a6a] bg-[#0a0a14] font-[family-name:var(--font-pixel)] text-xs md:text-sm text-[#00d9ff]">
                 {t}
               </span>
             ))}
@@ -511,7 +511,7 @@ function SpecialAbilitiesPanel({ type }: { type: 'legal' | 'tech' }) {
         ) : (
           <Zap className="w-4 h-4" style={{ color: typeColor }} />
         )}
-        <span className="font-pixel text-xs" style={{ color: typeColor }}>
+        <span className="font-[family-name:var(--font-pixel)] text-xs" style={{ color: typeColor }}>
           {title}
         </span>
       </div>
@@ -546,7 +546,7 @@ function SpecialAbilitiesPanel({ type }: { type: 'legal' | 'tech' }) {
                 {/* Info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2 mb-1">
-                    <span className="text-white font-pixel text-sm truncate">
+                    <span className="text-white font-[family-name:var(--font-pixel)] text-sm truncate">
                       {ability.name}
                     </span>
                   </div>
@@ -559,7 +559,7 @@ function SpecialAbilitiesPanel({ type }: { type: 'legal' | 'tech' }) {
                         className={`w-3 h-3 ${filled ? 'text-[#f5a623] fill-[#f5a623]' : 'text-[#4a4a6a]'}`}
                       />
                     ))}
-                    <span className="text-[#808080] font-pixel text-xs ml-2">
+                    <span className="text-[#808080] font-[family-name:var(--font-pixel)] text-xs ml-2">
                       [{ability.type}]
                     </span>
                   </div>
@@ -567,14 +567,14 @@ function SpecialAbilitiesPanel({ type }: { type: 'legal' | 'tech' }) {
                   {/* Description - shows on hover */}
                   {isHovered && (
                     <div className="mt-2 pt-2 border-t border-[#4a4a6a] animate-in fade-in duration-150">
-                      <p className="text-[#c0c0c0] font-pixel text-xs leading-relaxed">
+                      <p className="text-[#c0c0c0] font-mono text-[11px] md:text-xs leading-relaxed tracking-tight">
                         {ability.description}
                       </p>
                       <div className="flex items-center gap-2 mt-2">
-                        <span className="text-[#808080] font-pixel text-xs">
+                        <span className="text-[#808080] font-[family-name:var(--font-pixel)] text-xs">
                           Cooldown:
                         </span>
-                        <span className="text-[#88ff88] font-pixel text-xs">
+                        <span className="text-[#88ff88] font-[family-name:var(--font-pixel)] text-xs">
                           {ability.cooldown}
                         </span>
                       </div>
@@ -589,7 +589,7 @@ function SpecialAbilitiesPanel({ type }: { type: 'legal' | 'tech' }) {
       
       {/* Footer */}
       <div className="border-t-2 border-[#4a4a6a] px-3 py-2 bg-[#0f0f1f]">
-        <p className="text-[#808080] font-pixel text-xs text-center">
+        <p className="text-[#808080] font-[family-name:var(--font-pixel)] text-xs text-center">
           [HOVER] Ver descripcion de habilidad
         </p>
       </div>
@@ -688,7 +688,7 @@ export default function AvocadoCenter() {
         
         {/* Header - Battle Title */}
         <div className="text-center mb-8">
-          <h1 className="font-pixel text-2xl md:text-4xl text-[#f5a623] rpg-glow tracking-wider">
+          <h1 className="font-[family-name:var(--font-pixel)] text-2xl md:text-4xl text-[#f5a623] rpg-glow tracking-wider">
             ~ Un héroe legal-tech aparece ~
           </h1>
         </div>
@@ -732,7 +732,7 @@ export default function AvocadoCenter() {
               <div className="relative h-[300px] sm:h-[400px] lg:h-[calc(100vh-80px)] lg:sticky lg:top-10 border-b-2 lg:border-b-0 lg:border-r-2 border-[#4a4a6a] bg-[#0a0a14]/5">
                 
                 {/* Etiqueta de Nombre Clásica arriba del personaje */}
-                <div className="absolute top-4 left-4 z-10 bg-[#000080] border-2 border-white px-3 py-1 text-white font-pixel text-sm shadow-md">
+                <div className="absolute top-4 left-4 z-10 bg-[#000080] border-2 border-white px-3 py-1 text-white font-[family-name:var(--font-pixel)] text-sm shadow-md">
                   Lv.99 Abogado-Dev
                 </div>
 
@@ -744,14 +744,14 @@ export default function AvocadoCenter() {
               {/* LADO DERECHO: Menú de Estadísticas (Fluye Naturalmente) */}
               <div className="relative p-4 lg:p-8 bg-[#05050a]">
                 
-                <h2 className="font-pixel text-2xl text-[#88ff88] mb-8 border-b-2 border-[#4a4a6a] pb-2">
+                <h2 className="font-[family-name:var(--font-pixel)] text-2xl text-[#88ff88] mb-8 border-b-2 border-[#4a4a6a] pb-2">
                   PERFIL DE CLASE
                 </h2>
 
                 <div className="flex flex-col gap-8">
                   {/* Panel 1: Stats Principales (Limpios) */}
                   <div>
-                    <h3 className="font-pixel text-sm text-[gray] mb-3 uppercase tracking-widest">Estadísticas Vitales</h3>
+                    <h3 className="font-[family-name:var(--font-pixel)] text-sm text-[gray] mb-3 uppercase tracking-widest">Estadísticas Vitales</h3>
                     <div className="bg-[#0a0a14] border-2 border-gray-600 p-4 rounded-sm">
                       <RPGStatsPanel />
                     </div>
@@ -759,7 +759,7 @@ export default function AvocadoCenter() {
 
                   {/* Panel 2: Clase Desarrollador */}
                   <div>
-                    <h3 className="font-pixel text-sm text-[#00d9ff] mb-3 uppercase tracking-widest">Rama: Engineer</h3>
+                    <h3 className="font-[family-name:var(--font-pixel)] text-sm text-[#00d9ff] mb-3 uppercase tracking-widest">Rama: Engineer</h3>
                     <div className="bg-[#0a0a14] border border-[#00d9ff]/30 p-2 lg:p-4 rounded-sm">
                       <SpecialAbilitiesPanel type="tech" />
                     </div>
@@ -767,7 +767,7 @@ export default function AvocadoCenter() {
 
                   {/* Panel 3: Clase Abogado */}
                   <div className="pb-8 lg:pb-0">
-                    <h3 className="font-pixel text-sm text-[#ffd700] mb-3 uppercase tracking-widest">Rama: Legal</h3>
+                    <h3 className="font-[family-name:var(--font-pixel)] text-sm text-[#ffd700] mb-3 uppercase tracking-widest">Rama: Legal</h3>
                     <div className="bg-[#0a0a14] border border-[#ffd700]/30 p-2 lg:p-4 rounded-sm">
                       <SpecialAbilitiesPanel type="legal" />
                     </div>
@@ -778,7 +778,7 @@ export default function AvocadoCenter() {
 
             {/* SECCIÓN INFERIOR DE ANCHO COMPLETO: Sinergia */}
             <div className="p-4 lg:p-8 border-t-2 border-[#4a4a6a] bg-[#05050a]">
-               <h3 className="font-pixel text-lg text-purple-400 mb-6 uppercase tracking-widest text-center border-b border-[#4a4a6a] pb-2">
+               <h3 className="font-[family-name:var(--font-pixel)] text-lg text-purple-400 mb-6 uppercase tracking-widest text-center border-b border-[#4a4a6a] pb-2">
                  <i className="w-2 h-4 inline-block bg-purple-400 animate-pulse mr-2"></i> 
                  Sinergia Completa (Tech + Legal)
                </h3>
@@ -801,8 +801,8 @@ export default function AvocadoCenter() {
         )}
 
         {activeWindow === 'clases' && (
-          <div className="fixed inset-0 z-60 flex items-start sm:items-center justify-center p-2 sm:p-4 pt-4 pb-[8rem] sm:pb-24 overflow-y-auto bg-black/60 animate-in fade-in duration-200">
-            <div className="w-full max-w-5xl my-auto">
+          <div className="fixed inset-0 z-[40] flex items-start sm:items-center justify-center p-2 sm:p-4 pt-4 pb-[14rem] sm:pb-[16rem] overflow-y-auto bg-black/60 animate-in fade-in duration-200">
+            <div className="w-full max-w-5xl my-auto mt-4 md:mt-12 mb-[6rem]">
               <Win95Window 
                 title="Mis_Clases_y_Recursos.exe" 
                 onClose={() => setActiveWindow(null)}

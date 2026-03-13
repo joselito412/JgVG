@@ -47,7 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${vt323.variable} ${spaceMono.variable}`}>
-      <body className="font-mono antialiased">
+      <body className="font-[family-name:var(--font-pixel)] antialiased">
         {children}
         <Toaster />
         <Analytics />
