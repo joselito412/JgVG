@@ -9,7 +9,6 @@ import {
   WindowsFolderOpen, 
   WindowsBriefcase, 
   WindowsAddressBook, 
-  AgentComponent,
   Windows95MainCpl,
   Windows95Access,
   WindowsShutDown

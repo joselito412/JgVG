@@ -14,12 +14,11 @@ import DesktopIcon from "@/modules/core/components/DesktopIcon"
 import CatalogoServiciosPanel from "@/modules/catalog/components/CatalogoServiciosPanel"
 import MisClasesPanel from "@/modules/education/components/MisClasesPanel"
 import { GlobalAudio } from "@/modules/shared/components/GlobalAudio"
-import { 
-  Windows95Configuration, 
-  WindowsFolderOpen, 
-  WindowsBriefcase, 
-  WindowsAddressBook, 
-  AgentComponent 
+import {
+  Windows95Configuration,
+  WindowsFolderOpen,
+  WindowsBriefcase,
+  WindowsAddressBook
 } from "react-old-icons"
 
 // ===========================================
@@ -240,7 +239,7 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
           onClick={() => setIsOpen(true)}
           className="group relative bg-[#1a1a2e] border-2 border-[#f5a623] w-16 h-16 md:w-20 md:h-20 rounded-full flex flex-col items-center justify-center shadow-[0_0_15px_rgba(245,166,35,0.4)] hover:scale-110 transition-transform cursor-pointer animate-in zoom-in"
         >
-          <AgentComponent size={56} className="drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]" />
+          <span className="text-3xl md:text-5xl drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">🧙🏽‍♂️</span>
           <span className="w-3 h-3 md:w-4 md:h-4 bg-[#88ff88] rounded-full absolute bottom-0 right-1 md:bottom-1 md:right-1 border-2 border-[#1a1a2e] animate-pulse"></span>
           
           {/* Tooltip pequeño para invitar al click */}
@@ -259,7 +258,7 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
           <div className="flex items-center justify-between px-3 md:px-4 py-3 bg-[#2a2a4a] border-b-2 border-[#4a4a6a]">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 md:w-10 md:h-10 bg-[#1a1a2e] rounded-full flex items-center justify-center border-2 border-[#f5a623]">
-                <AgentComponent size={24} className="drop-shadow-sm" />
+                <span className="text-xl md:text-2xl drop-shadow-sm">🧙🏽‍♂️</span>
               </div>
               <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-base md:text-lg font-bold tracking-widest text-shadow">
                 CHUNGPT.exe
@@ -278,7 +277,7 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
             {/* Initial AI Message */}
             <div className="flex gap-3">
               <div className="w-8 h-8 md:w-10 md:h-10 bg-[#1a1a2e] rounded-full flex items-center justify-center shrink-0 border-2 border-[#4a4a6a]">
-                <AgentComponent size={24} />
+                <span className="text-xl md:text-2xl">🧙🏽‍♂️</span>
               </div>
               <div className="bg-[#1a1a2e] border-2 border-[#4a4a6a] px-4 py-3 max-w-[85%] rounded-md shadow-md">
                 <p className="text-[#e0e0e0] font-mono text-sm md:text-base leading-relaxed tracking-tight">
@@ -305,7 +304,7 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
                   {msg.isUser ? (
                     <span className="font-[family-name:var(--font-pixel)] text-xs md:text-sm font-bold text-[#00d9ff]">TU</span>
                   ) : (
-                    <AgentComponent size={24} />
+                    <span className="text-xl md:text-2xl">🧙🏽‍♂️</span>
                   )}
                 </div>
                 <div className={`px-4 py-3 max-w-[85%] rounded-md shadow-md ${
@@ -719,7 +718,7 @@ export default function AvocadoCenter() {
            <div className="w-[100px] sm:w-[130px] md:w-[180px]"><DesktopIcon icon={<WindowsFolderOpen size={64} className="drop-shadow-md" />} label="Catálogo" onClick={() => handleIconClick('servicios')} isActive={activeWindow === 'servicios'} /></div>
            <div className="w-[100px] sm:w-[130px] md:w-[180px]"><DesktopIcon icon={<WindowsBriefcase size={64} className="drop-shadow-md" />} label="Proyectos" onClick={() => handleIconClick('proyectos')} isActive={activeWindow === 'proyectos'} /></div>
            <div className="w-[100px] sm:w-[130px] md:w-[180px]"><DesktopIcon icon={<WindowsAddressBook size={64} className="drop-shadow-md" />} label="Mis Clases" onClick={() => handleIconClick('clases')} isActive={activeWindow === 'clases'} /></div>
-           <div className="w-[100px] sm:w-[130px] md:w-[180px]"><DesktopIcon icon={<AgentComponent size={64} className="drop-shadow-md" />} label="Agente AI" onClick={() => handleIconClick('ia')} isActive={isChatOpen} /></div>
+           <div className="w-[100px] sm:w-[130px] md:w-[180px]"><DesktopIcon icon={<span className="text-[64px] leading-none drop-shadow-md">🧙🏽‍♂️</span>} label="Agente AI" onClick={() => handleIconClick('ia')} isActive={isChatOpen} /></div>
         </div>
 
         {/* Active Window Render Area */}
