@@ -1,8 +1,9 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useTransition } from "react"
 import { Linkedin, Mail, Github, X, Minus, Square, ChevronRight, Sword, Shield, Zap, BookOpen, Heart, Star, Instagram, BookMarked, ExternalLink, MessageCircle, FileCode } from "lucide-react"
 import Scene3D from "@/components/three/Scene3D"
+import { signOut } from "@/modules/auth/actions"
 
 // ===========================================
 // SKILL DATA - Tu perfil de habilidades
@@ -543,7 +544,7 @@ function FeaturedProjectsPanel() {
       desc: "Plataforma Legal-Tech que democratiza el acceso a servicios legales combinando agentes IA autónomos y abogados expertos via WhatsApp.",
       tech: ["Python", "React", "Vector DBs", "LLM APIs"],
       link: "https://avocado.center/",
-      logo: "/projects/avocado-logo.png" // Sube aquí tu imagen
+      logo: "/projects/avocado-logo.svg" // Sube aquí tu imagen
     },
     {
       name: "Aldana Hernandez Legal",
@@ -551,57 +552,54 @@ function FeaturedProjectsPanel() {
       desc: "Implementación tecnológica y automatización de procesos para el prestigioso despacho legal corporativo.",
       tech: ["AI Agents", "Legal Engineering", "Automation"],
       link: "https://aldanahernandezlegal.com/",
-      logo: "/projects/aldana-logo.png"  // Sube aquí tu imagen
+      logo: "/projects/aldana-logo.svg"  // Sube aquí tu imagen
     }
   ]
   return (
     <div className="space-y-4">
       {projects.map((proj, idx) => (
         <div key={idx} className="bg-[#1a1a2e] border-2 border-[#4a4a6a] p-4 group hover:border-[#f5a623] transition-colors">
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
-            
-            {/* Contenedor Izquierdo: Logo + Titulos */}
-            <div className="flex items-center gap-4">
-              {/* Espacio reservado para el Logo */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 bg-[#0a0a14] border-2 border-[#4a4a6a] flex items-center justify-center p-1 rounded-sm overflow-hidden group-hover:border-[#f5a623] transition-colors">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src={proj.logo} 
-                  alt={`Logo de ${proj.name}`}
-                  className="w-full h-full object-contain"
-                  onError={(e) => {
-                    // Fallback visual si la imagen no existe aún
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.innerHTML = `<span class="font-[family-name:var(--font-pixel)] text-[10px] text-[#4a4a6a] text-center leading-tight">Mising<br/>img</span>`;
-                  }}
-                />
-              </div>
+          <div className="flex flex-col items-center mb-6">
+            {/* Contenedor Superior: Logo Ampliado al 80% */}
+            <div className="w-[80%] shrink-0 bg-[#0a0a14] border-2 border-[#4a4a6a] flex items-center justify-center p-4 sm:p-6 rounded-md overflow-hidden group-hover:border-[#f5a623] transition-colors mb-6 min-h-[140px] md:min-h-[200px]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                src={proj.logo} 
+                alt={`Logo de ${proj.name}`}
+                className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.1)]"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.parentElement!.innerHTML = `<span class="font-[family-name:var(--font-pixel)] text-sm text-[#4a4a6a] text-center leading-tight">Missing<br/>img</span>`;
+                }}
+              />
+            </div>
 
+            <div className="w-full flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                 <h3 className="font-[family-name:var(--font-pixel)] text-lg sm:text-xl lg:text-2xl text-[#f5a623] group-hover:text-white transition-colors drop-shadow-md leading-tight max-w-[180px] sm:max-w-none">
+                 <h3 className="font-[family-name:var(--font-pixel)] text-xl sm:text-2xl lg:text-3xl text-[#f5a623] group-hover:text-white transition-colors drop-shadow-md leading-tight">
                    {proj.name}
                  </h3>
-                 <p className="font-[family-name:var(--font-pixel)] text-xs sm:text-sm text-[#88ff88] mt-1 shadow-black drop-shadow-sm">
+                 <p className="font-[family-name:var(--font-pixel)] text-sm sm:text-base text-[#88ff88] mt-2 shadow-black drop-shadow-sm">
                    {proj.role}
                  </p>
               </div>
-            </div>
 
-            <a 
-              href={proj.link} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="win95-btn px-3 py-1 bg-[#c0c0c0] text-black font-[family-name:var(--font-pixel)] text-xs flex items-center justify-center gap-1 w-fit md:shrink-0 mt-2 md:mt-0"
-            >
-              VISITAR <ExternalLink className="w-3 h-3" />
-            </a>
+              <a 
+                href={proj.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="win95-btn px-4 py-2 bg-[#c0c0c0] hover:bg-[#d0d0d0] text-black font-[family-name:var(--font-pixel)] text-sm flex items-center justify-center gap-2 w-full md:w-auto shrink-0 transition-colors"
+              >
+                VISITAR <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
           </div>
-          <p className="font-[family-name:var(--font-pixel)] text-sm text-[#c0c0c0] leading-relaxed mb-3">
+          <p className="font-[family-name:var(--font-pixel)] text-sm md:text-base text-[#c0c0c0] leading-relaxed mb-4">
             {proj.desc}
           </p>
           <div className="flex flex-wrap gap-2">
             {proj.tech.map((t, i) => (
-              <span key={i} className="px-2 py-0.5 border border-[#4a4a6a] bg-[#0a0a14] font-[family-name:var(--font-pixel)] text-[10px] text-[#00d9ff]">
+              <span key={i} className="px-2 py-1 border border-[#4a4a6a] bg-[#0a0a14] font-[family-name:var(--font-pixel)] text-xs md:text-sm text-[#00d9ff]">
                 {t}
               </span>
             ))}
@@ -794,6 +792,7 @@ function SpecialAbilitiesPanel({ type }: { type: 'legal' | 'tech' }) {
 function Taskbar({ onMenuClick, isAuthenticated, userRole }: { onMenuClick?: (section: string) => void, isAuthenticated?: boolean, userRole?: string | null }) {
   const [time, setTime] = useState("")
   const [isStartOpen, setIsStartOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   // Cerrar menú con ESC
   useEffect(() => {
@@ -892,6 +891,21 @@ function Taskbar({ onMenuClick, isAuthenticated, userRole }: { onMenuClick?: (se
             <div className="h-0.5 w-full bg-gray-400 border-b border-white my-1 mt-auto"></div>
 
             {/* Sistema */}
+            {isAuthenticated && (
+              <button 
+                onClick={() => { 
+                  setIsStartOpen(false); 
+                  startTransition(() => {
+                    signOut();
+                  });
+                }}
+                disabled={isPending}
+                className="flex items-center gap-3 w-full px-2 py-2 hover:bg-[#000080] hover:text-white transition-colors text-left disabled:opacity-50"
+              >
+                <span className="text-2xl ml-0.5">🚪</span>
+                <span className="font-[family-name:var(--font-pixel)] text-lg">Cerrar Sesión</span>
+              </button>
+            )}
             <button 
               onClick={() => setIsStartOpen(false)}
               className="flex items-center gap-3 w-full px-2 py-2 hover:bg-[#000080] hover:text-white transition-colors text-left"
