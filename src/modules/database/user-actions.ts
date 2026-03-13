@@ -38,7 +38,15 @@ export async function ensureUserRecord(
 
 export async function updateUserOnboarding(
   userId: string,
-  data: { occupation: string; interest: string; username: string }
+  data: { 
+    occupation: string; 
+    interest: string; 
+    username: string;
+    phone: string;
+    company?: string;
+    acceptedPolicies: boolean;
+    acceptedTerms: boolean;
+  }
 ) {
   await db
     .update(users)
