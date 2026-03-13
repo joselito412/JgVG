@@ -1,9 +1,9 @@
 'use server';
 
 import { db } from './db-client';
-import { users } from './schema';
+import { users, services, classes, classModules, prompts } from './schema';
 import { createClient } from './server';
-import { desc, sql } from 'drizzle-orm';
+import { desc, sql, eq } from 'drizzle-orm';
 
 /**
  * Verifica si el usuario actual tiene sesión y rol de admin.
@@ -69,4 +69,50 @@ export async function getRecentVisitors(limit: number = 50) {
   });
 
   return visitors;
+}
+
+// ==========================================
+// CMS ACTIONS (Phase 8 Prep)
+// ==========================================
+
+export async function createService(data: Omit<typeof services.$inferInsert, 'id' | 'createdAt'>) {
+  await requireAdmin();
+  const [newService] = await db.insert(services).values(data).returning();
+  return newService;
+}
+
+export async function deleteService(id: string) {
+  await requireAdmin();
+  await db.delete(services).where(eq(services.id, id));
+  return { success: true };
+}
+
+export async function createClassModule(data: Omit<typeof classModules.$inferInsert, 'id' | 'createdAt'>) {
+  await requireAdmin();
+  const [newModule] = await db.insert(classModules).values(data).returning();
+  return newModule;
+}
+
+export async function createClass(data: Omit<typeof classes.$inferInsert, 'id' | 'createdAt'>) {
+  await requireAdmin();
+  const [newClass] = await db.insert(classes).values(data).returning();
+  return newClass;
+}
+
+export async function deleteClass(id: string) {
+  await requireAdmin();
+  await db.delete(classes).where(eq(classes.id, id));
+  return { success: true };
+}
+
+export async function createPrompt(data: Omit<typeof prompts.$inferInsert, 'id' | 'createdAt'>) {
+  await requireAdmin();
+  const [newPrompt] = await db.insert(prompts).values(data).returning();
+  return newPrompt;
+}
+
+export async function deletePrompt(id: string) {
+  await requireAdmin();
+  await db.delete(prompts).where(eq(prompts.id, id));
+  return { success: true };
 }

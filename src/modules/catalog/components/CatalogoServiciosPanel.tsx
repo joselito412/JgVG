@@ -1,18 +1,39 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { BookOpen, Search, ChevronRight } from "lucide-react"
-import { SERVICIOS_CATALOGO } from "@/modules/catalog/data"
+import { getCatalogoServicios } from "@/modules/database/content-actions"
+
+// Define un tipo basico a partir del esquema esperado
+export interface Servicio {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+  category: string;
+  color: string;
+}
 
 export default function CatalogoServiciosPanel() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<'Todo' | 'Legal-Tech' | 'Legal' | 'Tech'>('Todo');
+  const [servicios, setServicios] = useState<Servicio[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const filteredServicios = SERVICIOS_CATALOGO.filter(servicio => {
+  useEffect(() => {
+    async function loadData() {
+      const data = await getCatalogoServicios();
+      setServicios(data);
+      setIsLoading(false);
+    }
+    loadData();
+  }, []);
+
+  const filteredServicios = servicios.filter(servicio => {
     const term = searchTerm.toLowerCase();
     const matchesSearch = servicio.title.toLowerCase().includes(term) || 
-                          servicio.desc.toLowerCase().includes(term);
-    const matchesType = filterType === 'Todo' || servicio.tipo === filterType;
+                          servicio.description.toLowerCase().includes(term);
+    const matchesType = filterType === 'Todo' || servicio.category === filterType;
     return matchesSearch && matchesType;
   });
 
@@ -62,7 +83,11 @@ export default function CatalogoServiciosPanel() {
       </div>
 
       {/* Grilla de Resultados */}
-      {filteredServicios.length === 0 ? (
+      {isLoading ? (
+        <div className="text-center py-16">
+          <p className="animate-pulse font-[family-name:var(--font-pixel)] text-[#f5a623] text-lg mb-2">Cargando catálogo desde Supabase...</p>
+        </div>
+      ) : filteredServicios.length === 0 ? (
         <div className="text-center py-16 border-2 border-dashed border-[#4a4a6a] rounded-sm bg-[#0a0a14]/50">
           <p className="font-[family-name:var(--font-pixel)] text-[#f5a623] text-lg mb-2">0 Resultados Encontrados</p>
           <p className="font-mono text-gray-400 text-sm">Intenta con otros términos de búsqueda o cambia el filtro de categoría.</p>
@@ -74,7 +99,7 @@ export default function CatalogoServiciosPanel() {
               'Legal': 'bg-amber-900 border-amber-500 text-amber-300',
               'Tech': 'bg-blue-900 border-blue-500 text-blue-300',
               'Legal-Tech': 'bg-purple-900 border-purple-500 text-purple-300'
-            }[servicio.tipo as 'Legal' | 'Tech' | 'Legal-Tech'] || 'bg-gray-900 border-gray-500 text-gray-300'
+            }[servicio.category as 'Legal' | 'Tech' | 'Legal-Tech'] || 'bg-gray-900 border-gray-500 text-gray-300'
 
             return (
               <div key={idx} className="bg-[#0a0a14] border-2 border-[#4a4a6a] hover:border-[#f5a623] group transition-all duration-300 rounded-sm flex flex-col h-full hover:-translate-y-1 hover:shadow-[0_4px_12px_rgba(245,166,35,0.15)] p-1 animate-in fade-in zoom-in-95 duration-200">
@@ -82,7 +107,7 @@ export default function CatalogoServiciosPanel() {
                     
                     {/* Badge Tipo */}
                     <span className={`absolute top-3 right-3 border px-2 py-0.5 text-[9px] font-[family-name:var(--font-pixel)] uppercase tracking-widest rounded-sm ${badgeColors}`}>
-                      {servicio.tipo}
+                      {servicio.category}
                     </span>
 
                     <div className="text-4xl mb-4 drop-shadow-md group-hover:scale-110 group-hover:-rotate-3 transition-transform origin-bottom-left">
@@ -94,7 +119,7 @@ export default function CatalogoServiciosPanel() {
                     </h3>
                     
                     <p className="text-[#b0b0d0] font-mono text-sm leading-relaxed flex-1">
-                      {servicio.desc}
+                      {servicio.description}
                     </p>
                     
                     <div className="mt-5 pt-4 border-t border-[#4a4a6a]/60">

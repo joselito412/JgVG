@@ -1,13 +1,26 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { BookOpen, Lock, Shield, ChevronRight, PlayCircle, FileText, CheckCircle2, Sword, Zap } from "lucide-react"
-import { AREA_LEGAL_DATA, AREA_TECH_DATA, PROMPT_LIBRARY } from "@/modules/education/data"
+import { getEducationContent, getPromptsLibrary } from "@/modules/database/content-actions"
 
 export interface ClaseData {
   titulo: string;
   duracion: string;
   recursos: string[];
+}
+
+export interface ModuleData {
+  modulo: string;
+  clases: ClaseData[];
+}
+
+export interface PromptData {
+  topic: string;
+  tool: string;
+  purpose: string;
+  promptText: string;
+  tips: string | null;
 }
 
 export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: boolean }) {
@@ -17,7 +30,25 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
   const [selectedClase, setSelectedClase] = useState<{ moduloName: string, clase: ClaseData } | null>(null);
   const [showAuthwall, setShowAuthwall] = useState(false);
 
-  const activeData = activeTab === 'legal' ? AREA_LEGAL_DATA : AREA_TECH_DATA;
+  const [isLoading, setIsLoading] = useState(true);
+  const [educationData, setEducationData] = useState<{ legal: ModuleData[], tech: ModuleData[] }>({ legal: [], tech: [] });
+  const [promptsData, setPromptsData] = useState<PromptData[]>([]);
+
+  useEffect(() => {
+    async function fetchAll() {
+      setIsLoading(true);
+      const [edu, prompts] = await Promise.all([
+        getEducationContent(),
+        getPromptsLibrary()
+      ]);
+      setEducationData(edu);
+      setPromptsData(prompts);
+      setIsLoading(false);
+    }
+    fetchAll();
+  }, []);
+
+  const activeData = activeTab === 'legal' ? educationData.legal : educationData.tech;
 
   // Manejar el clic en una clase (Autenticación Requerida)
   const handleClaseClick = (moduloName: string, clase: ClaseData) => {
@@ -95,7 +126,11 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
       <div className="flex-1 bg-[#ffffff] p-4 md:p-8 pb-12 overflow-visible shadow-[inset_2px_2px_4px_rgba(0,0,0,0.1)] relative border-t-2 md:border-t-0 md:border-l-2 border-[#808080]">
         
         {/* VISTA DE UNA CLASE SELECCIONADA */}
-        {selectedClase ? (
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center p-16 animate-pulse">
+            <span className="font-[family-name:var(--font-pixel)] text-lg text-[#000080]">Cargando base de datos...</span>
+          </div>
+        ) : selectedClase ? (
           <div className="animate-in slide-in-from-right-4 duration-300">
              <button 
                onClick={() => setSelectedClase(null)}
@@ -261,23 +296,23 @@ export default function MisClasesPanel({ isAuthenticated }: { isAuthenticated: b
                   </p>
 
                   <div className="space-y-6 mt-6">
-                    {PROMPT_LIBRARY.map((recurso, idx) => (
+                    {promptsData.map((recurso, idx) => (
                       <div key={idx} className="border-2 border-gray-400 bg-white">
                          <div className="bg-[#dfdfdf] px-3 py-2 flex items-center justify-between border-b-2 border-gray-400">
-                            <span className="font-[family-name:var(--font-pixel)] text-sm font-bold text-black">{recurso.tema}</span>
-                            <span className="font-sans text-[10px] bg-[#000080] text-white px-2 py-0.5 rounded-full uppercase tracking-wider">{recurso.herramienta}</span>
+                            <span className="font-[family-name:var(--font-pixel)] text-sm font-bold text-black">{recurso.topic}</span>
+                            <span className="font-sans text-[10px] bg-[#000080] text-white px-2 py-0.5 rounded-full uppercase tracking-wider">{recurso.tool}</span>
                          </div>
                          
                          <div className="p-3 sm:p-4 space-y-4">
                             <div>
                               <span className="font-[family-name:var(--font-pixel)] text-[10px] text-gray-500 uppercase tracking-wider block mb-1">Propósito Estratégico</span>
-                              <p className="font-mono text-sm text-gray-800">{recurso.proposito}</p>
+                              <p className="font-mono text-sm text-gray-800">{recurso.purpose}</p>
                             </div>
                             
                             <div>
                               <span className="font-[family-name:var(--font-pixel)] text-[10px] text-gray-500 uppercase tracking-wider block mb-1">Prompt Block</span>
                               <div className="bg-[#0a0a14] rounded-sm p-3 font-mono text-xs text-[#88ff88] leading-relaxed overflow-x-auto whitespace-pre-wrap border-l-4 border-[#00d9ff]">
-                                {recurso.prompt}
+                                {recurso.promptText}
                               </div>
                             </div>
 
