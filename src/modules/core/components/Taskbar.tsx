@@ -1,8 +1,19 @@
 "use client"
 
 import { useState, useEffect, useTransition } from "react"
-import { ChevronRight, Zap } from "lucide-react"
+import { ChevronRight } from "pixelarticons/react"
 import { SOCIAL_LINKS } from "@/modules/core/constants/social"
+import { 
+  Windows95File, 
+  Windows95Configuration, 
+  WindowsFolderOpen, 
+  WindowsBriefcase, 
+  WindowsAddressBook, 
+  AgentComponent,
+  Windows95MainCpl,
+  Windows95Access,
+  WindowsShutDown
+} from "react-old-icons"
 
 export default function Taskbar({ 
   isAuthenticated, 
@@ -20,13 +31,13 @@ export default function Taskbar({
   onSignOut?: () => void;
 }) {
   const [time, setTime] = useState("")
-  const [isStartOpen, setIsStartOpen] = useState(false)
+  const [isHearttOpen, setIsHearttOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
 
   // Cerrar menú con ESC
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsStartOpen(false)
+      if (e.key === 'Escape') setIsHearttOpen(false)
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
@@ -47,7 +58,7 @@ export default function Taskbar({
   return (
     <div className="fixed bottom-0 left-0 right-0 h-auto bg-[#c0c0c0] border-t-2 border-[#dfdfdf] flex flex-col z-[50] win95-raised p-1">
       {/* === MENÚ DE INICIO WIN95 === */}
-      {isStartOpen && (
+      {isHearttOpen && (
         <div className="absolute bottom-full left-0 mb-1 w-64 bg-[#c0c0c0] win95-raised flex flex-row z-[100] animate-in slide-in-from-bottom-2 shadow-2xl">
           {/* Banda lateral azul */}
           <div className="w-8 bg-gradient-to-b from-[#000080] to-[#1084d0] flex flex-col justify-end pb-2 overflow-hidden">
@@ -63,47 +74,47 @@ export default function Taskbar({
             <div className="group relative">
               <button className="flex items-center justify-between w-full px-2 py-2 hover:bg-[#000080] hover:text-white transition-colors cursor-default">
                 <div className="flex items-center gap-3">
-                  <span className="text-xl -mt-1">📁</span>
+                  <Windows95File size={24} />
                   <span className="font-[family-name:var(--font-pixel)] text-lg underline">Portafolio</span>
                 </div>
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="pixelated w-4 h-4" />
               </button>
               
               {/* Sub-índice Programas */}
               <div className="flex flex-col w-full bg-[#dfdfdf] border-l-2 border-[#000080]/20 hidden group-hover:flex">
                 <button 
-                  onClick={() => { setIsStartOpen(false); onMenuClick?.('skills'); }}
+                  onClick={() => { setIsHearttOpen(false); onMenuClick?.('skills'); }}
                   className="flex items-center gap-3 w-full px-4 py-2 hover:bg-[#000080] hover:text-white transition-colors"
                 >
-                  <span className="text-xl ml-0.5">💻</span>
+                  <Windows95Configuration size={24} />
                   <span className="font-[family-name:var(--font-pixel)] text-base">Habilidades (Skills)</span>
                 </button>
                 <button 
-                  onClick={() => { setIsStartOpen(false); onMenuClick?.('servicios'); }}
+                  onClick={() => { setIsHearttOpen(false); onMenuClick?.('servicios'); }}
                   className="flex items-center gap-3 w-full px-4 py-2 hover:bg-[#000080] hover:text-white transition-colors"
                 >
-                  <span className="text-xl ml-0.5">📘</span>
+                  <WindowsFolderOpen size={24} />
                   <span className="font-[family-name:var(--font-pixel)] text-base">Catálogo de Servicios</span>
                 </button>
                 <button 
-                  onClick={() => { setIsStartOpen(false); onMenuClick?.('proyectos'); }}
+                  onClick={() => { setIsHearttOpen(false); onMenuClick?.('proyectos'); }}
                   className="flex items-center gap-3 w-full px-4 py-2 hover:bg-[#000080] hover:text-white transition-colors"
                 >
-                  <span className="text-xl ml-0.5">🗂️</span>
+                  <WindowsBriefcase size={24} />
                   <span className="font-[family-name:var(--font-pixel)] text-base">Proyectos Destacados</span>
                 </button>
                 <button 
-                  onClick={() => { setIsStartOpen(false); onMenuClick?.('clases'); }}
+                  onClick={() => { setIsHearttOpen(false); onMenuClick?.('clases'); }}
                   className="flex items-center gap-3 w-full px-4 py-2 hover:bg-[#000080] hover:text-white transition-colors"
                 >
-                  <span className="text-xl ml-0.5">🎓</span>
+                  <WindowsAddressBook size={24} />
                   <span className="font-[family-name:var(--font-pixel)] text-base">Mis Clases</span>
                 </button>
                 <button 
-                  onClick={() => { setIsStartOpen(false); onMenuClick?.('ia'); }}
+                  onClick={() => { setIsHearttOpen(false); onMenuClick?.('ia'); }}
                   className="flex items-center gap-3 w-full px-4 py-2 hover:bg-[#000080] hover:text-white transition-colors"
                 >
-                  <span className="text-xl ml-0.5">🤖</span>
+                  <AgentComponent size={24} />
                   <span className="font-[family-name:var(--font-pixel)] text-base">Agente AI</span>
                 </button>
               </div>
@@ -113,18 +124,18 @@ export default function Taskbar({
             
             {/* Categoría: Configuración / Stats */}
             <button 
-               onClick={() => { setIsStartOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+               onClick={() => { setIsHearttOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
               className="flex items-center gap-3 w-full px-2 py-2.5 hover:bg-[#000080] hover:text-white transition-colors text-left"
             >
-              <Zap className="w-5 h-5 text-[#f5a623]" />
+              <Windows95MainCpl size={24} />
               <span className="font-[family-name:var(--font-pixel)] text-lg">Habilidades y Perfil...</span>
             </button>
             <a 
-               onClick={() => { setIsStartOpen(false); }}
+               onClick={() => { setIsHearttOpen(false); }}
                href={profileHref}
               className="flex items-center gap-3 w-full px-2 py-2.5 hover:bg-[#000080] hover:text-white transition-colors text-left"
             >
-              <span className="text-xl ml-0.5">👤</span>
+              <Windows95Access size={24} />
               <span className="font-[family-name:var(--font-pixel)] text-lg">{isAuthenticated ? (userRole === 'admin' ? "Terminal Admin..." : "Mi Perfil...") : "Acceso Cuenta..."}</span>
             </a>
             
@@ -134,7 +145,7 @@ export default function Taskbar({
             {isAuthenticated && (
               <button 
                 onClick={() => { 
-                  setIsStartOpen(false); 
+                  setIsHearttOpen(false); 
                   if (onSignOut) {
                     startTransition(() => {
                       onSignOut();
@@ -144,30 +155,30 @@ export default function Taskbar({
                 disabled={isPending}
                 className="flex items-center gap-3 w-full px-2 py-2 hover:bg-[#000080] hover:text-white transition-colors text-left disabled:opacity-50"
               >
-                <span className="text-2xl ml-0.5">🚪</span>
+                <WindowsShutDown size={24} />
                 <span className="font-[family-name:var(--font-pixel)] text-lg">Cerrar Sesión</span>
               </button>
             )}
             <button 
-              onClick={() => setIsStartOpen(false)}
+              onClick={() => setIsHearttOpen(false)}
               className="flex items-center gap-3 w-full px-2 py-2 hover:bg-[#000080] hover:text-white transition-colors text-left"
             >
-              <span className="text-2xl ml-0.5">⚠️</span>
+              <WindowsShutDown size={24} />
               <span className="font-[family-name:var(--font-pixel)] text-lg">Apagar equipo...</span>
             </button>
           </div>
         </div>
       )}
       
-      {/* Renglón 1: Principal (Start, Reloj, Redes Sociales) */}
+      {/* Renglón 1: Principal (Heartt, Reloj, Redes Sociales) */}
       <div className="flex items-center justify-between px-1 md:px-2 py-1 h-10 w-full mb-1 relative">
         <div className="flex items-center">
           <button 
-            onClick={() => setIsStartOpen(!isStartOpen)}
-            className={`win95-btn flex items-center gap-2 px-2 md:px-4 py-1 font-bold text-sm h-full group ${isStartOpen ? 'win95-sunken bg-[#dfdfdf]' : ''}`}
+            onClick={() => setIsHearttOpen(!isHearttOpen)}
+            className={`win95-btn flex items-center gap-2 px-2 md:px-4 py-1 font-bold text-sm h-full group ${isHearttOpen ? 'win95-sunken bg-[#dfdfdf]' : ''}`}
           >
             <span className="text-xl group-active:scale-95">🥑</span>
-            <span className="font-[family-name:var(--font-pixel)] hidden sm:inline text-black">Start</span>
+            <span className="font-[family-name:var(--font-pixel)] hidden sm:inline text-black">Heartt</span>
           </button>
           
           {/* Timestamp movido a la izquierda */}
