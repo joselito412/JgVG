@@ -35,7 +35,11 @@ export function LocalLoginForm() {
           title: activeTab === 'signup' ? 'Cuenta creada exitosamente' : 'Sesión iniciada',
           description: 'Accediendo al sistema...',
         });
-        router.push('/');
+        if (res?.onboarded === false) {
+           router.push('/onboarding');
+        } else {
+           router.push('/');
+        }
         router.refresh();
       }
     } catch (err) {

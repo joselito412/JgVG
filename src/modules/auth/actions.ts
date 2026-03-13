@@ -49,17 +49,19 @@ export async function signInWithEmail(email: string, password?: string) {
 
   // Get user session to inject into postgres map
   const { data: { user } } = await supabase.auth.getUser();
+  let onboarded = false;
   if (user) {
     try {
       const { ensureUserRecord } = require('@/modules/database/user-actions');
-      await ensureUserRecord(user.id, user.email!, user.user_metadata || {});
+      const record = await ensureUserRecord(user.id, user.email!, user.user_metadata || {});
+      onboarded = record.onboarded;
     } catch (dbErr: any) {
       console.error("DB INSERT ERROR FROM ACTION:", dbErr);
       return { error: `DB Sync Error: ${dbErr.message || 'Unknown DB Error'}` };
     }
   }
 
-  return { success: true };
+  return { success: true, onboarded };
 }
 
 export async function signUpWithEmail(email: string, password?: string) {
@@ -79,15 +81,17 @@ export async function signUpWithEmail(email: string, password?: string) {
   }
 
   // Ensure user record is created immediately
+  let onboarded = false;
   if (signUpData.user) {
      try {
        const { ensureUserRecord } = require('@/modules/database/user-actions');
-       await ensureUserRecord(signUpData.user.id, signUpData.user.email!, signUpData.user.user_metadata || {});
+       const record = await ensureUserRecord(signUpData.user.id, signUpData.user.email!, signUpData.user.user_metadata || {});
+       onboarded = record.onboarded;
      } catch (dbErr: any) {
        console.error("DB INSERT ERROR FROM SIGNUP:", dbErr);
        return { error: `DB Sync Error: ${dbErr.message || 'Unknown DB Error'}` };
      }
   }
 
-  return { success: true };
+  return { success: true, onboarded };
 }
