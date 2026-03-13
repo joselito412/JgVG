@@ -6,13 +6,13 @@ import './globals.css'
 const vt323 = VT323({ 
   weight: '400',
   subsets: ['latin'],
-  variable: '--font-pixel'
+  variable: '--next-font-pixel'
 })
 
 const spaceMono = Space_Mono({ 
   weight: ['400', '700'],
   subsets: ['latin'],
-  variable: '--font-mono'
+  variable: '--next-font-mono'
 })
 
 export const metadata: Metadata = {

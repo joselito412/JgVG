@@ -56,9 +56,9 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-mono), 'Space Mono', 'Courier New', monospace;
-  --font-mono: var(--font-mono), 'Space Mono', 'Courier New', monospace;
-  --font-pixel: var(--font-pixel), 'VT323', monospace;
+  --font-sans: var(--next-font-mono), 'Space Mono', 'Courier New', monospace;
+  --font-mono: var(--next-font-mono), 'Space Mono', 'Courier New', monospace;
+  --font-pixel: var(--next-font-pixel), 'VT323', monospace;
   --color-brand-blue-base: var(--brand-blue-base);
   --color-brand-blue-mid: var(--brand-blue-mid);
   --color-brand-blue-dark: var(--brand-blue-dark);
@@ -92,6 +92,9 @@
   --radius-md: 0;
   --radius-lg: 0;
   --radius-xl: 0;
+  --z-60: 60;
+  --z-100: 100;
+  --spacing-18: 4.5rem;
 }
 
 @layer base {
