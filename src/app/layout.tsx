@@ -20,21 +20,8 @@ export const metadata: Metadata = {
   description: 'Portafolio interactivo de José - Abogado corporativo especializado en LegalTech, Propiedad Intelectual y Datos, además de Desarrollador Fullstack y creador de Agentes de IA.',
   generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/logo/Cafe_logo.svg',
+    apple: '/logo/Cafe_logo.svg',
   },
 }
 

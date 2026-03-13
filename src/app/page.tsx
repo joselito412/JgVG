@@ -15,9 +15,9 @@ import CatalogoServiciosPanel from "@/modules/catalog/components/CatalogoServici
 import MisClasesPanel from "@/modules/education/components/MisClasesPanel"
 import { GlobalAudio } from "@/modules/shared/components/GlobalAudio"
 import {
-  Windows95Configuration,
-  WindowsFolderOpen,
-  WindowsBriefcase,
+  WindowsXPHelp,
+  WindowsExplorer,
+  WindowsXPMyNetworkPlaces,
   WindowsAddressBook
 } from "react-old-icons"
 
@@ -123,7 +123,7 @@ function CharacterStatsPanel() {
   return (
     <div className="rpg-panel p-6 md:p-8 flex flex-col items-center text-center">
       {/* Avatar Central */}
-      <div className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-4 md:border-[6px] border-[#60b080] mb-6 shadow-[0_0_25px_rgba(96,176,128,0.6)] bg-[#6CBA89] relative transition-transform hover:scale-105 duration-300 pixelated">
+      <div className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-4 md:border-[6px] border-[#60b080] mb-6 shadow-[0_0_25px_rgba(96,176,128,0.6)] bg-[#6CBA89] relative transition-transform hover:scale-105 duration-300">
         <Image 
           src="/profile.png" 
           alt="Jose Guillermo Vasquez" 
@@ -131,6 +131,7 @@ function CharacterStatsPanel() {
           height={400}
           quality={100}
           priority
+          unoptimized={true}
           sizes="(max-width: 768px) 160px, 224px"
           className="w-full h-full object-cover object-center"
         />
@@ -232,14 +233,14 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
   }
 
   return (
-    <div className="fixed bottom-16 md:bottom-[4.5rem] lg:bottom-20 right-4 md:right-6 z-[30] flex flex-col items-end">
+    <div className="fixed bottom-40 sm:bottom-32 md:bottom-28 lg:bottom-32 right-4 md:right-8 z-[60] flex flex-col items-end">
       {/* Botón flotante (Avatar Icono) */}
       {!isOpen && (
         <button 
           onClick={() => setIsOpen(true)}
-          className="group relative bg-[#1a1a2e] border-2 border-[#f5a623] w-16 h-16 md:w-20 md:h-20 rounded-full flex flex-col items-center justify-center shadow-[0_0_15px_rgba(245,166,35,0.4)] hover:scale-110 transition-transform cursor-pointer animate-in zoom-in"
+          className="group relative bg-[#1a1a2e] border-[3px] border-[#f5a623] w-20 h-20 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center shadow-[0_0_25px_rgba(245,166,35,0.6)] hover:scale-110 transition-transform cursor-pointer animate-in zoom-in"
         >
-          <span className="text-3xl md:text-5xl drop-shadow-[2px_2px_0_rgba(0,0,0,0.5)]">🧙🏽‍♂️</span>
+          <span className="text-4xl sm:text-5xl drop-shadow-[3px_3px_0_rgba(0,0,0,0.5)]">🧙🏽‍♂️</span>
           <span className="w-3 h-3 md:w-4 md:h-4 bg-[#88ff88] rounded-full absolute bottom-0 right-1 md:bottom-1 md:right-1 border-2 border-[#1a1a2e] animate-pulse"></span>
           
           {/* Tooltip pequeño para invitar al click */}
@@ -257,8 +258,8 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
           {/* Header */}
           <div className="flex items-center justify-between px-3 md:px-4 py-3 bg-[#2a2a4a] border-b-2 border-[#4a4a6a]">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-[#1a1a2e] rounded-full flex items-center justify-center border-2 border-[#f5a623]">
-                <span className="text-xl md:text-2xl drop-shadow-sm">🧙🏽‍♂️</span>
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-[#1a1a2e] rounded-full flex items-center justify-center border-[3px] border-[#f5a623]">
+                <span className="text-2xl md:text-3xl drop-shadow-sm">🧙🏽‍♂️</span>
               </div>
               <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-base md:text-lg font-bold tracking-widest text-shadow">
                 CHUNGPT.exe
@@ -672,9 +673,13 @@ export default function AvocadoCenter() {
 
   const handleIconClick = (windowName: 'proyectos' | 'skills' | 'ia' | 'servicios' | 'clases') => {
     if (windowName === 'ia') {
-      setIsChatOpen(prev => !prev)
+      setIsChatOpen(true)
     } else {
-      setActiveWindow(windowName === activeWindow ? null : windowName)
+      setActiveWindow(windowName)
+      setTimeout(() => {
+        const el = document.getElementById(`${windowName}-section`);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
     }
   }
 
@@ -696,11 +701,19 @@ export default function AvocadoCenter() {
       {/* Main Content - Mobile First Container */}
       <div className="w-full max-w-xl mx-auto px-4 py-8 relative z-10">
         
-        {/* Header - Battle Title */}
-        <div className="text-center mb-8">
-          <h1 className="font-[family-name:var(--font-pixel)] text-2xl md:text-4xl text-[#f5a623] rpg-glow tracking-wider">
-            ~ Un héroe legal-tech aparece ~
-          </h1>
+        {/* Header - Brand Logo */}
+        <div className="flex justify-center mb-8 mt-6 relative">
+          {/* Difuminado trasero (Capa de resalte profesional) */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[500px] h-[80px] md:h-[120px] bg-[#c0c0c0]/15 blur-2xl rounded-[100%] z-0 pointer-events-none"></div>
+          
+          <Image 
+            src="/logo/JoseGuillermoVG_Legal-Tech_Dev.svg" 
+            alt="Jose Guillermo VG Logo" 
+            width={800} 
+            height={220} 
+            className="w-[95%] sm:w-[85%] md:w-[70%] lg:w-[600px] h-auto drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] relative z-10"
+            priority
+          />
         </div>
 
         {/* Character Profile (FIRST) */}
@@ -714,16 +727,16 @@ export default function AvocadoCenter() {
         
         {/* Desktop Navigation Menu (Win95 Icons) */}
         <div className="flex flex-wrap justify-center gap-4 sm:gap-10 mb-16 w-full animate-in slide-in-from-bottom-8 duration-700 max-w-6xl mx-auto px-4 mt-8">
-           <div className="w-[100px] sm:w-[130px] md:w-[180px]"><DesktopIcon icon={<Windows95Configuration size={64} className="drop-shadow-md" />} label="Skills" onClick={() => handleIconClick('skills')} isActive={activeWindow === 'skills'} /></div>
-           <div className="w-[100px] sm:w-[130px] md:w-[180px]"><DesktopIcon icon={<WindowsFolderOpen size={64} className="drop-shadow-md" />} label="Catálogo" onClick={() => handleIconClick('servicios')} isActive={activeWindow === 'servicios'} /></div>
-           <div className="w-[100px] sm:w-[130px] md:w-[180px]"><DesktopIcon icon={<WindowsBriefcase size={64} className="drop-shadow-md" />} label="Proyectos" onClick={() => handleIconClick('proyectos')} isActive={activeWindow === 'proyectos'} /></div>
+           <div className="w-[100px] sm:w-[130px] md:w-[180px]"><DesktopIcon icon={<WindowsXPHelp size={64} className="drop-shadow-md" />} label="Skills" onClick={() => handleIconClick('skills')} isActive={activeWindow === 'skills'} /></div>
+           <div className="w-[100px] sm:w-[130px] md:w-[180px]"><DesktopIcon icon={<WindowsExplorer size={64} className="drop-shadow-md" />} label="Catálogo" onClick={() => handleIconClick('servicios')} isActive={activeWindow === 'servicios'} /></div>
+           <div className="w-[100px] sm:w-[130px] md:w-[180px]"><DesktopIcon icon={<WindowsXPMyNetworkPlaces size={64} className="drop-shadow-md" />} label="Proyectos" onClick={() => handleIconClick('proyectos')} isActive={activeWindow === 'proyectos'} /></div>
            <div className="w-[100px] sm:w-[130px] md:w-[180px]"><DesktopIcon icon={<WindowsAddressBook size={64} className="drop-shadow-md" />} label="Mis Clases" onClick={() => handleIconClick('clases')} isActive={activeWindow === 'clases'} /></div>
            <div className="w-[100px] sm:w-[130px] md:w-[180px]"><DesktopIcon icon={<span className="text-[64px] leading-none drop-shadow-md">🧙🏽‍♂️</span>} label="Agente AI" onClick={() => handleIconClick('ia')} isActive={isChatOpen} /></div>
         </div>
 
         {/* Active Window Render Area */}
         {activeWindow === 'proyectos' && (
-          <div className="mb-10 max-w-3xl mx-auto animate-in slide-in-from-bottom-4">
+          <div id="proyectos-section" className="mb-10 max-w-3xl mx-auto animate-in slide-in-from-bottom-4">
             <Win95Window title="Proyectos_Destacados.exe" onClose={() => setActiveWindow(null)}>
               <div className="p-2 sm:p-4 bg-[#0a0a14]">
                  <FeaturedProjectsPanel />
@@ -734,7 +747,7 @@ export default function AvocadoCenter() {
 
         {/* ===== NUEVO LAYOUT RPG: SPLIT SCREEN STICKY (Personaje Te Acompaña / Stats Limpios Der) ===== */}
         {activeWindow === 'skills' && (
-          <div className="mb-10 w-[95vw] lg:w-[1100px] max-w-full mx-auto animate-in slide-in-from-bottom-4 relative bg-transparent border-2 border-[#4a4a6a]">
+          <div id="skills-section" className="mb-10 w-[95vw] lg:w-[1100px] max-w-full mx-auto animate-in slide-in-from-bottom-4 relative bg-transparent border-2 border-[#4a4a6a]">
             
             <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
               
@@ -754,9 +767,13 @@ export default function AvocadoCenter() {
               {/* LADO DERECHO: Menú de Estadísticas (Fluye Naturalmente) */}
               <div className="relative p-4 lg:p-8 bg-[#05050a]">
                 
-                <h2 className="font-[family-name:var(--font-pixel)] text-2xl text-[#88ff88] mb-8 border-b-2 border-[#4a4a6a] pb-2">
+                <h2 className="font-[family-name:var(--font-pixel)] text-2xl text-[#88ff88] mb-4 border-b-2 border-[#4a4a6a] pb-2">
                   PERFIL DE CLASE
                 </h2>
+                
+                <p className="font-[family-name:var(--font-pixel)] text-lg md:text-xl text-[#f5a623] tracking-widest mb-8 text-shadow animate-pulse">
+                  ~ Un héroe legal-tech aparece ~
+                </p>
 
                 <div className="flex flex-col gap-8">
                   {/* Panel 1: Stats Principales (Limpios) */}
@@ -801,7 +818,7 @@ export default function AvocadoCenter() {
         )}
 
         {activeWindow === 'servicios' && (
-          <div className="mb-10 w-[95vw] lg:w-[1000px] max-w-full mx-auto animate-in slide-in-from-bottom-4 relative">
+          <div id="servicios-section" className="mb-10 w-[95vw] lg:w-[1000px] max-w-full mx-auto animate-in slide-in-from-bottom-4 relative">
             <Win95Window title="Catalogo_de_Servicios.exe" onClose={() => setActiveWindow(null)}>
                <div className="bg-[#0a0a14] p-1 h-full">
                  <CatalogoServiciosPanel />
@@ -811,7 +828,7 @@ export default function AvocadoCenter() {
         )}
 
         {activeWindow === 'clases' && (
-          <div className="fixed inset-0 z-[40] flex items-start sm:items-center justify-center p-2 sm:p-4 pt-4 pb-[14rem] sm:pb-[16rem] overflow-y-auto bg-black/60 animate-in fade-in duration-200">
+          <div id="clases-section" className="fixed inset-0 z-[40] flex items-start sm:items-center justify-center p-2 sm:p-4 pt-4 pb-[14rem] sm:pb-[16rem] overflow-y-auto bg-black/60 animate-in fade-in duration-200">
             <div className="w-full max-w-5xl my-auto mt-4 md:mt-12 mb-[6rem]">
               <Win95Window 
                 title="Mis_Clases_y_Recursos.exe" 
