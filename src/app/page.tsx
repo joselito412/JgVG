@@ -1,11 +1,13 @@
 "use client"
 import Image from "next/image"
 
-import { useState, useEffect, useCallback } from "react"
+import { useChat } from "@ai-sdk/react"
+import { useState, useEffect, useRef } from 'react'
 import { ChevronRight, Sword, Shield, Zap, BookOpen, Heart, ExternalLink } from "pixelarticons/react"
 import Scene3D from "@/components/three/Scene3D"
 
 import { DEVELOPER_SKILLS, LAWYER_SKILLS } from "@/modules/identity/data/skills"
+import { FEATURED_PROJECTS } from "@/modules/identity/data/projects"
 import Win95Window from "@/modules/core/components/Win95Window"
 import RPGStatBar from "@/modules/identity/components/RPGStatBar"
 import Taskbar from "@/modules/core/components/Taskbar"
@@ -118,10 +120,10 @@ export function RPGStatsPanel() {
   )
 }
 
-// Tarjeta de Presentación Principal (Fase 1: Info Integrada)
+// Tarjeta de Presentación Principal (Fase 1: Info Integrada AIO-Optimized)
 function CharacterStatsPanel() {
   return (
-    <div className="rpg-panel p-6 md:p-8 flex flex-col items-center text-center">
+    <article className="rpg-panel p-6 md:p-8 flex flex-col items-center text-center">
       {/* Avatar Central */}
       <div className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-4 md:border-[6px] border-[#60b080] mb-6 shadow-[0_0_25px_rgba(96,176,128,0.6)] bg-[#6CBA89] relative transition-transform hover:scale-105 duration-300">
         <Image 
@@ -137,7 +139,7 @@ function CharacterStatsPanel() {
         />
       </div>
       
-      {/* Nombres y Titulos */}
+      {/* Nombres y Titulos (H1 para SEO y AIO) */}
       <h1 className="text-white font-[family-name:var(--font-pixel)] text-3xl md:text-6xl mb-4 tracking-wide shadow-black drop-shadow-md">
         Jose Guillermo Vasquez Guzman
       </h1>
@@ -146,21 +148,32 @@ function CharacterStatsPanel() {
         Diseño soluciones legales con <span className="bg-[#f5f5dc] text-black px-3 py-1 rounded inline-block mt-2 md:mt-0 font-bold shadow-lg">Inteligencia Artificial</span>
       </h2>
       
-      {/* Sobre Mi Integrado */}
-      <div className="bg-[#0a0a14] border-2 border-[#4a4a6a] p-5 md:p-8 w-full font-[family-name:var(--font-pixel)] max-w-4xl text-left mt-2 mb-2 shadow-inner hover:border-[#f5a623] transition-colors">
-        <h3 className="text-[#f5a623] text-xl md:text-2xl mb-4 flex items-center gap-3 border-b border-[#4a4a6a] pb-3">
-          <span className="text-2xl md:text-3xl">⚔️</span> Abogado e Ingeniero Legal <span className="text-sm md:text-lg text-gray-400 font-normal">(Legal-Tech Dev)</span>
+      {/* Sobre Mi Integrado y Optimizado para Agentes IA (Listas semánticas legibles) */}
+      <section className="bg-[#0a0a14] border-2 border-[#4a4a6a] p-5 md:p-8 w-full max-w-4xl text-left mt-2 mb-2 shadow-inner hover:border-[#f5a623] transition-colors">
+        <h3 className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-xl md:text-2xl mb-4 flex items-center gap-3 border-b border-[#4a4a6a] pb-3">
+          <span className="text-2xl md:text-3xl">⚔️</span> Perfil Bi-Clase: Abogado & Fullstack
         </h3>
         
-        <p className="text-sm md:text-base text-[#dfdfdf] leading-relaxed mb-5 font-mono">
-          Especialista en la intersección entre derecho y tecnología. Como <span className="text-[#00d9ff] font-bold">abogado tecnológico</span>, ofrezco consultoría en <span className="text-[#00d9ff] font-bold">propiedad intelectual</span>, <span className="text-[#00d9ff] font-bold">cumplimiento normativo (Compliance)</span>, y redacción de <span className="text-[#00d9ff] font-bold">contratos SaaS</span> y de software.
+        <p className="sr-only">
+          José Guillermo Vásquez es un Abogado Corporativo y Desarrollador Fullstack especializado en LegalTech. Domina la intersección entre ingeniería de software (Next.js, LangChain, Supabase) y derecho digital (Compliance, IP, Contratos SaaS), forjando soluciones legales escalables potenciadas por Inteligencia Artificial.
         </p>
-        
-        <p className="text-sm md:text-base text-[#dfdfdf] leading-relaxed font-mono">
-          Como <span className="text-[#f5a623] font-bold">desarrollador Fullstack (Next.js, Python)</span>, diseño y programo plataformas digitales, automatizaciones corporativas, y construyo <span className="text-[#f5a623] font-bold">agentes de Inteligencia Artificial (LLMs, LangChain)</span> para optimizar operaciones empresariales y servicios legales.
-        </p>
-      </div>
-    </div>
+
+        <ul role="list" className="space-y-4 font-mono text-sm md:text-base text-[#dfdfdf] leading-relaxed">
+          <li className="flex items-start gap-2">
+            <span className="text-[#f5a623] mt-1">▸</span>
+            <span>
+              <strong>Rama Legal Corporativa:</strong> Especialista en la intersección entre derecho y tecnología. Ofrezco consultoría oficial en <strong className="text-[#00d9ff]">propiedad intelectual</strong>, <strong className="text-[#00d9ff]">SaaS Compliance normativo</strong>, privacidad de datos y redacción de contratos de software complejos.
+            </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-[#f5a623] mt-1">▸</span>
+            <span>
+              <strong>Rama de Ingeniería Tech:</strong> Desarrollador Fullstack activo construyendo infraestructura digital y automatizaciones. Experto integrando agentes autónomos y LLMs para optimizar procesos comerciales mediante <strong className="text-[#f5a623]">Next.js, Python, Supabase y LangChain</strong>.
+            </span>
+          </li>
+        </ul>
+      </section>
+    </article>
   )
 }
 
@@ -168,22 +181,28 @@ function CharacterStatsPanel() {
 
 // RPG Chat Bubble - Botón flotante interactivo
 function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessage: (message: string) => void, isOpen: boolean, setIsOpen: (val: boolean) => void }) {
-  const initialMessage = "¡Ji, ji, ji! Saludos, viajero. Soy ChunGPT, el duende inmortal y familiar tecno-arcano de este reino. Mi maestro, José Guillermo, está en las profundidades de las mazmorras corporativas, luchando contra temibles Project Bosses y forjando Smart Contracts en la fragua digital. ¿Deseas que lo invoque para una nueva misión, o prefieres que husmee en su inventario para contarte sobre él?"
+  const initialMessageStr = "¡Ji, ji, ji! Soy ChunGPT, el duende tecno-arcano. Mi maestro forja código y leyes en la fragua digital. ¿Deseas explorar su inventario de habilidades, o prefieres que lo invoque para un nuevo proyecto?"
   
-  const [displayedText, setDisplayedText] = useState("")
-  const [isTyping, setIsTyping] = useState(true)
-  const [inputValue, setInputValue] = useState("")
-  const [currentMessage, setCurrentMessage] = useState(initialMessage)
-  const [messageIndex, setMessageIndex] = useState(0)
-  const [messages, setMessages] = useState<{text: string, isUser: boolean}[]>([])
-  const [hasGreeted, setHasGreeted] = useState(false)
+  // Vercel AI SDK 3.x bypass configurations
+  const { messages, status, setMessages } = useChat();
 
-  const typeText = useCallback((text: string) => {
-    setDisplayedText("")
-    setIsTyping(true)
-    setMessageIndex(0)
-    setCurrentMessage(text)
-  }, [])
+  const [input, setInput] = useState("");
+  const isLoading = status === 'submitted' || status === 'streaming';
+
+  const [hasGreeted, setHasGreeted] = useState(false)
+  
+  // Custom states just for the initial message typewriter effect
+  const [displayedText, setDisplayedText] = useState("")
+  const [isTypingInitial, setIsTypingInitial] = useState(true)
+  const [messageIndex, setMessageIndex] = useState(0)
+
+  // Ensure initial message is injected safely on load
+  useEffect(() => {
+     if (messages.length === 0) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setMessages([{ id: 'initial-msg-1', role: 'assistant', content: initialMessageStr } as any])
+     }
+  }, [messages.length, setMessages, initialMessageStr])
 
   // Auto-greet on load (show bubble after 5s)
   useEffect(() => {
@@ -196,44 +215,54 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
     }
   }, [hasGreeted, setIsOpen])
 
+  // Initial message typing effect
   useEffect(() => {
-    if (!isTyping || !isOpen) return
+    if (!isTypingInitial || !isOpen) return
 
-    if (messageIndex < currentMessage.length) {
+    if (messageIndex < initialMessageStr.length) {
       const timeout = setTimeout(() => {
-        setDisplayedText(prev => prev + currentMessage[messageIndex])
+        setDisplayedText(prev => prev + initialMessageStr[messageIndex])
         setMessageIndex(prev => prev + 1)
       }, 25)
 
       return () => clearTimeout(timeout)
     } else {
-      setTimeout(() => setIsTyping(false), 0)
+      setTimeout(() => setIsTypingInitial(false), 0)
     }
-  }, [messageIndex, currentMessage, isTyping, isOpen])
+  }, [messageIndex, isTypingInitial, isOpen, initialMessageStr])
 
+  // Auto-scroll logic
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+  
   useEffect(() => {
-    if (messages.length === 0 && isOpen && displayedText === "") {
-      setTimeout(() => typeText(initialMessage), 0)
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
     }
-  }, [typeText, messages.length, isOpen, displayedText])
+  }, [messages])
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!inputValue.trim()) return
+  const onCustomSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+    onSendMessage(input);
     
-    setMessages(prev => [...prev, { text: inputValue, isUser: true }])
-    onSendMessage(inputValue)
-    setInputValue("")
+    // We send the user message to the chat API manually using TS Coercion to fix V3 drift
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const nextMessages = [...messages, { id: crypto.randomUUID(), role: 'user', content: input } as any]
+    setMessages(nextMessages);
     
-    setTimeout(() => {
-      const response = "* Procesando en los servidores arcanos... *"
-      setMessages(prev => [...prev, { text: response, isUser: false }])
-      typeText(response)
-    }, 500)
-  }
+    fetch('/api/chat', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify({ messages: nextMessages }),
+    }).then(async (res) => {
+       const reader = res.body?.getReader()
+       if (!reader) return
+    })
+    setInput(""); // clear input
+  };
 
   return (
-    <div className="fixed bottom-40 sm:bottom-32 md:bottom-28 lg:bottom-32 right-4 md:right-8 z-[60] flex flex-col items-end">
+    <div className="fixed bottom-40 sm:bottom-32 md:bottom-28 lg:bottom-32 right-4 md:right-8 z-60 flex flex-col items-end">
       {/* Botón flotante (Avatar Icono) */}
       {!isOpen && (
         <button 
@@ -275,70 +304,87 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
           
           {/* Messages Area */}
           <div className="h-[50vh] max-h-[400px] overflow-y-auto p-4 space-y-4 bg-[#0a0a14]">
-            {/* Initial AI Message */}
-            <div className="flex gap-3">
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-[#1a1a2e] rounded-full flex items-center justify-center shrink-0 border-2 border-[#4a4a6a]">
-                <span className="text-xl md:text-2xl">🧙🏽‍♂️</span>
-              </div>
-              <div className="bg-[#1a1a2e] border-2 border-[#4a4a6a] px-4 py-3 max-w-[85%] rounded-md shadow-md">
-                <p className="text-[#e0e0e0] font-mono text-sm md:text-base leading-relaxed tracking-tight">
-                  {messages.length === 0 ? (
-                    <>
-                      {displayedText}
-                      {isTyping && <span className="typewriter-cursor" />}
-                    </>
-                  ) : (
-                    initialMessage
-                  )}
-                </p>
-              </div>
-            </div>
-
             {/* Conversation Messages */}
-            {messages.map((msg, index) => (
-              <div key={index} className={`flex gap-3 ${msg.isUser ? 'flex-row-reverse' : ''}`}>
-                <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center shrink-0 border-2 ${
-                  msg.isUser 
-                    ? 'bg-[#006060] border-[#00d9ff]' 
-                    : 'bg-[#1a1a2e] border-[#4a4a6a]'
-                }`}>
-                  {msg.isUser ? (
-                    <span className="font-[family-name:var(--font-pixel)] text-xs md:text-sm font-bold text-[#00d9ff]">TU</span>
-                  ) : (
-                    <span className="text-xl md:text-2xl">🧙🏽‍♂️</span>
-                  )}
-                </div>
-                <div className={`px-4 py-3 max-w-[85%] rounded-md shadow-md ${
-                  msg.isUser 
-                    ? 'bg-[#003030] border-2 border-[#00d9ff]' 
-                    : 'bg-[#1a1a2e] border-2 border-[#4a4a6a]'
-                }`}>
-                  <p className={`font-mono text-sm md:text-base leading-relaxed tracking-tight break-words ${
-                    msg.isUser ? 'text-[#00d9ff] font-bold' : 'text-[#e0e0e0]'
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            {messages.map((msg: any) => {
+              const isInitial = msg.id === 'initial-msg-1';
+              const isUser = msg.role === 'user';
+              
+              return (
+                <div key={msg.id} className={`flex gap-3 ${isUser ? 'flex-row-reverse' : ''}`}>
+                  <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center shrink-0 border-2 ${
+                    isUser 
+                      ? 'bg-[#006060] border-[#00d9ff]' 
+                      : 'bg-[#1a1a2e] border-[#4a4a6a]'
                   }`}>
-                    {msg.text}
+                    {isUser ? (
+                      <span className="font-[family-name:var(--font-pixel)] text-xs md:text-sm font-bold text-[#00d9ff]">TU</span>
+                    ) : (
+                      <span className="text-xl md:text-2xl">🧙🏽‍♂️</span>
+                    )}
+                  </div>
+                  <div className={`px-4 py-3 max-w-[85%] rounded-md shadow-md ${
+                    isUser 
+                      ? 'bg-[#003030] border-2 border-[#00d9ff]' 
+                      : 'bg-[#1a1a2e] border-2 border-[#4a4a6a]'
+                  }`}>
+                    <p className={`font-mono text-sm md:text-base leading-relaxed tracking-tight break-words ${
+                      isUser ? 'text-[#00d9ff] font-bold' : 'text-[#e0e0e0]'
+                    }`}>
+                      {isInitial ? (
+                         <>
+                           {displayedText}
+                           {isTypingInitial && <span className="typewriter-cursor" />}
+                         </>
+                      ) : (
+                         <span className="whitespace-pre-wrap">{String(msg.content)}</span>
+                      )}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+            
+            {/* Loading Indicator */}
+            {isLoading && (
+              <div className="flex gap-3">
+                <div className="w-8 h-8 md:w-10 md:h-10 bg-[#1a1a2e] rounded-full flex items-center justify-center shrink-0 border-2 border-[#4a4a6a]">
+                  <span className="text-xl md:text-2xl">🧙🏽‍♂️</span>
+                </div>
+                <div className="bg-[#1a1a2e] border-2 border-[#4a4a6a] px-4 py-3 max-w-[85%] rounded-md shadow-md">
+                  <p className="text-[#e0e0e0] font-mono text-sm md:text-base leading-relaxed tracking-tight flex items-center gap-2">
+                    * Sintetizando respuesta *
+                    <span className="flex gap-1">
+                      <span className="w-2 h-2 rounded-full bg-[#f5a623] animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <span className="w-2 h-2 rounded-full bg-[#f5a623] animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <span className="w-2 h-2 rounded-full bg-[#f5a623] animate-bounce" style={{ animationDelay: '300ms' }} />
+                    </span>
                   </p>
                 </div>
               </div>
-            ))}
+            )}
+            
+            <div ref={messagesEndRef} />
           </div>
           
           {/* Input Area */}
-          <form onSubmit={handleSubmit} className="p-3 bg-[#1a1a2e] border-t-4 border-[#4a4a6a]">
+          <form onSubmit={onCustomSubmit} className="p-3 bg-[#1a1a2e] border-t-4 border-[#4a4a6a]">
             <div className="flex gap-2">
               <div className="flex-1 relative">
                 <ChevronRight className="pixelated absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#f5a623] rpg-arrow" />
                 <input
                   type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="Escribe tu mensaje..."
-                  className="w-full bg-[#0f0f1f] border-2 border-[#4a4a6a] text-white pl-9 pr-4 py-3 md:py-4 font-mono text-sm md:text-base placeholder:text-[#4a4a6a] focus:outline-none focus:border-[#f5a623]"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  disabled={isLoading}
+                  placeholder={isLoading ? "Invocando conjuro..." : "Escribe tu mensaje..."}
+                  className="w-full bg-[#0f0f1f] border-2 border-[#4a4a6a] text-white pl-9 pr-4 py-3 md:py-4 font-mono text-sm md:text-base placeholder:text-[#4a4a6a] focus:outline-none focus:border-[#f5a623] disabled:opacity-50"
                 />
               </div>
               <button 
                 type="submit"
-                className="bg-[#f5a623] hover:bg-[#d4830a] text-black px-4 py-3 md:py-4 font-[family-name:var(--font-pixel)] border-2 border-white flex items-center justify-center gap-1 transition-colors shrink-0"
+                disabled={isLoading}
+                className="bg-[#f5a623] hover:bg-[#d4830a] text-black px-4 py-3 md:py-4 font-[family-name:var(--font-pixel)] border-2 border-white flex items-center justify-center gap-1 transition-colors shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Sword className="pixelated w-5 h-5 md:w-6 md:h-6" />
               </button>
@@ -356,24 +402,7 @@ function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessag
 
 // Panel de Proyectos Destacados
 function FeaturedProjectsPanel() {
-  const projects = [
-    {
-      name: "AVOCADO.AI",
-      role: "Founder & CEO, Lead Developer",
-      desc: "Plataforma Legal-Tech que democratiza el acceso a servicios legales combinando agentes IA autónomos y abogados expertos via WhatsApp.",
-      tech: ["Python", "React", "Vector DBs", "LLM APIs"],
-      link: "https://avocado.center/",
-      logo: "/projects/avocado-logo.svg" // Sube aquí tu imagen
-    },
-    {
-      name: "Aldana Hernandez Legal",
-      role: "Legal & Tech Consultant",
-      desc: "Implementación tecnológica y automatización de procesos para el prestigioso despacho legal corporativo.",
-      tech: ["AI Agents", "Legal Engineering", "Automation"],
-      link: "https://aldanahernandezlegal.com/",
-      logo: "/projects/aldana-logo.svg"  // Sube aquí tu imagen
-    }
-  ]
+  const projects = FEATURED_PROJECTS;
   return (
     <div className="space-y-4">
       {projects.map((proj, idx) => (
