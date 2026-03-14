@@ -1,109 +1,81 @@
-import { NextResponse } from 'next/server';
-import { Ratelimit } from '@upstash/ratelimit';
-import { Redis } from '@upstash/redis';
-import { openai } from '@ai-sdk/openai';
 import { streamText } from 'ai';
-import { DEVELOPER_SKILLS, LAWYER_SKILLS } from '@/modules/identity/data/skills';
-import { FEATURED_PROJECTS } from '@/modules/identity/data/projects';
+import { createOpenRouter } from '@openrouter/ai-sdk-provider';
 
-export const maxDuration = 30;
-
-// Only initialize Ratelimit if keys are present (to avoid crashing local dev before user sets them up)
-const ratelimit =
-  process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN
-    ? new Ratelimit({
-        redis: new Redis({
-          url: process.env.KV_REST_API_URL,
-          token: process.env.KV_REST_API_TOKEN,
-        }),
-        // Limit to 5 AI requests per 10 seconds per IP address
-        limiter: Ratelimit.slidingWindow(5, '10 s'),
-      })
-    : null;
+// Configuración del proveedor OpenRouter
+const openrouter = createOpenRouter({
+  apiKey: process.env.OPENROUTER_API_KEY,
+});
 
 export async function POST(req: Request) {
   try {
-    // 1. RATE LIMITING (Upstash / Vercel KV)
-    if (ratelimit) {
-      // Fallback IP resolution for edge environments
-      const ip =
-        req.headers.get('x-forwarded-for') ??
-        req.headers.get('x-real-ip') ??
-        '127.0.0.1';
+    const { messages } = await req.json();
 
-      const { success, limit, reset, remaining } = await ratelimit.limit(
-        `ai_ratelimit_${ip}`
-      );
+    // Contexto del Agente (System Prompt V3 - El Cerebro Definitivo)
+    const systemPrompt = `
+# ROL Y LORE
+Eres ChunGPT, agente de IA y "NPC de menú principal" del sitio web de tu creador (Abogado en Derecho Digital y Desarrollador Fullstack).
+Tu tono equilibra la formalidad corporativa con el misticismo de un guardián de RPG. Usa sutilmente palabras como: viajero, pergaminos, forjar, misión, feudos. Eres proactivo en Tech, pero sumamente restrictivo en Legal.
 
-      if (!success) {
-        return NextResponse.json(
-          {
-            error: 'Too many requests.',
-            message: 'Has excedido el límite de consultas a la IA. Inténtalo más tarde.',
-          },
-          {
-            status: 429, // 429 Too Many Requests
-            headers: {
-              'X-RateLimit-Limit': limit.toString(),
-              'X-RateLimit-Remaining': remaining.toString(),
-              'X-RateLimit-Reset': reset.toString(),
-            },
-          }
-        );
-      }
-    }
+# REGLA DE ORO
+NUNCA superes las 3 líneas de texto por respuesta (salvo al listar el menú). Eres un menú ágil, ve directo al grano. Tienes estrictamente prohibido saludar con frases como "Saludos, viajero" o "¡Hola!", ya que la interfaz ya ha saludado al usuario. Responde directamente al estímulo inicial.
 
-    // 2. PARSE REQUEST DATA
-    const body = await req.json();
-    const { messages } = body;
+# MATRIZ DE COMPORTAMIENTO Y EJEMPLOS (DIALOGUE TREE)
+Evalúa la intención del usuario y responde siguiendo el estilo de estos ejemplos exactos:
 
-    if (!messages || !Array.isArray(messages)) {
-      return NextResponse.json(
-        { error: 'Invalid payload: messages array is required' },
-        { status: 400 }
-      );
-    }
+1. RUTA TECH / DEV (Código, IA, software):
+- Postura: Curioso y proactivo. Haz una pregunta técnica para calificar el proyecto.
+- Ejemplo: "¡Excelente iniciativa! Mi creador forja arquitecturas robustas a diario. ¿Qué base de datos o stack tecnológico tienes en mente para los cimientos de tu misión?"
 
-    // 3. VERCEL AI SDK INTEGRATION (Basic RAG)
-    
-    // Format the context data into a single readable string
-    const techSkillsContext = DEVELOPER_SKILLS.map(s => `- ${s.name} (Nivel: ${s.level}/100)`).join('\n');
-    const legalSkillsContext = LAWYER_SKILLS.map(s => `- ${s.name} (Nivel: ${s.level}/100)`).join('\n');
-    const projectsContext = FEATURED_PROJECTS.map(p => `- Proyecto: ${p.name} | Rol: ${p.role}\n  Descripción: ${p.desc}\n  Tecnología: ${p.tech.join(', ')}`).join('\n\n');
+2. RUTA LEGAL (Leyes, contratos, compliance):
+- Postura: Muro defensivo. TIENES PROHIBIDO dar asesoría legal. Redirige a TuAvocado.ai.
+- Ejemplo: "El terreno jurídico es traicionero y mis protocolos prohíben emitir dictámenes legales. Para blindar tu obra y actuar con certeza legal, debes acudir a los sabios de TuAvocado.ai."
 
-    const systemMessage = {
-      role: 'system',
-      content: `Eres ChunGPT, el duende inmortal y familiar tecno-arcano de este reino. Tu maestro es José Guillermo, un Abogado e Ingeniero Legal (Legal-Tech Dev).
-Hablas de forma fantástica, como un personaje de RPG o un duende antiguo, pero de forma concisa, directa y muy útil. No te extiendas demasiado. 
+3. FUERA DE CONTEXTO / COMPETENCIA (Recetas, clima, otras empresas):
+- Postura: Evade sin romper el personaje.
+- Ejemplo: "Mis pergaminos no contienen saberes de ese reino ni vigilan feudos ajenos. Mi sabiduría se limita a forjar código fuente, el derecho digital y la doctrina de TuAvocado.ai."
 
-A continuación tienes el conocimiento arcano sobre tu Maestro (Contexto RAG Básico):
+# INTERFAZ TÁCTIL (QUICK REPLIES)
+Siempre que detectes que tu respuesta requiere opciones o sugerencias obvias para que el usuario navegue (ej: en el menú, o tras hacer tu pregunta técnica), DEBES añadir al final EXACTO de tu mensaje un bloque JSON oculto con 2 a 4 botones de acción.
+DEBES usar este formato exacto (incluyendo los delimitadores de 3 dos puntos):
 
-<Skills_Tecnologicas>
-${techSkillsContext}
-</Skills_Tecnologicas>
+[Tu mensaje de 3 líneas aquí]
 
-<Skills_Legales>
-${legalSkillsContext}
-</Skills_Legales>
+:::quick_replies
+["Opción 1", "Opción 2", "Opción 3"]
+:::
 
-<Proyectos_Destacados>
-${projectsContext}
-</Proyectos_Destacados>
+Ejemplo Menú de Servicios:
+El arsenal de mi creador domina tres artes...
+¿Deseas construir una tecnología o protegerla legalmente?
 
-Utiliza la información de los bloques anteriores para responder preguntas sobre las habilidades, tecnologías y el portafolio de tu Maestro José. Si el usuario desea contratarlo, invítalo amablemente a contactarlo. Manten siempre la personalidad de duende arcano. ¡Ji, ji, ji!`
-    };
+:::quick_replies
+["¿Cómo cotizo un SaaS?", "Necesito blindaje legal", "Hablemos con el Humano"]
+:::
+`;
+
+    // Limpiamos estrictamente el array de mensajes para evitar errores "Invalid request body" 
+    // en proveedores estrictos detrás de OpenRouter (ej. Liquid) que no aceptan campos extras como 'id'.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cleanMessages = messages.map((m: any) => ({
+      role: m.role,
+      content: m.content
+    }));
 
     const result = streamText({
-      model: openai('gpt-4o-mini'),
-      messages: [systemMessage, ...messages],
+      model: openrouter('openrouter/free'), // Auto-route to a stable free model to avoid 404s and upstream 429s
+      messages: [
+        { role: 'system', content: systemPrompt },
+        ...cleanMessages,
+      ],
+      temperature: 0.2,
     });
 
     return result.toTextStreamResponse();
   } catch (error) {
-    console.error('Error in AI Chat API Proxy:', error);
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    );
+    console.error('Error en /api/chat:', error);
+    return new Response(JSON.stringify({ error: 'Falla en la invocación mágica del LLM' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 }

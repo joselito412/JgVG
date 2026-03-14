@@ -1,9 +1,9 @@
 "use client"
 import Image from "next/image"
 
-import { useChat } from "@ai-sdk/react"
 import { useState, useEffect, useRef } from 'react'
-import { ChevronRight, Sword, Shield, Zap, BookOpen, Heart, ExternalLink } from "pixelarticons/react"
+import { ChevronRight, Shield, Zap, BookOpen, Heart, ExternalLink } from "pixelarticons/react"
+import ChatBotItem from "@/modules/ai/components/ChatBotItem"
 import Scene3D from "@/components/three/Scene3D"
 
 import { DEVELOPER_SKILLS, LAWYER_SKILLS } from "@/modules/identity/data/skills"
@@ -174,225 +174,6 @@ function CharacterStatsPanel() {
         </ul>
       </section>
     </article>
-  )
-}
-
-// MainActionButtons Removed as they are moving to Desktop Icons
-
-// RPG Chat Bubble - Botón flotante interactivo
-function FloatingChatBubble({ onSendMessage, isOpen, setIsOpen }: { onSendMessage: (message: string) => void, isOpen: boolean, setIsOpen: (val: boolean) => void }) {
-  const initialMessageStr = "¡Ji, ji, ji! Soy ChunGPT, el duende tecno-arcano. Mi maestro forja código y leyes en la fragua digital. ¿Deseas explorar su inventario de habilidades, o prefieres que lo invoque para un nuevo proyecto?"
-  
-  // Vercel AI SDK 3.x bypass configurations
-  const { messages, status, setMessages } = useChat();
-
-  const [input, setInput] = useState("");
-  const isLoading = status === 'submitted' || status === 'streaming';
-
-  const [hasGreeted, setHasGreeted] = useState(false)
-  
-  // Custom states just for the initial message typewriter effect
-  const [displayedText, setDisplayedText] = useState("")
-  const [isTypingInitial, setIsTypingInitial] = useState(true)
-  const [messageIndex, setMessageIndex] = useState(0)
-
-  // Ensure initial message is injected safely on load
-  useEffect(() => {
-     if (messages.length === 0) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setMessages([{ id: 'initial-msg-1', role: 'assistant', content: initialMessageStr } as any])
-     }
-  }, [messages.length, setMessages, initialMessageStr])
-
-  // Auto-greet on load (show bubble after 5s)
-  useEffect(() => {
-    if (!hasGreeted) {
-      const timer = setTimeout(() => {
-        setIsOpen(true)
-        setHasGreeted(true)
-      }, 5000)
-      return () => clearTimeout(timer)
-    }
-  }, [hasGreeted, setIsOpen])
-
-  // Initial message typing effect
-  useEffect(() => {
-    if (!isTypingInitial || !isOpen) return
-
-    if (messageIndex < initialMessageStr.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedText(prev => prev + initialMessageStr[messageIndex])
-        setMessageIndex(prev => prev + 1)
-      }, 25)
-
-      return () => clearTimeout(timeout)
-    } else {
-      setTimeout(() => setIsTypingInitial(false), 0)
-    }
-  }, [messageIndex, isTypingInitial, isOpen, initialMessageStr])
-
-  // Auto-scroll logic
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-  
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
-    }
-  }, [messages])
-
-  const onCustomSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
-    onSendMessage(input);
-    
-    // We send the user message to the chat API manually using TS Coercion to fix V3 drift
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const nextMessages = [...messages, { id: crypto.randomUUID(), role: 'user', content: input } as any]
-    setMessages(nextMessages);
-    
-    fetch('/api/chat', {
-       method: 'POST',
-       headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify({ messages: nextMessages }),
-    }).then(async (res) => {
-       const reader = res.body?.getReader()
-       if (!reader) return
-    })
-    setInput(""); // clear input
-  };
-
-  return (
-    <div className="fixed bottom-40 sm:bottom-32 md:bottom-28 lg:bottom-32 right-4 md:right-8 z-60 flex flex-col items-end">
-      {/* Botón flotante (Avatar Icono) */}
-      {!isOpen && (
-        <button 
-          onClick={() => setIsOpen(true)}
-          className="group relative bg-[#1a1a2e] border-[3px] border-[#f5a623] w-20 h-20 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center shadow-[0_0_25px_rgba(245,166,35,0.6)] hover:scale-110 transition-transform cursor-pointer animate-in zoom-in"
-        >
-          <span className="text-4xl sm:text-5xl drop-shadow-[3px_3px_0_rgba(0,0,0,0.5)]">🧙🏽‍♂️</span>
-          <span className="w-3 h-3 md:w-4 md:h-4 bg-[#88ff88] rounded-full absolute bottom-0 right-1 md:bottom-1 md:right-1 border-2 border-[#1a1a2e] animate-pulse"></span>
-          
-          {/* Tooltip pequeño para invitar al click */}
-          {hasGreeted && (
-             <div className="absolute -top-10 right-0 bg-[#f5f5dc] text-black font-[family-name:var(--font-pixel)] text-xs md:text-sm font-bold px-3 py-1.5 border-2 border-black whitespace-nowrap shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
-               Hablar con ChunGPT
-             </div>
-          )}
-        </button>
-      )}
-
-      {/* Ventana de chat desplegada */}
-      {isOpen && (
-        <div className="rpg-panel overflow-hidden w-[95vw] sm:w-[450px] shadow-[0_10px_30px_rgba(0,0,0,0.8)] animate-in slide-in-from-bottom-8 duration-300 mb-2">
-          {/* Header */}
-          <div className="flex items-center justify-between px-3 md:px-4 py-3 bg-[#2a2a4a] border-b-2 border-[#4a4a6a]">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-[#1a1a2e] rounded-full flex items-center justify-center border-[3px] border-[#f5a623]">
-                <span className="text-2xl md:text-3xl drop-shadow-sm">🧙🏽‍♂️</span>
-              </div>
-              <span className="text-[#f5a623] font-[family-name:var(--font-pixel)] text-base md:text-lg font-bold tracking-widest text-shadow">
-                CHUNGPT.exe
-              </span>
-            </div>
-            <button 
-              onClick={() => setIsOpen(false)}
-              className="text-[#c0c0c0] hover:text-white hover:bg-[#ff0000] px-3 py-1 rounded transition-colors font-[family-name:var(--font-pixel)] text-lg"
-            >
-              X
-            </button>
-          </div>
-          
-          {/* Messages Area */}
-          <div className="h-[50vh] max-h-[400px] overflow-y-auto p-4 space-y-4 bg-[#0a0a14]">
-            {/* Conversation Messages */}
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            {messages.map((msg: any) => {
-              const isInitial = msg.id === 'initial-msg-1';
-              const isUser = msg.role === 'user';
-              
-              return (
-                <div key={msg.id} className={`flex gap-3 ${isUser ? 'flex-row-reverse' : ''}`}>
-                  <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center shrink-0 border-2 ${
-                    isUser 
-                      ? 'bg-[#006060] border-[#00d9ff]' 
-                      : 'bg-[#1a1a2e] border-[#4a4a6a]'
-                  }`}>
-                    {isUser ? (
-                      <span className="font-[family-name:var(--font-pixel)] text-xs md:text-sm font-bold text-[#00d9ff]">TU</span>
-                    ) : (
-                      <span className="text-xl md:text-2xl">🧙🏽‍♂️</span>
-                    )}
-                  </div>
-                  <div className={`px-4 py-3 max-w-[85%] rounded-md shadow-md ${
-                    isUser 
-                      ? 'bg-[#003030] border-2 border-[#00d9ff]' 
-                      : 'bg-[#1a1a2e] border-2 border-[#4a4a6a]'
-                  }`}>
-                    <p className={`font-mono text-sm md:text-base leading-relaxed tracking-tight break-words ${
-                      isUser ? 'text-[#00d9ff] font-bold' : 'text-[#e0e0e0]'
-                    }`}>
-                      {isInitial ? (
-                         <>
-                           {displayedText}
-                           {isTypingInitial && <span className="typewriter-cursor" />}
-                         </>
-                      ) : (
-                         <span className="whitespace-pre-wrap">{String(msg.content)}</span>
-                      )}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-            
-            {/* Loading Indicator */}
-            {isLoading && (
-              <div className="flex gap-3">
-                <div className="w-8 h-8 md:w-10 md:h-10 bg-[#1a1a2e] rounded-full flex items-center justify-center shrink-0 border-2 border-[#4a4a6a]">
-                  <span className="text-xl md:text-2xl">🧙🏽‍♂️</span>
-                </div>
-                <div className="bg-[#1a1a2e] border-2 border-[#4a4a6a] px-4 py-3 max-w-[85%] rounded-md shadow-md">
-                  <p className="text-[#e0e0e0] font-mono text-sm md:text-base leading-relaxed tracking-tight flex items-center gap-2">
-                    * Sintetizando respuesta *
-                    <span className="flex gap-1">
-                      <span className="w-2 h-2 rounded-full bg-[#f5a623] animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <span className="w-2 h-2 rounded-full bg-[#f5a623] animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <span className="w-2 h-2 rounded-full bg-[#f5a623] animate-bounce" style={{ animationDelay: '300ms' }} />
-                    </span>
-                  </p>
-                </div>
-              </div>
-            )}
-            
-            <div ref={messagesEndRef} />
-          </div>
-          
-          {/* Input Area */}
-          <form onSubmit={onCustomSubmit} className="p-3 bg-[#1a1a2e] border-t-4 border-[#4a4a6a]">
-            <div className="flex gap-2">
-              <div className="flex-1 relative">
-                <ChevronRight className="pixelated absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#f5a623] rpg-arrow" />
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  disabled={isLoading}
-                  placeholder={isLoading ? "Invocando conjuro..." : "Escribe tu mensaje..."}
-                  className="w-full bg-[#0f0f1f] border-2 border-[#4a4a6a] text-white pl-9 pr-4 py-3 md:py-4 font-mono text-sm md:text-base placeholder:text-[#4a4a6a] focus:outline-none focus:border-[#f5a623] disabled:opacity-50"
-                />
-              </div>
-              <button 
-                type="submit"
-                disabled={isLoading}
-                className="bg-[#f5a623] hover:bg-[#d4830a] text-black px-4 py-3 md:py-4 font-[family-name:var(--font-pixel)] border-2 border-white flex items-center justify-center gap-1 transition-colors shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Sword className="pixelated w-5 h-5 md:w-6 md:h-6" />
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
-    </div>
   )
 }
 
@@ -696,9 +477,7 @@ export default function AvocadoCenter() {
     checkSession()
   }, [])
 
-  const handleSendMessage = (message: string) => {
-    console.log("Message sent:", message)
-  }
+  // Chat interactions removed, now isolated in ChatBotItem
 
   const handleIconClick = (windowName: 'proyectos' | 'skills' | 'ia' | 'servicios' | 'clases') => {
     if (windowName === 'ia') {
@@ -873,7 +652,7 @@ export default function AvocadoCenter() {
         {/* Fin del render Area */}
       </div>
 
-      <FloatingChatBubble onSendMessage={handleSendMessage} isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+      <ChatBotItem isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
       <Taskbar 
         isAuthenticated={isAuthenticated} 
         userRole={userRole} 
