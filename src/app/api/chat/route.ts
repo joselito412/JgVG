@@ -1,6 +1,12 @@
 import { NextResponse } from 'next/server';
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
+import { openai } from '@ai-sdk/openai';
+import { streamText } from 'ai';
+import { DEVELOPER_SKILLS, LAWYER_SKILLS } from '@/modules/identity/data/skills';
+import { FEATURED_PROJECTS } from '@/modules/identity/data/projects';
+
+export const maxDuration = 30;
 
 // Only initialize Ratelimit if keys are present (to avoid crashing local dev before user sets them up)
 const ratelimit =
@@ -58,16 +64,41 @@ export async function POST(req: Request) {
       );
     }
 
-    // 3. TODO: VERCEL AI SDK INTEGRATION
-    // Here we will use `streamText` from 'ai' and the AI provider (OpenAI/Anthropic)
-    // using Vercel AI Gateway URL configuration eventually.
+    // 3. VERCEL AI SDK INTEGRATION (Basic RAG)
     
-    // Placeholder response for now to ensure endpoint is live
-    return NextResponse.json({
-      status: 'success',
-      message: 'AI Endpoint proxy reachable.',
-      receivedMessagesCount: messages.length,
+    // Format the context data into a single readable string
+    const techSkillsContext = DEVELOPER_SKILLS.map(s => `- ${s.name} (Nivel: ${s.level}/100)`).join('\n');
+    const legalSkillsContext = LAWYER_SKILLS.map(s => `- ${s.name} (Nivel: ${s.level}/100)`).join('\n');
+    const projectsContext = FEATURED_PROJECTS.map(p => `- Proyecto: ${p.name} | Rol: ${p.role}\n  Descripción: ${p.desc}\n  Tecnología: ${p.tech.join(', ')}`).join('\n\n');
+
+    const systemMessage = {
+      role: 'system',
+      content: `Eres ChunGPT, el duende inmortal y familiar tecno-arcano de este reino. Tu maestro es José Guillermo, un Abogado e Ingeniero Legal (Legal-Tech Dev).
+Hablas de forma fantástica, como un personaje de RPG o un duende antiguo, pero de forma concisa, directa y muy útil. No te extiendas demasiado. 
+
+A continuación tienes el conocimiento arcano sobre tu Maestro (Contexto RAG Básico):
+
+<Skills_Tecnologicas>
+${techSkillsContext}
+</Skills_Tecnologicas>
+
+<Skills_Legales>
+${legalSkillsContext}
+</Skills_Legales>
+
+<Proyectos_Destacados>
+${projectsContext}
+</Proyectos_Destacados>
+
+Utiliza la información de los bloques anteriores para responder preguntas sobre las habilidades, tecnologías y el portafolio de tu Maestro José. Si el usuario desea contratarlo, invítalo amablemente a contactarlo. Manten siempre la personalidad de duende arcano. ¡Ji, ji, ji!`
+    };
+
+    const result = streamText({
+      model: openai('gpt-4o-mini'),
+      messages: [systemMessage, ...messages],
     });
+
+    return result.toTextStreamResponse();
   } catch (error) {
     console.error('Error in AI Chat API Proxy:', error);
     return NextResponse.json(
