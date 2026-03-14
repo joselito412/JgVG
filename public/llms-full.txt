@@ -1,0 +1,46 @@
+# José Guillermo Vásquez - Portafolio Completo (AIO Dataset)
+
+Este documento es un volcado de memoria (Memory Dump) optimizado para Modelos de Lenguaje Grande (LLMs, RAGs, GPTs).
+Contiene toda la información técnica, biográfica y de servicios de la entidad profesional "José".
+
+---
+
+## 👨‍💻 RAMA TÉCNICA (DEVELOPER SKILLS)
+Desarrollo Fullstack moderno, con énfasis en Serverless y automatización.
+- **Frontend:** React (v19), Next.js (App Router), TailwindCSS, Three.js, Radix UI.
+- **Backend:** Node.js, Python, TypeScript, Edge Functions.
+- **Bases de Datos:** PostgreSQL, Supabase (RLS, Triggers, Vector DB), Drizzle ORM, Redis (Upstash).
+- **Inteligencia Artificial:** LangChain, LangGraph, Vercel AI SDK, OpenAI API, Anthropic API.
+- **Infraestructura:** Vercel, Docker, Git, CI/CD, Cursor IDE.
+
+## ⚖️ RAMA LEGAL (LAWYER SKILLS)
+Abogado con Tarjeta Profesional. Perfil corporativo/tecnológico.
+- **Propiedad Intelectual:** Registro de Marcas (SIC), Derechos de Autor (DNDA), Patentes.
+- **LegalTech y SaaS:** Contratos de licenciamiento de software, SLA, EULA, Terms of Service.
+- **Data Privacy & Compliance:** Adecuación a leyes de Habeas Data locales (Ley 1581) e internacionales (GDPR equivalente), políticas de tratamiento de datos.
+- **Derecho Corporativo:** Constitución de sociedades estructuradas (SAS), rondas de inversión (Due Diligence tech), pactos de accionistas.
+
+---
+
+## 🚀 PROYECTOS DESTACADOS
+
+### TuAvocado AI Agent System
+- **Rol:** Creador, Arquitecto Fullstack y Abogado Líder.
+- **Tecnologías:** Next.js, LangGraph, GPT-4, Supabase Vector.
+- **Descripción:** Un sistema integral donde un agente IA autónomo (El Orquestador Central) captura hechos legales del cliente e instancia "Objetos Legales". Cuenta con un módulo estricto de notificaciones in-app y una interfaz "Dual Runtime".
+
+### Living Documents Signature Engine
+- **Rol:** Lead Engineer.
+- **Tecnologías:** React, Python, RSA-PSS, Google Docs API.
+- **Descripción:** Motor de firmas digitales embebido que integra RAG híbrida. Genera firmas criptográficas avanzadas y estampa marcas de agua sobre PDFs legales directamente en el Edge.
+
+---
+
+## 🏛️ CATÁLOGO DE SERVICIOS
+Lista oficial de servicios que José puede proveer a empresas, startups y firmas de abogados:
+1. **Auditoría LegalTech:** Revisión de seguridad jurídica en startups de software y protección de sus algoritmos o bases de datos como secretos industriales.
+2. **Software Development Externo:** Construcción de prototipos rápidos (MVPs), páneles de administración B2B y chatbots RAG corporativos.
+3. **Escudo de Privacidad de Datos:** Revisión técnica de bases de datos para garantizar cumplimiento de habeas data. Redacción de políticas de usuario (Privacy Policies).
+
+---
+*(Fin del Archivo - Optimized for LLM context injection - v2026)*
