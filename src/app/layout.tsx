@@ -18,6 +18,38 @@ const spaceMono = Space_Mono({
 export const metadata: Metadata = {
   title: 'AVOCADO Center | José - Abogado & Desarrollador IA',
   description: 'Portafolio interactivo de José - Abogado corporativo especializado en LegalTech, Propiedad Intelectual y Datos, además de Desarrollador Fullstack y creador de Agentes de IA.',
+  keywords: [
+    'Abogado Corporativo', 'LegalTech', 'Desarrollador Fullstack', 
+    'Inteligencia Artificial', 'Next.js', 'React', 'Python', 
+    'Propiedad Intelectual', 'Contratos SaaS', 'Compliance', 'Colombia'
+  ],
+  authors: [{ name: 'José Guillermo Vásquez', url: 'https://avocadocenter.co' }],
+  creator: 'José Guillermo Vásquez',
+  publisher: 'AVOCADO Center',
+  alternates: {
+    canonical: 'https://avocadocenter.co',
+  },
+  openGraph: {
+    type: 'profile',
+    title: 'AVOCADO Center | José - Abogado & Desarrollador IA',
+    description: 'Abogado Corporativo y Desarrollador Fullstack especializado en LegalTech e Inteligencia Artificial.',
+    url: 'https://avocadocenter.co',
+    siteName: 'AVOCADO Center',
+    images: [
+      {
+        url: '/profile.png',
+        width: 800,
+        height: 800,
+        alt: 'Foto de perfil de José Guillermo Vásquez',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AVOCADO Center | José - Abogado & Desarrollador IA',
+    description: 'Abogado Corporativo y Desarrollador Fullstack especializado en LegalTech e Inteligencia Artificial.',
+    images: ['/profile.png'],
+  },
   generator: 'v0.app',
   icons: {
     icon: '/logo/Cafe_logo.svg',
@@ -26,6 +58,7 @@ export const metadata: Metadata = {
 }
 
 import { Toaster } from "@/components/ui/toaster"
+import SchemaMarkup from "@/modules/core/components/SchemaMarkup"
 
 export default function RootLayout({
   children,
@@ -35,6 +68,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${vt323.variable} ${spaceMono.variable}`}>
       <body className="font-[family-name:var(--font-pixel)] antialiased">
+        <SchemaMarkup />
         {children}
         <Toaster />
         <Analytics />
