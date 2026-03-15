@@ -48,7 +48,7 @@ describe('ChatBotItem UX States', () => {
     // Una vez clicked (que dispara uxMode='chat'), el menu de acciones rápidas desaparece
     expect(screen.queryByText(/Acciones Rápidas/i)).not.toBeInTheDocument()
     // Y el ChatBox se muestra (placeholder)
-    const input = screen.getByPlaceholderText(/Escribe tu mensaje libre/i)
+    const input = screen.getByPlaceholderText(/Invocando conjuro/i)
     expect(input).toBeInTheDocument()
   })
 })

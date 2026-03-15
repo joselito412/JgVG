@@ -28,3 +28,22 @@ Las llamadas desde el cliente no exponen directamente las llaves de OpenAI (o el
 ## 3. Seguridad y Límites (Rate Limiting)
 Para evitar que Web Scrapers malignos o ataques DDoS generen costos astronómicos de API y colapsen la base de datos de Vercel/Supabase, las rutas `/api/chat` o componentes afines planean integrarse con:
 - **Upstash (Redis Rate Limiting):** Para taponar IPs que envíen ráfagas de mensajes descontroladas al modelo, manteniendo la arquitectura free-tier localizable y segura de escalar.
+
+## 4. Estado Actual del Desarrollo (Marzo 2026 - Sprint Fase 8)
+Actualmente, el motor Core de ChunGPT ha superado con éxito la refactorización arquitectónica para integrar `Vercel AI SDK`. Los siguientes hitos están al **100% completados e integrados en la rama `develop`**:
+
+1. **Abstracción UI y UX Híbrida (`ChatBotItem.tsx`):**
+   - Transición fluida entre un Menú de "Acciones Rápidas" y un Chat Libre.
+   - Tooltip proactivo ("Habla con mi asistente...") disparado automáticamente a los 3 segundos de carga.
+   - Saludo RPG estático y permanente desvinculado de la generación del LLM para mantener inmersión.
+
+2. **Cerebro Backend y Resiliencia (`/api/chat/route.ts`):**
+   - Implementación del Vercel AI SDK Core (`streamText`).
+   - Integración segura de **OpenRouter** para enrutamiento a modelos gratuitos competitivos.
+   - **Depuración Estricta de Payload:** El SDK fue configurado para esterilizar el array de mensajes (enviando exclusivamente `role` y `content`). Esto previene Errores 400 (`Invalid request body`) al interactuar con proveedores hiper-estrictos como Liquid Llama.
+
+### Próximos Pasos Arquitectónicos: Parte 2 (Pensamiento y Flujo)
+La siguiente iteración tecnológica evolucionará la arquitectura hacia el paradigma moderno de "Agentes y Herramientas" del Vercel AI SDK, abarcando:
+- **Agents & Tools:** Dotar al sistema de `toolCalling` (ej. Web Search) para fundamentar respuestas técnicas actuales sin alucinaciones.
+- **Sessions & Memory Persistence:** Integrar Supra/Drizzle en el callback `onFinish()` para dar memoria a largo plazo al usuario.
+- **Runners:** Control avanzado de la ejecución para exponer los "pasos de procesamiento" o pensamientos ("Thinking...") al usuario.

@@ -19,6 +19,31 @@ export default function ChatBotItem({ isOpen, setIsOpen }: ChatBotItemProps) {
 
   const [hasGreeted, setHasGreeted] = useState(false);
   const [uxMode, setUxMode] = useState<'menu' | 'chat'>('menu');
+  const [sessionId, setSessionId] = useState<string | null>(null);
+
+  // Hydration effect (Only runs once on client mount)
+  useEffect(() => {
+    const storedSession = localStorage.getItem('chunGPT_sessionId');
+    if (storedSession) {
+      setSessionId(storedSession);
+      fetch(`/api/chat?sessionId=${storedSession}`)
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            // Map the history DB records back to UI format
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const history = data.map((msg: any) => ({
+              id: msg.id,
+              role: msg.role,
+              content: typeof msg.content === 'string' ? msg.content : JSON.stringify(msg.content)
+            }));
+            setMessages(history as any);
+            setUxMode('chat');
+          }
+        })
+        .catch(err => console.error("Failed to hydrate chat:", err));
+    }
+  }, [setMessages]);
 
   // Auto-greet on load (show tooltip after 5s)
   useEffect(() => {
@@ -30,12 +55,13 @@ export default function ChatBotItem({ isOpen, setIsOpen }: ChatBotItemProps) {
     }
   }, [hasGreeted]);
 
-  // Si el usuario borra todos los mensajes, volvemos al menú base
+  // Si el usuario borra todos los mensajes manualmente, limpiamos la sesión local para iniciar de cero
   useEffect(() => {
     if (messages.length === 0 && uxMode === 'chat') {
        setUxMode('menu'); // Ignoramos el warning de linting para este caso intencional temporalmente
+       setSessionId(null);
+       localStorage.removeItem('chunGPT_sessionId');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages.length, uxMode]);
 
   // Auto-scroll logic
@@ -60,8 +86,15 @@ export default function ChatBotItem({ isOpen, setIsOpen }: ChatBotItemProps) {
     fetch('/api/chat', {
        method: 'POST',
        headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify({ messages: nextMessages }),
+       body: JSON.stringify({ messages: nextMessages, sessionId: sessionId }),
     }).then(async (res) => {
+       // Extract and store new session ID if we don't have one
+       const newSessionId = res.headers.get('x-chat-session-id');
+       if (newSessionId && !sessionId) {
+          setSessionId(newSessionId);
+          localStorage.setItem('chunGPT_sessionId', newSessionId);
+       }
+
        const reader = res.body?.getReader()
        if (!reader) {
          setIsProcessing(false);
@@ -120,8 +153,15 @@ export default function ChatBotItem({ isOpen, setIsOpen }: ChatBotItemProps) {
     fetch('/api/chat', {
        method: 'POST',
        headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify({ messages: nextMessages }),
+       body: JSON.stringify({ messages: nextMessages, sessionId: sessionId }),
     }).then(async (res) => {
+       // Extract and store new session ID if we don't have one
+       const newSessionId = res.headers.get('x-chat-session-id');
+       if (newSessionId && !sessionId) {
+          setSessionId(newSessionId);
+          localStorage.setItem('chunGPT_sessionId', newSessionId);
+       }
+
        const reader = res.body?.getReader()
        if (!reader) {
          setIsProcessing(false);

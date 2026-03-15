@@ -1,14 +1,50 @@
-import { streamText } from 'ai';
+import { streamText, tool } from 'ai';
 import { createOpenRouter } from '@openrouter/ai-sdk-provider';
+import { db } from '@/modules/database/db-client';
+import { chatSessions, chatMessages } from '@/modules/database/schema';
+import { eq } from 'drizzle-orm';
+import { z } from 'zod';
 
 // Configuración del proveedor OpenRouter
 const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY,
 });
 
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const sessionId = searchParams.get('sessionId');
+
+    if (!sessionId) {
+      return new Response(JSON.stringify([]), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const messages = await db
+      .select()
+      .from(chatMessages)
+      .where(eq(chatMessages.sessionId, sessionId))
+      .orderBy(chatMessages.createdAt);
+
+    return new Response(JSON.stringify(messages), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    console.error('Error fetching chat history:', error);
+    return new Response(JSON.stringify({ error: 'Failed to fetch history' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
+
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const { messages, sessionId } = await req.json();
+    let currentSessionId = sessionId;
 
     // Contexto del Agente (System Prompt V3 - El Cerebro Definitivo)
     const systemPrompt = `
@@ -61,6 +97,33 @@ El arsenal de mi creador domina tres artes...
       content: m.content
     }));
 
+    // Pre-generar la Sesión si no existe ANTES de hacer el stream (para poder enviar el Header de inmediato)
+    if (!currentSessionId) {
+       const [newSession] = await db.insert(chatSessions).values({
+         title: cleanMessages[0]?.content?.substring(0, 50) || 'Nueva Aventura',
+       }).returning({ id: chatSessions.id });
+       currentSessionId = newSession.id;
+
+       // Guardar todo el historial temporal entrante (el usuario enviando su primer mensaje)
+       for (const msg of cleanMessages) {
+          await db.insert(chatMessages).values({
+            sessionId: currentSessionId,
+            role: msg.role,
+            content: msg.content,
+          });
+       }
+    } else {
+       // Si ya existía, guardamos sólo el ÚLTIMO mensaje del usuario
+       const lastUserMsg = cleanMessages[cleanMessages.length - 1];
+       if (lastUserMsg && lastUserMsg.role === 'user') {
+          await db.insert(chatMessages).values({
+            sessionId: currentSessionId,
+            role: 'user',
+            content: lastUserMsg.content,
+          });
+       }
+    }
+
     const result = streamText({
       model: openrouter('openrouter/free'), // Auto-route to a stable free model to avoid 404s and upstream 429s
       messages: [
@@ -68,9 +131,44 @@ El arsenal de mi creador domina tres artes...
         ...cleanMessages,
       ],
       temperature: 0.2,
+      tools: {
+        webSearch: tool({
+          description: 'Search the web for up-to-date information, news, technology status, or definitions to avoid hallucinating.',
+          parameters: z.object({
+            query: z.string().describe('The search query to look up.'),
+          }),
+          // @ts-expect-error - type inference fails on this version of AI SDK
+          execute: async ({ query }) => {
+            // Simulated web search integration (Tavily or similar could be injected here)
+            // For now, we simulate a response to demonstrate tool calling.
+            console.log("Web search requested for:", query);
+            return `Simulated Web Search result for "${query}": According to recent index, Nextjs is now on v15, React 19 is out, and Vercel AI SDK 3.x introduced streamText.`;
+          },
+        }),
+      },
+      onFinish: async ({ response }) => {
+        try {
+          // Guardar todos los mensajes generados por el LLM en este ciclo (incluyendo llamadas a herramientas)
+          if (response.messages && response.messages.length > 0) {
+             for (const genMsg of response.messages) {
+               await db.insert(chatMessages).values({
+                 sessionId: currentSessionId,
+                 role: genMsg.role,
+                 content: genMsg.content || '', // O JSON de la toolCall
+               });
+             }
+          }
+        } catch (dbErr) {
+          console.error("Error saving chat memory:", dbErr);
+        }
+      }
     });
 
-    return result.toTextStreamResponse();
+    return result.toTextStreamResponse({
+      headers: {
+        'x-chat-session-id': currentSessionId,
+      }
+    });
   } catch (error) {
     console.error('Error en /api/chat:', error);
     return new Response(JSON.stringify({ error: 'Falla en la invocación mágica del LLM' }), {

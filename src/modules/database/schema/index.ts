@@ -88,7 +88,7 @@ export const prompts = pgTable('prompts', {
 // Phase 7 - AI Integration (Vercel AI SDK Memory & Persistance)
 export const chatSessions = pgTable('chat_sessions', {
   id: uuid('id').defaultRandom().primaryKey(),
-  userId: uuid('user_id').references(() => users.id).notNull(),
+  userId: uuid('user_id').references(() => users.id),
   title: text('title'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
